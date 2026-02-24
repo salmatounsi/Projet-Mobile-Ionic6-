@@ -11,6 +11,15 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full'
   },
+  {
+    path: 'signup-skills',
+    loadChildren: () => import('./pages/signup-skills/signup-skills.module').then( m => m.SignupSkillsPageModule)
+  },
+  {
+    path: 'signup-languages',
+    loadChildren: () => import('./pages/signup-languages/signup-languages.module').then( m => m.SignupLanguagesPageModule)
+  },
+
 ];
 
 @NgModule({

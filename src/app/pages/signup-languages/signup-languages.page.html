@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/signup-skills"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Create Your Profile</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <h2>Languages</h2>
+  <p class="hint">
+    Clients often want to know what languages you speak. English is recommended.
+  </p>
+
+  <ion-grid class="head">
+    <ion-row>
+      <ion-col size="7"><strong>Language</strong></ion-col>
+      <ion-col size="4"><strong>Proficiency</strong></ion-col>
+      <ion-col size="1"></ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-list>
+    <ion-item *ngFor="let row of signup.languages; let i = index">
+      <ion-select
+        interface="popover"
+        placeholder="Select language"
+        [value]="row.language"
+        (ionChange)="signup.updateLanguage(i, { language: $event.detail.value })"
+      >
+        <ion-select-option *ngFor="let l of allLanguages" [value]="l">
+          {{ l }}
+        </ion-select-option>
+      </ion-select>
+
+      <ion-select
+        interface="popover"
+        placeholder="Fluent"
+        [value]="row.proficiency"
+        (ionChange)="signup.updateLanguage(i, { proficiency: $event.detail.value })"
+      >
+        <ion-select-option *ngFor="let p of proficiencies" [value]="p">
+          {{ p }}
+        </ion-select-option>
+      </ion-select>
+
+      <ion-button fill="clear" color="medium" (click)="signup.removeLanguage(i)">
+        <ion-icon name="trash-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+  <ion-button expand="block" fill="outline" (click)="addRow()">
+    + Add a language
+  </ion-button>
+
+  <div class="actions">
+    <ion-button expand="block" fill="outline" (click)="back()">← Back</ion-button>
+    <ion-button
+      expand="block"
+      [disabled]="signup.languages.length === 0"
+      (click)="next()"
+    >
+      Write an overview →
+    </ion-button>
+  </div>
+</ion-content>

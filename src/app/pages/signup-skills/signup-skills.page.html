@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Create Your Profile</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <h2>What work are you here to do?</h2>
+  <p class="hint">
+    Your skills show clients what you can offer and help us recommend relevant jobs.
+  </p>
+
+  <ion-item>
+    <ion-label position="stacked">Your skills</ion-label>
+    <ion-input
+      [(ngModel)]="skillInput"
+      placeholder="Type a skill and press Add"
+      (keyup.enter)="addFromInput()"
+    ></ion-input>
+  </ion-item>
+
+  <ion-button expand="block" fill="outline" (click)="addFromInput()">
+    Add Skill
+  </ion-button>
+
+  <div class="section">
+    <ion-text color="medium"><small>Selected skills</small></ion-text>
+    <div class="chips">
+      <ion-chip *ngFor="let s of signup.skills" (click)="signup.removeSkill(s)">
+        <ion-label>{{ s }}</ion-label>
+        <ion-icon name="close-circle" color="medium"></ion-icon>
+      </ion-chip>
+
+      <ion-text *ngIf="signup.skills.length === 0" color="medium">
+        <small>No skills selected yet.</small>
+      </ion-text>
+    </div>
+  </div>
+
+  <div class="section">
+    <ion-text color="medium"><small>Suggested skills</small></ion-text>
+    <div class="chips">
+      <ion-chip
+        *ngFor="let s of suggestedSkills"
+        [outline]="!signup.skills.includes(s)"
+        (click)="toggleSuggested(s)"
+      >
+        <ion-label>{{ s }}</ion-label>
+      </ion-chip>
+    </div>
+  </div>
+
+  <ion-button expand="block" [disabled]="signup.skills.length === 0" (click)="next()">
+    Languages →
+  </ion-button>
+</ion-content>
