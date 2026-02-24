@@ -18,7 +18,11 @@ const routes: Routes = [
   {
     path: 'signup-languages',
     loadChildren: () => import('./pages/signup-languages/signup-languages.module').then( m => m.SignupLanguagesPageModule)
+  },  {
+    path: 'choose-plan',
+    loadChildren: () => import('./pages/choose-plan/choose-plan.module').then( m => m.ChoosePlanPageModule)
   },
+
 
 ];
 

@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Business Plan</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <h2>Monthly Subscription</h2>
+  <p class="hint">
+    Activate your Business Plan to unlock premium features for your FreelanceHub account.
+  </p>
+
+  <div class="plan-card">
+    <div class="top">
+      <div>
+        <div class="plan-name">Business Plan</div>
+        <div class="plan-sub">Billed monthly • Cancel anytime</div>
+      </div>
+
+      <div class="price">
+        <div class="amount">19.99</div>
+        <div class="unit">TND / month</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="features">
+      <div class="feat">✅ Unlimited proposals</div>
+      <div class="feat">✅ Priority support</div>
+      <div class="feat">✅ Access to premium gigs</div>
+      <div class="feat">✅ Store discounts</div>
+    </div>
+  </div>
+
+  <ion-item lines="none" class="toggle">
+    <ion-label>Auto-renew every month</ion-label>
+    <ion-toggle [(ngModel)]="autoRenew"></ion-toggle>
+  </ion-item>
+
+  <ion-item lines="none" class="toggle">
+    <ion-checkbox slot="start" [(ngModel)]="agreed"></ion-checkbox>
+    <ion-label class="small">
+      I agree to the Terms and understand this is a simulated payment.
+    </ion-label>
+  </ion-item>
+
+  <ion-button expand="block" [disabled]="!agreed" (click)="continue()">
+    Activate Subscription
+  </ion-button>
+
+  <p class="foot">
+    You can cancel anytime. If auto-renew is enabled, your subscription renews monthly.
+  </p>
+</ion-content>

@@ -1,0 +1,81 @@
+h2 {
+  margin: 6px 0 6px;
+  font-weight: 700;
+  font-size: 22px;
+}
+
+.hint {
+  margin: 0 0 14px;
+  color: var(--ion-color-medium);
+  line-height: 1.35;
+}
+
+.plan-card {
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 16px;
+  padding: 14px;
+  background: var(--ion-background-color, #fff);
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.plan-name {
+  font-weight: 800;
+  font-size: 16px;
+}
+
+.plan-sub {
+  margin-top: 4px;
+  color: var(--ion-color-medium);
+  font-size: 13px;
+}
+
+.price {
+  text-align: right;
+}
+
+.amount {
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.unit {
+  font-size: 12px;
+  color: var(--ion-color-medium);
+}
+
+.divider {
+  height: 1px;
+  background: rgba(0,0,0,0.08);
+  margin: 12px 0;
+}
+
+.features {
+  display: grid;
+  gap: 8px;
+}
+
+.feat {
+  font-size: 14px;
+}
+
+.toggle {
+  margin-top: 12px;
+  --padding-start: 0;
+}
+
+.small {
+  font-size: 12px;
+  color: var(--ion-color-medium);
+}
+
+.foot {
+  margin-top: 12px;
+  font-size: 12px;
+  color: var(--ion-color-medium);
+}
