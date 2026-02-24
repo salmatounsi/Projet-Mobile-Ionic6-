@@ -1,3 +1,42 @@
-.hint { margin-top: 6px; }
-.head { margin-top: 10px; }
-.actions { margin-top: 18px; display: grid; gap: 10px; }
+h2 {
+  margin: 6px 0 6px;
+  font-weight: 700;
+  font-size: 22px;
+}
+
+.hint {
+  margin: 0 0 14px;
+  color: var(--ion-color-medium);
+  line-height: 1.35;
+}
+
+.card {
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 14px;
+  padding: 8px 10px;
+  background: var(--ion-background-color, #fff);
+}
+
+.row-head {
+  display: grid;
+  grid-template-columns: 1fr 1fr 38px;
+  gap: 10px;
+  padding: 8px 10px;
+  margin-top: 10px;
+  color: var(--ion-color-medium);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+.lang-row {
+  --padding-start: 10px;
+  --inner-padding-end: 10px;
+  --min-height: 54px;
+}
+
+.actions {
+  margin-top: 18px;
+  display: grid;
+  gap: 10px;
+}
