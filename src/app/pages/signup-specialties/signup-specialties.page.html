@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Specialties</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <h2>What kind of work are you here to do ?</h2>
+
+  <ion-list>
+
+    <div *ngFor="let cat of categories">
+
+      <!-- CATEGORY -->
+      <ion-item button (click)="toggleCategory(cat)">
+        <ion-label>{{ cat.name }}</ion-label>
+        <ion-icon
+          [name]="cat.open ? 'chevron-up' : 'chevron-down'"
+          slot="end">
+        </ion-icon>
+      </ion-item>
+
+      <!-- SPECIALTIES -->
+      <div *ngIf="cat.open">
+        <ion-item
+          *ngFor="let spec of cat.specialties"
+          lines="none">
+
+          <ion-checkbox
+            slot="start"
+            [checked]="isSelected(spec)"
+            (ionChange)="toggleSpecialty(spec)">
+          </ion-checkbox>
+
+          <ion-label>{{ spec }}</ion-label>
+
+        </ion-item>
+      </div>
+
+    </div>
+
+  </ion-list>
+
+  <!-- NEXT BUTTON -->
+  <ion-button
+    expand="block"
+    [disabled]="selectedSpecialties.length === 0"
+    class="next-btn">
+
+    Skills
+  </ion-button>
+
+</ion-content>

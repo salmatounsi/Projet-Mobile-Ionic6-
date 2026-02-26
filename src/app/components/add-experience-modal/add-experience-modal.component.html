@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Add Work Experience</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">✕</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <form [formGroup]="form">
+
+    <ion-input placeholder="Title *" formControlName="title"></ion-input>
+    <ion-input placeholder="Company *" formControlName="company"></ion-input>
+    <ion-input placeholder="Location *" formControlName="location"></ion-input>
+    <ion-input placeholder="Country *" formControlName="country"></ion-input>
+    <ion-item >
+      <ion-label position="stacked">Start date</ion-label>
+      <ion-datetime formControlName="startDate"></ion-datetime>
+    </ion-item>
+    <ion-item *ngIf="!form.value.currentlyInRole">
+      <ion-label position="stacked">End date</ion-label>
+      <ion-datetime formControlName="endDate"></ion-datetime>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-checkbox
+        slot="start"
+        formControlName="currentlyInRole">
+      </ion-checkbox>
+      <ion-label>I am currently working in this role</ion-label>
+    </ion-item>
+    <div class="buttons">
+      <ion-button fill="outline" (click)="close()">Cancel</ion-button>
+      <ion-button (click)="save()" [disabled]="form.invalid">Save</ion-button>
+    </div>
+
+  </form>
+
+</ion-content>

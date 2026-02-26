@@ -1,0 +1,21 @@
+<ion-content class="ion-padding">
+
+  <h2>Create Your Profile</h2>
+  <p>If you have relevant experiences, share it here</p>
+
+  <ion-button shape="round" (click)="openAddExperience()">
+    + Add experience
+  </ion-button>
+
+  <ion-list *ngIf="experiences.length">
+
+    <ion-item *ngFor="let exp of experiences">
+      <ion-label>
+        <h3>{{ exp.title }}</h3>
+        <p>{{ exp.company }} — {{ exp.country }}</p>
+      </ion-label>
+    </ion-item>
+
+  </ion-list>
+
+</ion-content>
