@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Add Education</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">✕</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <form [formGroup]="form">
+    <ion-item >
+    <ion-label position="stacked">School</ion-label>
+    <ion-input placeholder="School *" formControlName="school"></ion-input>
+    </ion-item>
+
+    <ion-item >
+      <ion-label position="stacked">Degree</ion-label>
+    <ion-input placeholder="Degree *" formControlName="degree"></ion-input>
+    </ion-item>
+
+    <ion-item >
+      <ion-label position="stacked">Field Of Study</ion-label>
+      <ion-input placeholder="Field Of Study *" formControlName="field"></ion-input>
+    </ion-item>
+
+    <ion-item >
+      <ion-label position="stacked">From</ion-label>
+      <ion-datetime presentation="date" formControlName="startDate"></ion-datetime>
+    </ion-item>
+    <ion-item >
+      <ion-label position="stacked">To (or expected graduation year)</ion-label>
+      <ion-datetime presentation="date" max="3000" formControlName="endDate"></ion-datetime>
+    </ion-item>
+
+    <ion-item >
+      <ion-label position="stacked">Description</ion-label>
+  <ion-textarea placeholder="Describe your studies, awards, etc." formControlName="description">
+  </ion-textarea>
+    </ion-item>
+    <div class="buttons">
+      <ion-button fill="outline" (click)="close()">Cancel</ion-button>
+      <ion-button (click)="save()" [disabled]="form.invalid">Save</ion-button>
+    </div>
+
+  </form>
+
+</ion-content>

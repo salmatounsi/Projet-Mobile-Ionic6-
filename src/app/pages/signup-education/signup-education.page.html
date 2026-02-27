@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/signup-experience"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Create Your Profile</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+
+  <p>Clients like to know what you know - add your education here.</p>
+
+  <ion-button shape="round" (click)="openAddEducation()">
+    + Add education
+  </ion-button>
+
+  <ion-list *ngIf="educations.length">
+
+    <ion-item *ngFor="let ed of educations">
+      <ion-label>
+        <h3>{{ ed.school }}</h3>
+        <p>{{ ed.field }} — {{ ed.degree }}</p>
+      </ion-label>
+    </ion-item>
+
+  </ion-list>
+
+  <div class="btn-row">
+    <ion-button
+      expand="block"
+      fill="outline"
+      color="primary"
+      class="next-btn"
+      routerLink="/signup-languages"
+    >
+      Skip
+    </ion-button>
+
+    <ion-button
+      expand="block"
+      color="primary"
+      class="next-btn"
+      routerLink="/signup-languages"
+    >
+      Add Languages
+    </ion-button>
+  </div>
+</ion-content>
