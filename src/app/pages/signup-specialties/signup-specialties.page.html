@@ -12,7 +12,6 @@
 
     <div *ngFor="let cat of categories">
 
-      <!-- CATEGORY -->
       <ion-item button (click)="toggleCategory(cat)">
         <ion-label>{{ cat.name }}</ion-label>
         <ion-icon
@@ -21,7 +20,6 @@
         </ion-icon>
       </ion-item>
 
-      <!-- SPECIALTIES -->
       <div *ngIf="cat.open">
         <ion-item
           *ngFor="let spec of cat.specialties"
@@ -42,7 +40,6 @@
 
   </ion-list>
 
-  <!-- NEXT BUTTON -->
   <ion-button
     expand="block"
     [disabled]="selectedSpecialties.length === 0"

@@ -30,6 +30,10 @@ const routes: Routes = [
     path: 'signup-experience',
     loadChildren: () => import('./pages/signup-experience/signup-experience.module').then( m => m.SignupExperiencePageModule)
   },
+  {
+    path: 'signup-education',
+    loadChildren: () => import('./pages/signup-education/signup-education.module').then( m => m.SignupEducationPageModule)
+  },
 
 
 ];

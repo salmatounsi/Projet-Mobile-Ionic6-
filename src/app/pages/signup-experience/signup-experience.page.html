@@ -1,6 +1,13 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/signup-experience"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Create Your Profile</ion-title>
+  </ion-toolbar>
+</ion-header>
 <ion-content class="ion-padding">
 
-  <h2>Create Your Profile</h2>
   <p>If you have relevant experiences, share it here</p>
 
   <ion-button shape="round" (click)="openAddExperience()">
@@ -18,4 +25,23 @@
 
   </ion-list>
 
+  <div class="btn-row">
+    <ion-button
+      expand="block"
+      fill="outline"
+      color="primary"
+      class="next-btn"
+    >
+      Skip
+    </ion-button>
+
+    <ion-button
+      expand="block"
+      color="primary"
+      class="next-btn"
+      routerLink="/signup-education"
+    >
+      Add Education
+    </ion-button>
+  </div>
 </ion-content>
