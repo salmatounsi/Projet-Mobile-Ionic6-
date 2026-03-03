@@ -34,6 +34,18 @@ const routes: Routes = [
     path: 'signup-education',
     loadChildren: () => import('./pages/signup-education/signup-education.module').then( m => m.SignupEducationPageModule)
   },
+  {
+    path: 'what-dyd',
+    loadChildren: () => import('./pages/what-dyd/what-dyd.module').then( m => m.WhatDydPageModule)
+  },
+  {
+    path: 'general-info',
+    loadChildren: () => import('./pages/general-info/general-info.module').then( m => m.GeneralInfoPageModule)
+  },
+  {
+    path: 'bio-cv',
+    loadChildren: () => import('./pages/bio-cv/bio-cv.module').then( m => m.BioCvPageModule)
+  },
 
 
 ];

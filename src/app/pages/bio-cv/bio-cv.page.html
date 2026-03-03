@@ -1,0 +1,37 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>Bio</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="form-container">
+    <h2 class="title-underline">Tell the world about yourself.</h2>
+    
+    <p class="instruction-text">
+      Help people get to know you at a glance. What work do you do best? You can always edit later.
+    </p>
+
+    <ion-item lines="outline" class="custom-textarea-item ion-margin-bottom">
+      <ion-textarea rows="6" placeholder="A bit about me..."></ion-textarea>
+    </ion-item>
+
+    <p class="cv-text">
+      Upload your CV to let people know your previous projects and achievements.
+    </p>
+
+    <input type="file" #fileInput (change)="onFileSelected($event)" style="display: none;" accept=".pdf,.doc,.docx">
+    
+    <ion-button fill="solid" class="upload-cv-btn" (click)="fileInput.click()">
+      Upload CV
+    </ion-button>
+
+    <p *ngIf="fileName" class="selected-file-name">{{ fileName }}</p>
+
+    <div class="footer-action">
+      <ion-button color="dark" shape="round" class="next-btn">
+        NEXT
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

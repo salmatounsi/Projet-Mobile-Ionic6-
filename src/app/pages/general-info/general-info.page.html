@@ -1,0 +1,67 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>General Information</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="form-container">
+    <h2>Create Your Account</h2>
+    <p>Please fill in the details below to get started.</p>
+
+    <form>
+      <ion-grid class="ion-no-padding">
+        <ion-row>
+          <ion-col size="6">
+            <ion-item lines="outline" class="ion-margin-bottom">
+              <ion-label position="stacked">First Name</ion-label>
+              <ion-input type="text" placeholder="John"></ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="6">
+            <ion-item lines="outline" class="ion-margin-bottom">
+              <ion-label position="stacked">Last Name</ion-label>
+              <ion-input type="text" placeholder="Doe"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <ion-item lines="outline" class="ion-margin-bottom">
+        <ion-label position="stacked">Work Email Address</ion-label>
+        <ion-input type="email" placeholder="john.doe@company.com"></ion-input>
+      </ion-item>
+
+      <ion-item lines="outline" class="ion-margin-bottom">
+        <ion-label position="stacked">Password</ion-label>
+        <ion-input type="password" placeholder="********"></ion-input>
+      </ion-item>
+
+      <ion-item lines="outline" class="ion-margin-bottom">
+        <ion-label position="stacked">Confirm Password</ion-label>
+        <ion-input type="password" placeholder="********"></ion-input>
+      </ion-item>
+
+      <ion-item lines="outline" class="ion-margin-bottom">
+        <ion-label position="stacked">Country</ion-label>
+        <ion-select placeholder="Select your country">
+          <ion-select-option value="fr">France</ion-select-option>
+          <ion-select-option value="us">United States</ion-select-option>
+          <ion-select-option value="ca">Canada</ion-select-option>
+          </ion-select>
+      </ion-item>
+
+      <ion-item lines="none" class="ion-margin-vertical">
+        <ion-checkbox slot="start" justify="start"></ion-checkbox>
+        <ion-label class="ion-text-wrap">
+          Yes, I understand and agree to the <a>Terms of service</a>
+        </ion-label>
+      </ion-item>
+
+      <ion-button expand="block" shape="round" class="create-account-button">
+        Create My Account
+      </ion-button>
+    </form>
+  </div>
+</ion-content>
