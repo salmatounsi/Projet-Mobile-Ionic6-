@@ -1,0 +1,63 @@
+/* Label au-dessus */
+.input-label {
+  display: block;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #1a4f8b;
+  margin-bottom: 10px;
+}
+
+/* Conteneur du select pour simuler l'input de l'image */
+.custom-input-item {
+  --border-radius: 12px;
+  --background: #ffffff;
+  --border-color: #444444; /* Bordure plus sombre comme sur l'image */
+  --padding-start: 15px;
+  margin-top: 5px;
+  height: 55px;
+}
+
+/* Style interne du Select */
+ion-select {
+  width: 100%;
+  font-weight: 400;
+  --placeholder-color: #666;
+  --placeholder-opacity: 1;
+}
+
+/* Personnalisation de l'icône de la flèche (le cercle sur votre image) */
+ion-select::part(icon) {
+  border: 1px solid #444;
+  border-radius: 50%;
+  padding: 2px;
+  width: 20px;
+  height: 20px;
+  color: #444;
+  opacity: 1;
+}
+
+/* Navigation footer */
+.navigation-footer {
+  margin-top: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.back-circle-button {
+  --border-radius: 50%;
+  --background: #757575;
+  --color: white;
+  width: 50px;
+  height: 50px;
+}
+
+.add-experience-button {
+  flex: 1;
+  --background: #d6dde4;
+  --color: #1a4f8b;
+  font-weight: 600;
+  height: 50px;
+  text-transform: none;
+}

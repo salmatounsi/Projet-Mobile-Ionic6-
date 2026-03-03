@@ -1,0 +1,77 @@
+/* Conteneur principal */
+.form-container {
+  padding: 20px;
+  background-color: #ffffff; /* Fond blanc pur */
+  border-radius: 12px;
+}
+
+/* Titres eit textes */
+h2 {
+  color: #1a4f8b; /* Bleu profond */
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+p {
+  color: #667c99; /* Bleu gris pour le sous-titre */
+  font-size: 0.9rem;
+}
+
+/* Personnalisation des champs de saisie (Ion-Item) */
+ion-item {
+  --background: #f8faff; /* Blanc bleuté très léger pour les champs */
+  --border-color: #d1d9e6;
+  --border-radius: 8px;
+  --highlight-color-focused: #3880ff; /* Bleu vif quand on clique */
+  margin-bottom: 12px;
+}
+
+ion-label {
+  color: #4a6984 !important; /* Couleur des labels */
+  font-weight: 500;
+}
+
+/* Style spécifique pour les colonnes du nom/prénom */
+ion-col:first-child {
+  padding-right: 5px;
+}
+ion-col:last-child {
+  padding-left: 5px;
+}
+
+/* La case à cocher (Checkbox) */
+ion-checkbox {
+  --checkbox-background-checked: #3880ff;
+  --border-color-checked: #3880ff;
+  margin-right: 10px;
+}
+
+ion-label a {
+  color: #3880ff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* Le bouton Create Account */
+ion-button {
+  --background: #1a4f8b; /* Bleu institutionnel */
+  --background-activated: #12365f;
+  --border-radius: 10px;
+  font-weight: 600;
+  margin-top: 25px;
+  height: 50px; /* Bouton plus haut pour le mobile */
+}
+
+/* Style pour le Select (Pays) */
+ion-select {
+  width: 100%;
+  --placeholder-color: #99acc2;
+}
+.create-account-button {
+  flex: 1;
+  --background: #d6dde4;
+  --color: #1a4f8b;
+  font-weight: 600;
+  height: 50px;
+  text-transform: none;
+}
