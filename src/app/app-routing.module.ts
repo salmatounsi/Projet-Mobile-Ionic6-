@@ -18,20 +18,21 @@ const routes: Routes = [
   {
     path: 'signup-languages',
     loadChildren: () => import('./pages/signup-languages/signup-languages.module').then( m => m.SignupLanguagesPageModule)
-  },  {
+  },
+  {
     path: 'choose-plan',
     loadChildren: () => import('./pages/choose-plan/choose-plan.module').then( m => m.ChoosePlanPageModule)
   },
   {
-    path: 'signup-specialties',
+    path: 'signup-specialties/:id',
     loadChildren: () => import('./pages/signup-specialties/signup-specialties.module').then( m => m.SignupSpecialtiesPageModule)
   },
   {
-    path: 'signup-experience',
+    path: 'signup-experience/:id',
     loadChildren: () => import('./pages/signup-experience/signup-experience.module').then( m => m.SignupExperiencePageModule)
   },
   {
-    path: 'signup-education',
+    path: 'signup-education/:id',
     loadChildren: () => import('./pages/signup-education/signup-education.module').then( m => m.SignupEducationPageModule)
   },
   {

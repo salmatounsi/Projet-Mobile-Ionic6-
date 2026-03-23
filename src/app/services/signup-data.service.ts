@@ -1,4 +1,7 @@
-import { Injectable } from '@angular/core';
+import { HttpClient } from "@angular/common/http";
+import {inject, Injectable} from '@angular/core';
+import {ModalController} from "@ionic/angular";
+import {Observable} from "rxjs";
 
 export type Proficiency = 'Basic' | 'Conversational' | 'Fluent' | 'Native/Bilingual';
 
@@ -9,8 +12,13 @@ export interface LanguageItem {
 
 @Injectable({ providedIn: 'root' })
 export class SignupDataService {
+  private baseUrl = 'http://localhost:5000/auth';
+  userId: string | null = null;
   skills: string[] = [];
   languages: LanguageItem[] = [{ language: 'English', proficiency: 'Fluent' }];
+  private http= inject(HttpClient);
+
+  constructor() {}
 
   addSkill(skill: string) {
     const s = skill.trim();
@@ -25,5 +33,57 @@ export class SignupDataService {
   }
   updateLanguage(index: number, patch: Partial<LanguageItem>) {
     this.languages[index] = { ...this.languages[index], ...patch };
+  }
+
+  updateCategory(
+    category: string,
+    specialties: string[]
+  ): Observable<any> {
+
+    if (!this.userId) {
+      throw new Error('User ID is missing');
+    }
+
+    return this.http.put(
+      `${this.baseUrl}/register/${this.userId}/category`,
+      {
+        category,
+        specialties
+      }
+    );
+  }
+
+
+  updateExperience(experiences: any[]): Observable<any> {
+    if (!this.userId) {
+      throw new Error('User ID is missing');
+    }
+
+    return this.http.put(
+      `${this.baseUrl}/register/${this.userId}/experience`,
+      { experiences }
+    );
+  }
+  updateEducation(education: any[]): Observable<any> {
+    if (!this.userId) {
+      throw new Error('User ID is missing');
+    }
+
+    return this.http.put(
+      `${this.baseUrl}/register/${this.userId}/education`,
+      { education }
+    );
+  }
+
+  getCategory(userId: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/user/${userId}/category`);
+  }
+
+  getExperience(userId: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/user/${userId}/experience`);
+  }
+
+  getEducation(userId: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/user/${userId}/education`);
   }
 }

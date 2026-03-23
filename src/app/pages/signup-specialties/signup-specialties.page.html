@@ -43,9 +43,11 @@
   <ion-button
     expand="block"
     [disabled]="selectedSpecialties.length === 0"
-    class="next-btn">
+    class="next-btn"
+    (click)="next()"
+  >
 
-    Skills
+   Next add skills>
   </ion-button>
 
 </ion-content>

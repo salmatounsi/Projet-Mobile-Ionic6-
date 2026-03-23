@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
+import {SignupDataService} from "../../services/signup-data.service";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-signup-specialties',
@@ -7,8 +9,13 @@ import { Component, OnInit } from '@angular/core';
   standalone: false,
 })
 export class SignupSpecialtiesPage implements OnInit {
+  private route = inject(ActivatedRoute);
 
-  constructor() { }
+  constructor(
+    private api: SignupDataService,
+    private router: Router
+  ) {}
+
   categories = [
     {
       id: 1,
@@ -35,7 +42,7 @@ export class SignupSpecialtiesPage implements OnInit {
     {
       id: 3,
       name: 'IT & Networking',
-      open: true,
+      open: false,
       specialties: [
         'Database Management & Administration',
         'ERP / CRM Software',
@@ -94,12 +101,54 @@ export class SignupSpecialtiesPage implements OnInit {
     }
   ];
   ngOnInit() {
+    const idFromUrl = this.route.snapshot.paramMap.get('id');
 
+    if (idFromUrl) {
+      this.api.userId = idFromUrl;
+      console.log('Successfully read ID from URL:', this.api.userId);
+    } else {
+      console.error('No ID found in the URL path!');
+    }
+
+
+    if (this.api.userId) {
+      this.loadSavedData(this.api.userId); // New helper function
+    } else {
+      console.error('No ID found in the URL path!');
+    }
+   /* const nav = this.router.getCurrentNavigation();
+    if (nav?.extras?.state && nav.extras.state['userId']) {
+      this.api.userId = nav.extras.state['userId'];*/
+   // this.api.userId = "69a74a3a0b84371d1323a85b";
+   /* } else {
+      console.error('No userId found in router state!');
+    }*/
+  }
+
+  loadSavedData(userId: string) {
+    this.api.getCategory(userId).subscribe({
+      next: (res) => {
+        if (res) {
+          this.selectedSpecialties = res.specialties || [];
+          const savedCategoryId = res.category?.id;
+          const matchedCat = this.categories.find(c => c.id === savedCategoryId);
+
+          if (matchedCat) {
+            matchedCat.open = true;
+            this.selectedCategory = matchedCat.name;
+          }
+        }
+      },
+      error: (err) => console.error("Error loading saved specialties", err)
+    });
   }
   selectedSpecialties: string[] = [];
+  selectedCategory: string | null = null;
+  isLoading = false;
 
   toggleCategory(cat: any) {
     cat.open = !cat.open;
+    this.selectedCategory=cat;
   }
 
   toggleSpecialty(name: string) {
@@ -113,5 +162,35 @@ export class SignupSpecialtiesPage implements OnInit {
 
   isSelected(name: string) {
     return this.selectedSpecialties.includes(name);
+  }
+
+  next() {
+
+    if (!this.api.userId) {
+      console.error("User ID missing");
+      return;
+    }
+
+    if (!this.selectedCategory) {
+      console.error("Category required");
+      return;
+    }
+
+    this.isLoading = true;
+
+    this.api.updateCategory(
+      this.selectedCategory,
+      this.selectedSpecialties
+    ).subscribe({
+      next: () => {
+        this.router.navigateByUrl('/signup-bio');
+      },
+      error: (err) => {
+        console.error("Error saving category", err);
+      },
+      complete: () => {
+        this.isLoading = false;
+      }
+    });
   }
 }
