@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { SignupDataService } from '../../services/signup-data.service';
+import { OnboardingApiService } from '../../services/onboarding-api.service';
 
 @Component({
   selector: 'app-signup-skills',
@@ -23,7 +24,14 @@ export class SignupSkillsPage {
     'AI',
   ];
 
-  constructor(public signup: SignupDataService, private router: Router) {}
+  // TEMP: remplacer plus tard par le vrai userId après signup/login
+  private userId = '69a74a3a0b84371d1323a85b';
+
+  constructor(
+    public signup: SignupDataService,
+    private router: Router,
+    private api: OnboardingApiService
+  ) {}
 
   addFromInput() {
     this.signup.addSkill(this.skillInput);
@@ -36,6 +44,17 @@ export class SignupSkillsPage {
   }
 
   next() {
-    this.router.navigateByUrl('/signup-languages');
+    if (this.signup.skills.length === 0) {
+      alert('Please add at least one skill.');
+      return;
+    }
+
+    this.api.updateSkills(this.userId, this.signup.skills).subscribe({
+      next: () => this.router.navigateByUrl('/signup-languages'),
+      error: (err) => {
+        console.error('updateSkills failed', err);
+        alert('Failed to save skills. Is the backend running?');
+      },
+    });
   }
 }
