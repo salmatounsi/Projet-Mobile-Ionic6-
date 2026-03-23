@@ -73,7 +73,7 @@ export class SignupEducationPage implements OnInit {
     this.signupService.updateEducation(this.educations).subscribe({
       next: (res) => {
         console.log('Education saved:', res);
-        this.navCtrl.navigateForward(`/signup-languages/${this.signupService.userId}`);
+        this.navCtrl.navigateForward(`/signup-skills/${this.signupService.userId}`);
         //this.navCtrl.navigateForward('/dashboard');
       },
       error: (err) => console.error('Error saving education:', err)

@@ -19,7 +19,7 @@ export class SignupLanguagesPage {
   }
 
   back() {
-    this.router.navigateByUrl('/signup-skills');
+    this.router.navigateByUrl('/bio-cv');
   }
 
   next() {
