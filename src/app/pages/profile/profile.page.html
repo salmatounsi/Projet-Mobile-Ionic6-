@@ -1,0 +1,114 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Profile</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="profile-container">
+
+    <div class="top-bar">
+      <ion-icon name="menu-outline"></ion-icon>
+      <span>Earnings available {{ user.earnings }}.00$</span>
+    </div>
+
+    <div class="avatar-section">
+      <ion-avatar>
+        <img src="assets/avatar.png" alt="user">
+      </ion-avatar>
+
+      <h2>{{ user.general_info.first_name }} {{ user.general_info.last_name }}</h2>
+      <p>{{ user.role }}</p>
+    </div>
+
+    <div class="bio-card">
+      <h3>Bio</h3>
+      <p>{{ user.bio }}</p>
+    </div>
+
+    <div class="section">
+      <h3>Your skills</h3>
+      <div class="chips">
+        <ion-chip *ngFor="let skill of user.skills">
+          {{ skill.name }}
+        </ion-chip>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>Suggested skills</h3>
+      <div class="chips">
+        <ion-chip *ngFor="let skill of user.suggestedSkills">
+          {{ skill.name }}
+        </ion-chip>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>Languages</h3>
+      <div *ngFor="let lang of user.languages" class="language-row">
+        <span>{{ lang.name }}</span>
+        <span>{{ lang.level }}</span>
+      </div>
+    </div>
+
+  </div>
+
+
+  <div class="profile-container second-section">
+
+    <div class="section-title">
+      <h3>IT & Networking</h3>
+      <ion-button size="small">Change</ion-button>
+    </div>
+
+    <div class="checkbox-list">
+      <ion-item lines="none">
+        <ion-checkbox checked="true"></ion-checkbox>
+        <ion-label>Database Management & Administration</ion-label>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-checkbox></ion-checkbox>
+        <ion-label>ERP/CRM Software</ion-label>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-checkbox></ion-checkbox>
+        <ion-label>Information Security & Compliance</ion-label>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-checkbox checked="true"></ion-checkbox>
+        <ion-label>Network & system Administration</ion-label>
+      </ion-item>
+    </div>
+
+    <div class="section-title">
+      <h3>Your Education</h3>
+      <ion-button size="small">Add Education</ion-button>
+    </div>
+
+    <div *ngFor="let edu of user.education" class="card-item">
+      <h4>{{ edu.institution }}</h4>
+      <p>{{ edu.degree }}</p>
+      <p>{{ edu.field }}</p>
+      <small>{{ edu.start_date }} </small>
+    </div>
+
+    <div class="section-title">
+      <h3>Your Experience</h3>
+      <ion-button size="small">Add Experience</ion-button>
+    </div>
+
+    <div *ngFor="let exp of user.experiences" class="card-item">
+      <h4>{{ exp.title }}</h4>
+      <p>{{ exp.company }}</p>
+      <p>{{ exp.location }}</p>
+      <small>{{ exp.start_date }} </small>
+    </div>
+
+  </div>
+
+</ion-content>
