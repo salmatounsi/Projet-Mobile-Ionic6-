@@ -8,7 +8,6 @@ import {User} from "../../models/User";
   standalone: false,
 })
 export class ProfilePage implements OnInit {
-
   user: User = {
     _id: '123',
 
