@@ -9,7 +9,9 @@ export class AuthService {
 
   constructor() {}
   private http= inject(HttpClient);
-
+  getToken(){
+    return localStorage.getItem('token');
+  }
   login(data: any) {
     return this.http.post(`${this.api}/login`, data);
   }
