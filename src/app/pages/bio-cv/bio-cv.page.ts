@@ -8,7 +8,7 @@ import { HttpClient, HttpEventType } from '@angular/common/http';
   styleUrls: ['./bio-cv.page.scss'],
 })
 export class BioCvPage implements OnInit {
-   file: File | null = null;
+  file: File | null = null;
   fileName: string | null = null;
   bioText: string = '';
 
