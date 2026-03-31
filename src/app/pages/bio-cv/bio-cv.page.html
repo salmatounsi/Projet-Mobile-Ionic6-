@@ -13,7 +13,7 @@
     </p>
 
     <ion-item lines="outline" class="custom-textarea-item ion-margin-bottom">
-      <ion-textarea rows="6" placeholder="A bit about me..."></ion-textarea>
+      <ion-textarea rows="6" placeholder="A bit about me..." [(ngModel)]="bioText"></ion-textarea>
     </ion-item>
 
     <p class="cv-text">
@@ -29,7 +29,7 @@
     <p *ngIf="fileName" class="selected-file-name">{{ fileName }}</p>
 
     <div class="footer-action">
-      <ion-button color="dark" shape="round" class="next-btn">
+      <ion-button color="dark" shape="round" class="next-btn" (click)="onSubmit()">
         NEXT
       </ion-button>
     </div>

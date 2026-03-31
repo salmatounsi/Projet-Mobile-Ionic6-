@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient, HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-bio-cv',
@@ -7,17 +8,31 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./bio-cv.page.scss'],
 })
 export class BioCvPage implements OnInit {
-  fileName: string = "";
-  constructor() { }
+  file: File | null = null;
+  fileName: string | null = null;
+  bioText: string = '';
 
-  ngOnInit() {
+  constructor(private http: HttpClient) {}
+
+  ngOnInit(): void {
+    
   }
   onFileSelected(event: any) {
-    const file = event.target.files[0];
-    if (file) {
-      this.fileName = file.name;
-      console.log("Fichier sélectionné:", file.name);
+    this.file = event.target.files[0];
+    this.fileName = this.file?.name ?? null;
+  }
+
+  onSubmit() {
+    const formData = new FormData();
+    formData.append('bioText', this.bioText);
+    if (this.file) {
+      formData.append('file', this.file);
     }
+
+    this.http.post('http://127.0.0.1:5000/bio', formData,{ withCredentials: true }).subscribe({
+      next: (res) => console.log(res),
+      error: (err) => console.error(err)
+    });
   }
 
 }
