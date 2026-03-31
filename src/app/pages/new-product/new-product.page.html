@@ -1,0 +1,134 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="custom-toolbar">
+    <ion-title>New Product</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button class="icon-btn">
+        <ion-icon name="cube-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="new-product-content">
+  <div class="form-page">
+    <div class="intro-block">
+      <h1>Create a New Product</h1>
+      <p>
+        Add a polished digital product with clean details, pricing and images.
+      </p>
+    </div>
+
+    <form class="product-form-card" [formGroup]="productForm" (ngSubmit)="saveProduct()">
+      <div class="upload-section">
+        <div class="main-preview-card">
+          <ng-container *ngIf="mainImagePreview; else emptyMainImage">
+            <img [src]="mainImagePreview" alt="Main preview" />
+          </ng-container>
+
+          <ng-template #emptyMainImage>
+            <div class="empty-preview">
+              <ion-icon name="image-outline"></ion-icon>
+              <span>Main Preview</span>
+            </div>
+          </ng-template>
+        </div>
+
+        <label class="upload-main-btn">
+          Upload Main Photo
+          <input
+            type="file"
+            accept="image/*"
+            hidden
+            (change)="onMainImageSelected($event)"
+          />
+        </label>
+
+        <div class="gallery-grid">
+          <div class="gallery-item" *ngFor="let item of [0, 1, 2]; let i = index">
+            <ng-container *ngIf="galleryPreviews[i]; else emptySmall">
+              <img [src]="galleryPreviews[i]" alt="Gallery image" />
+            </ng-container>
+          </div>
+
+          <ng-template #emptySmall>
+            <div class="empty-small">
+              <ion-icon name="add-outline"></ion-icon>
+            </div>
+          </ng-template>
+        </div>
+
+        <label class="upload-gallery-btn">
+          Upload Gallery Photos
+          <input
+            type="file"
+            accept="image/*"
+            multiple
+            hidden
+            (change)="onGalleryImagesSelected($event)"
+          />
+        </label>
+      </div>
+
+      <div class="field-group">
+        <label>Product Title</label>
+        <ion-input
+          fill="outline"
+          formControlName="title"
+          placeholder="Ex: UI Starter Kit"
+        ></ion-input>
+      </div>
+
+      <div class="field-group">
+        <label>Description</label>
+        <ion-textarea
+          fill="outline"
+          rows="5"
+          formControlName="description"
+          placeholder="Describe clearly what your product contains and who it is for"
+        ></ion-textarea>
+      </div>
+
+      <div class="double-fields">
+        <div class="field-group">
+          <label>Version</label>
+          <ion-input
+            fill="outline"
+            formControlName="version"
+            placeholder="Ex: 1.0"
+          ></ion-input>
+        </div>
+
+        <div class="field-group">
+          <label>License</label>
+          <ion-input
+            fill="outline"
+            formControlName="license"
+            placeholder="Ex: Personal Use"
+          ></ion-input>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label>Price (TND)</label>
+        <ion-input
+          type="number"
+          fill="outline"
+          formControlName="price"
+          placeholder="Ex: 35"
+        ></ion-input>
+      </div>
+
+      <div class="action-row">
+        <ion-button type="button" fill="clear" class="secondary-btn">
+          Save Draft
+        </ion-button>
+
+        <ion-button type="submit" class="primary-btn">
+          <ion-icon name="checkmark-outline" slot="start"></ion-icon>
+          Publish
+        </ion-button>
+      </div>
+    </form>
+  </div>
+</ion-content>
