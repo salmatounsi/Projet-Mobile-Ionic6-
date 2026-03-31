@@ -14,7 +14,11 @@ export class SignupLanguagesPage {
   proficiencies: Proficiency[] = ['Basic', 'Conversational', 'Fluent', 'Native/Bilingual'];
 
   // TEMP: remplacer plus tard par le vrai userId après signup/login
-  private userId = '69a74a3a0b84371d1323a85b';
+  // private userId = '69a74a3a0b84371d1323a85b';
+
+  get userId(): string | null {
+    return this.signup.userId;
+  }
 
   constructor(
     public signup: SignupDataService,
@@ -35,6 +39,11 @@ export class SignupLanguagesPage {
     const valid = this.signup.languages.every(l => l.language && l.proficiency);
     if (!valid) {
       alert('Please select a language and proficiency for each row.');
+      return;
+    }
+
+    if (!this.userId) {
+      alert('User ID not available. Please complete previous steps.');
       return;
     }
 

@@ -15,4 +15,15 @@ export class AuthService {
   login(data: any) {
     return this.http.post(`${this.api}/login`, data);
   }
+
+  getUserId(): string | null {
+    const token = this.getToken();
+    if (!token) return null;
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.userId || payload._id || payload.id;
+    } catch (e) {
+      return null;
+    }
+  }
 }

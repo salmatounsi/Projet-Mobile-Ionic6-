@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ProductApiService, Product } from '../../services/product-api.service';
+import { AuthService } from '../../services/auth-service';
+import { ProfileService } from '../../services/profile-service';
+import { User } from '../../models/User';
 
 @Component({
   selector: 'app-new-product',
@@ -15,11 +18,14 @@ export class NewProductPage implements OnInit {
   mainImagePreview: string | null = null;
   galleryPreviews: string[] = [];
   isSubmitting = false;
+  userProfile: User | null = null;
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private productApi: ProductApiService
+    private productApi: ProductApiService,
+    private authService: AuthService,
+    private profileService: ProfileService
   ) {}
 
   ngOnInit(): void {
@@ -29,6 +35,19 @@ export class NewProductPage implements OnInit {
       version: ['', Validators.required],
       license: ['', Validators.required],
       price: [null, [Validators.required, Validators.min(1)]]
+    });
+
+    this.loadUserProfile();
+  }
+
+  loadUserProfile(): void {
+    this.profileService.fetchProfileData().subscribe({
+      next: (profile: any) => {
+        this.userProfile = profile;
+      },
+      error: (error) => {
+        console.error('Error loading profile:', error);
+      }
     });
   }
 
@@ -62,12 +81,24 @@ export class NewProductPage implements OnInit {
       return;
     }
 
+    if (!this.userProfile) {
+      alert('User profile not loaded. Please try again.');
+      return;
+    }
+
     this.isSubmitting = true;
 
+    const userId = this.authService.getUserId();
+    if (!userId) {
+      alert('User not authenticated.');
+      this.isSubmitting = false;
+      return;
+    }
+
     const productPayload: Product = {
-      seller_id: '123',
-      seller_name: 'Anna THEGOLD',
-      seller_role: 'Web Developer',
+      seller_id: userId,
+      seller_name: `${this.userProfile.general_info?.first_name} ${this.userProfile.general_info?.last_name}`.trim() || 'Unknown',
+      seller_role: this.userProfile.professional_role || 'Developer',
       title: this.productForm.value.title,
       description: this.productForm.value.description,
       version: this.productForm.value.version,
