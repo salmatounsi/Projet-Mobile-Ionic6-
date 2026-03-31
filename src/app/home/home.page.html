@@ -1,20 +1,23 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content [fullscreen]="true" class="onboarding-content">
+  <div class="background-overlay"></div>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class="content-container">
+    <div class="text-section">
+      <h1>One app, all of Upwork</h1>
+      <p>Choose an option to get started. You can add another account at any time.</p>
+    </div>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+    <div class="button-group">
+      <ion-button fill="outline" shape="round" class="btn-client">
+        I'm a client
+      </ion-button>
+      <ion-button fill="outline" shape="round" class="btn-freelancer" (click)="freelancer()">
+        I'm a freelancer
+      </ion-button>
+    </div>
+
+    <div class="login-section">
+      <p>Already have an account? <a (click)="login()">Log in</a></p>
+    </div>
   </div>
 </ion-content>

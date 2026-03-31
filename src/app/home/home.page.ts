@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-home',
@@ -8,6 +10,14 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  constructor() {}
+  constructor(private router:Router) {}
+  login() {
+    console.log('Direction la page de connexion');
+  }
+  freelancer(){
+          this.router.navigate(['/login']);
+  }
+  ngOnInit() {
+  }
 
 }
