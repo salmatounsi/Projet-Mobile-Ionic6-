@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import {inject, Injectable} from '@angular/core';
 import {ModalController} from "@ionic/angular";
 import {Observable} from "rxjs";
+import {AuthService} from "./auth-service";
 
 export type Proficiency = 'Basic' | 'Conversational' | 'Fluent' | 'Native/Bilingual';
 
@@ -17,7 +18,7 @@ export class SignupDataService {
   skills: string[] = [];
   languages: LanguageItem[] = [{ language: 'English', proficiency: 'Fluent' }];
   private http= inject(HttpClient);
-
+  private authService= inject(AuthService)
   constructor() {}
 
   addSkill(skill: string) {
@@ -40,50 +41,67 @@ export class SignupDataService {
     specialties: string[]
   ): Observable<any> {
 
-    if (!this.userId) {
-      throw new Error('User ID is missing');
+    const token = this.authService.getToken();
+    const headers = {
+      'Authorization': `Bearer ${token}`
     }
 
     return this.http.put(
-      `${this.baseUrl}/register/${this.userId}/category`,
+      `${this.baseUrl}/register/category`,
       {
         category,
         specialties
       }
+      ,{headers:headers}
     );
   }
 
 
   updateExperience(experiences: any[]): Observable<any> {
-    if (!this.userId) {
-      throw new Error('User ID is missing');
-    }
 
+    const token = this.authService.getToken();
+    const headers = {
+      'Authorization': `Bearer ${token}`
+    }
     return this.http.put(
-      `${this.baseUrl}/register/${this.userId}/experience`,
-      { experiences }
+      `${this.baseUrl}/register/experience`,
+      { experiences },{headers:headers}
     );
   }
   updateEducation(education: any[]): Observable<any> {
-    if (!this.userId) {
-      throw new Error('User ID is missing');
+    const token = this.authService.getToken();
+    const headers = {
+      'Authorization': `Bearer ${token}`
     }
 
     return this.http.put(
-      `${this.baseUrl}/register/${this.userId}/education`,
+      `${this.baseUrl}/register/education`,
       { education }
+      ,{headers:headers}
     );
   }
 
   getCategory(userId: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/user/${userId}/category`);
+    const token = this.authService.getToken();
+    const headers = {
+      'Authorization': `Bearer ${token}`
+    }
+    return this.http.get(`${this.baseUrl}/user/${userId}/category`,{headers:headers});
   }
 
-  getExperience(userId: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/user/${userId}/experience`);
+  getExperience(): Observable<any> {
+    const token = this.authService.getToken();
+    const headers = {
+      'Authorization': `Bearer ${token}`
+    }
+    return this.http.get(`${this.baseUrl}/user/experience`,{headers:headers});
   }
 
-  getEducation(userId: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/user/${userId}/education`);
+  getEducation(): Observable<any> {
+    const token = this.authService.getToken();
+    const headers = {
+      'Authorization': `Bearer ${token}`
+    }
+    return this.http.get(`${this.baseUrl}/user/education`,{headers:headers});
   }
 }

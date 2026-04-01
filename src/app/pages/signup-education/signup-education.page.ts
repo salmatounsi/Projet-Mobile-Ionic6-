@@ -47,33 +47,27 @@ export class SignupEducationPage implements OnInit {
   }
 
   ngOnInit() {
-    const idFromUrl = this.route.snapshot.paramMap.get('id');
-
-    if (idFromUrl) {
-      this.signupService.userId = idFromUrl;
-      console.log('Successfully read ID from URL:', this.signupService.userId);
-    } else {
-      console.error('No ID found in the URL path!');
-    }
 
 
-    if (this.signupService.userId) {
-      this.signupService.getEducation(this.signupService.userId).subscribe({
+
+
+      this.signupService.getEducation().subscribe({
         next: (res) => {
           this.educations = res.education || [];
 
         }
       });
-    }
+
   }
   private signupService = inject(SignupDataService);
-  private navCtrl = inject(NavController);
+  //private navCtrl = inject(NavController);
   private router = inject(Router)
   submitEducation() {
     this.signupService.updateEducation(this.educations).subscribe({
       next: (res) => {
         console.log('Education saved:', res);
-        this.navCtrl.navigateForward(`/signup-skills/${this.signupService.userId}`);
+        this.router.navigate(['/signup-skills'])
+        //this.navCtrl.navigateForward(`/signup-skills/${this.signupService.userId}`);
         //this.navCtrl.navigateForward('/dashboard');
       },
       error: (err) => console.error('Error saving education:', err)

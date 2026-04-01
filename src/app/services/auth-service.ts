@@ -26,4 +26,8 @@ export class AuthService {
       return null;
     }
   }
+
+  setToken(token: any) {
+    localStorage.setItem("token",token);
+  }
 }

@@ -24,12 +24,9 @@ export class SignupSkillsPage {
     'AI',
   ];
 
-  // TEMP: remplacer plus tard par le vrai userId après signup/login
-  // private userId = '69a74a3a0b84371d1323a85b';
 
-  get userId(): string | null {
-    return this.signup.userId;
-  }
+
+
 
   constructor(
     public signup: SignupDataService,
@@ -53,12 +50,9 @@ export class SignupSkillsPage {
       return;
     }
 
-    if (!this.userId) {
-      alert('User ID not available. Please complete previous steps.');
-      return;
-    }
 
-    this.api.updateSkills(this.userId, this.signup.skills).subscribe({
+
+    this.api.updateSkills( this.signup.skills).subscribe({
       next: () => this.router.navigateByUrl('/signup-languages'),
       error: (err) => {
         console.error('updateSkills failed', err);

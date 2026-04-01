@@ -24,15 +24,15 @@ const routes: Routes = [
     loadChildren: () => import('./pages/choose-plan/choose-plan.module').then( m => m.ChoosePlanPageModule)
   },
   {
-    path: 'signup-specialties/:id',
+    path: 'signup-specialties',
     loadChildren: () => import('./pages/signup-specialties/signup-specialties.module').then( m => m.SignupSpecialtiesPageModule)
   },
   {
-    path: 'signup-experience/:id',
+    path: 'signup-experience',
     loadChildren: () => import('./pages/signup-experience/signup-experience.module').then( m => m.SignupExperiencePageModule)
   },
   {
-    path: 'signup-education/:id',
+    path: 'signup-education',
     loadChildren: () => import('./pages/signup-education/signup-education.module').then( m => m.SignupEducationPageModule)
   },
   {
@@ -51,7 +51,8 @@ const routes: Routes = [
   {
     path: 'profile',
     loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule)
-  },  {
+  },
+  {
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
   },

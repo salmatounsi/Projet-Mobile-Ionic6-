@@ -7,7 +7,7 @@
 <ion-content class="ion-padding">
   <div class="form-container">
     <h2 class="title-underline">Tell the world about yourself.</h2>
-    
+
     <p class="instruction-text">
       Help people get to know you at a glance. What work do you do best? You can always edit later.
     </p>
@@ -21,7 +21,7 @@
     </p>
 
     <input type="file" #fileInput (change)="onFileSelected($event)" style="display: none;" accept=".pdf,.doc,.docx">
-    
+
     <ion-button fill="solid" class="upload-cv-btn" (click)="fileInput.click()">
       Upload CV
     </ion-button>
@@ -30,7 +30,7 @@
 
     <div class="footer-action">
       <ion-button color="dark" shape="round" class="next-btn" (click)="onSubmit()">
-        NEXT
+        Submit
       </ion-button>
     </div>
   </div>

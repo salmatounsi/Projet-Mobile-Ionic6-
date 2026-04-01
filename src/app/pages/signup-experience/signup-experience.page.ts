@@ -37,22 +37,22 @@ export class SignupExperiencePage implements OnInit {
     await modal.present();
   }
   ngOnInit() {
-    const idFromUrl = this.route.snapshot.paramMap.get('id');
+//    const idFromUrl = this.route.snapshot.paramMap.get('id');
 
-    if (idFromUrl) {
+   /* if (idFromUrl) {
       this.signupService.userId = idFromUrl;
       console.log('Successfully read ID from URL:', this.signupService.userId);
     } else {
       console.error('No ID found in the URL path!');
-    }
+    }*/
 
-    if (this.signupService.userId) {
-      this.signupService.getExperience(this.signupService.userId).subscribe({
+
+      this.signupService.getExperience().subscribe({
         next: (res) => {
           this.experiences = res.experience || [];
         }
       });
-    }
+
     /* const nav = this.router.getCurrentNavigation();
    if (nav?.extras?.state && nav.extras.state['userId']) {
      this.api.userId = nav.extras.state['userId'];*/
@@ -62,12 +62,14 @@ export class SignupExperiencePage implements OnInit {
      }*/
   }
   private signupService = inject(SignupDataService);
-  private navCtrl = inject(NavController);
+ // private navCtrl = inject(NavController);
   submitExperience() {
     this.signupService.updateExperience(this.experiences).subscribe({
       next: (res) => {
         console.log('Success!', res);
-        this.navCtrl.navigateForward(`/signup-education/${this.signupService.userId}`);      },
+        this.router.navigate(['/signup-education']);
+       // this.navCtrl.navigateForward(`/signup-education/${this.signupService.userId}`);
+        },
       error: (err) => {
         console.error('Database update failed:', err);
       }
