@@ -1,49 +1,71 @@
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/signup-experience"></ion-back-button>
     </ion-buttons>
-    <ion-title>Create Your Profile</ion-title>
+    <ion-title>Inscription</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="solid" class="step-badge">Étape 4 sur 6</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
-<ion-content class="ion-padding">
 
-  <p>Clients like to know what you know - add your education here.</p>
+<ion-content>
+  <div class="top-section">
+    <div class="progress-section">
+      <div class="prog-label">
+        <span>Compléter le profil</span>
+        <strong>66%</strong>
+      </div>
+      <div class="prog-track">
+        <div class="prog-fill"></div>
+      </div>
+    </div>
+    <div class="hero-kicker">Votre parcours</div>
+    <h2 class="hero-title">Votre formation.</h2>
+    <p class="hero-sub">Les clients aiment savoir ce que vous avez étudié — ajoutez votre formation ici.</p>
+  </div>
 
-  <ion-button shape="round" (click)="openAddEducation()">
-    + Add education
-  </ion-button>
+  <div class="body">
 
-  <ion-list *ngIf="educations.length">
-
-    <ion-item *ngFor="let ed of educations">
-      <ion-label>
-        <h3>{{ ed.school }}</h3>
-        <p>{{ ed.field }} — {{ ed.degree }}</p>
-      </ion-label>
-    </ion-item>
-
-  </ion-list>
-
-  <div class="btn-row">
-    <ion-button
-      expand="block"
-      fill="outline"
-      color="primary"
-      class="next-btn"
-      routerLink="/signup-languages"
-    >
-      Skip
+    <ion-button expand="block" class="add-btn" (click)="openAddEducation()">
+      <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+      Ajouter une formation
     </ion-button>
 
-    <ion-button
-      expand="block"
-      color="primary"
-      class="next-btn"
-      (click)="submitEducation()"
-    >
-     Next add Skills →
-    </ion-button>
+    <div class="card" *ngIf="educations.length">
+      <div class="card-head">
+        <div class="card-icon">
+          <ion-icon name="school-outline" class="c-icon"></ion-icon>
+        </div>
+        <span class="card-title">Formations ajoutées</span>
+        <span class="count-badge">{{ educations.length }}</span>
+      </div>
+      <div class="timeline-list">
+        <div class="timeline-item" *ngFor="let ed of educations">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <h4 class="tl-title">{{ ed.school }}</h4>
+            <p class="tl-sub">{{ ed.degree }} · {{ ed.field }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="empty-state" *ngIf="!educations.length">
+      <ion-icon name="school-outline" class="empty-icon"></ion-icon>
+      <p class="empty-text">Aucune formation ajoutée pour l'instant.</p>
+    </div>
+
+    <div class="footer">
+      <ion-button class="skip-btn" fill="clear" routerLink="/signup-languages">
+        Passer
+      </ion-button>
+      <ion-button class="submit-btn" (click)="submitEducation()">
+        Suivant
+        <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
+      </ion-button>
+    </div>
+
   </div>
 </ion-content>
-<!-- routerLink="/signup-languages"-->

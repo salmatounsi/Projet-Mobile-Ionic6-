@@ -1,67 +1,104 @@
-<ion-header [translucent]="true">
-  <ion-toolbar color="primary">
+<ion-header>
+  <ion-toolbar>
     <ion-title>General Information</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <div class="form-container">
-    <h2>Create Your Account</h2>
-    <p>Please fill in the details below to get started.</p>
+<ion-content>
+  <div class="top-section">
+    <p class="hero-kicker">Inscription</p>
+    <h2 class="hero-title">Créez votre compte.</h2>
+    <p class="hero-sub">Remplissez les informations ci-dessous pour commencer.</p>
+  </div>
 
+  <div class="body">
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-      <ion-grid class="ion-no-padding">
-        <ion-row>
-          <ion-col size="6">
-            <ion-item lines="outline" class="ion-margin-bottom">
-              <ion-label position="stacked">First Name</ion-label>
-              <ion-input type="text" placeholder="John" formControlName="firstName"></ion-input>
+
+      <div class="card">
+        <div class="card-head">
+          <div class="card-icon">
+            <ion-icon name="person-outline" class="c-icon"></ion-icon>
+          </div>
+          <span class="card-title">Identité</span>
+        </div>
+        <div class="fields-wrap">
+          <ion-grid class="ion-no-padding">
+            <ion-row>
+              <ion-col size="6">
+                <div class="field-group pr">
+                  <label class="field-label">Prénom</label>
+                  <ion-item lines="none" class="field-item">
+                    <ion-input type="text" placeholder="Jean" formControlName="firstName"></ion-input>
+                  </ion-item>
+                </div>
+              </ion-col>
+              <ion-col size="6">
+                <div class="field-group pl">
+                  <label class="field-label">Nom</label>
+                  <ion-item lines="none" class="field-item">
+                    <ion-input type="text" placeholder="Dupont" formControlName="lastName"></ion-input>
+                  </ion-item>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+
+          <div class="field-group">
+            <label class="field-label">Email professionnel</label>
+            <ion-item lines="none" class="field-item">
+              <ion-input type="email" placeholder="jean.dupont@entreprise.com" formControlName="email"></ion-input>
             </ion-item>
-          </ion-col>
+          </div>
 
-          <ion-col size="6">
-            <ion-item lines="outline" class="ion-margin-bottom">
-              <ion-label position="stacked">Last Name</ion-label>
-              <ion-input type="text" placeholder="Doe" formControlName="lastName"></ion-input>
+          <div class="field-group">
+            <label class="field-label">Pays</label>
+            <ion-item lines="none" class="field-item">
+              <ion-select placeholder="Sélectionnez votre pays" formControlName="country">
+                <ion-select-option value="fr">France</ion-select-option>
+                <ion-select-option value="us">États-Unis</ion-select-option>
+                <ion-select-option value="ca">Canada</ion-select-option>
+              </ion-select>
             </ion-item>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+          </div>
+        </div>
+      </div>
 
-      <ion-item lines="outline" class="ion-margin-bottom">
-        <ion-label position="stacked">Work Email Address</ion-label>
-        <ion-input type="email" formControlName="email" placeholder="john.doe@company.com"></ion-input>
-      </ion-item>
+      <div class="card">
+        <div class="card-head">
+          <div class="card-icon">
+            <ion-icon name="lock-closed-outline" class="c-icon"></ion-icon>
+          </div>
+          <span class="card-title">Sécurité</span>
+        </div>
+        <div class="fields-wrap">
+          <div class="field-group">
+            <label class="field-label">Mot de passe</label>
+            <ion-item lines="none" class="field-item">
+              <ion-input type="password" placeholder="••••••••" formControlName="password"></ion-input>
+            </ion-item>
+          </div>
 
-      <ion-item lines="outline" class="ion-margin-bottom">
-        <ion-label position="stacked">Password</ion-label>
-        <ion-input type="password" placeholder="********" formControlName="password"></ion-input>
-      </ion-item>
+          <div class="field-group">
+            <label class="field-label">Confirmer le mot de passe</label>
+            <ion-item lines="none" class="field-item">
+              <ion-input type="password" placeholder="••••••••" formControlName="confirmPassword"></ion-input>
+            </ion-item>
+          </div>
+        </div>
+      </div>
 
-      <ion-item lines="outline" class="ion-margin-bottom">
-        <ion-label position="stacked">Confirm Password</ion-label>
-        <ion-input type="password" placeholder="********" formControlName="confirmPassword"></ion-input>
-      </ion-item>
+      <div class="terms-row">
+        <ion-checkbox formControlName="terms" class="terms-check"></ion-checkbox>
+        <p class="terms-text">
+          J'accepte les <a class="terms-link">conditions d'utilisation</a> et la politique de confidentialité.
+        </p>
+      </div>
 
-      <ion-item lines="outline" class="ion-margin-bottom">
-        <ion-label position="stacked">Country</ion-label>
-        <ion-select placeholder="Select your country" formControlName="country">
-          <ion-select-option value="fr">France</ion-select-option>
-          <ion-select-option value="us">United States</ion-select-option>
-          <ion-select-option value="ca">Canada</ion-select-option>
-          </ion-select>
-      </ion-item>
-
-      <ion-item lines="none" class="ion-margin-vertical">
-        <ion-checkbox slot="start" justify="start" formControlName="terms"></ion-checkbox>
-        <ion-label class="ion-text-wrap">
-          Yes, I understand and agree to the <a>Terms of service</a>
-        </ion-label>
-      </ion-item>
-
-      <ion-button expand="block" type="submit" shape="round" class="create-account-button">
-        Create My Account
+      <ion-button expand="block" type="submit" class="submit-btn">
+        Créer mon compte
+        <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
       </ion-button>
+
     </form>
   </div>
 </ion-content>

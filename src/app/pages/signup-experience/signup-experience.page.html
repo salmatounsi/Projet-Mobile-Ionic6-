@@ -1,46 +1,71 @@
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/signup-experience"></ion-back-button>
+      <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
-    <ion-title>Create Your Profile</ion-title>
+    <ion-title>Inscription</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="solid" class="step-badge">Étape 3 sur 6</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
-<ion-content class="ion-padding">
 
-  <p>If you have relevant experiences, share it here</p>
+<ion-content>
+  <div class="top-section">
+    <div class="progress-section">
+      <div class="prog-label">
+        <span>Compléter le profil</span>
+        <strong>50%</strong>
+      </div>
+      <div class="prog-track">
+        <div class="prog-fill"></div>
+      </div>
+    </div>
+    <div class="hero-kicker">Votre parcours</div>
+    <h2 class="hero-title">Votre expérience.</h2>
+    <p class="hero-sub">Si vous avez des expériences pertinentes, partagez-les ici.</p>
+  </div>
 
-  <ion-button shape="round" (click)="openAddExperience()">
-    + Add experience
-  </ion-button>
+  <div class="body">
 
-  <ion-list *ngIf="experiences.length">
-
-    <ion-item *ngFor="let exp of experiences">
-      <ion-label>
-        <h3>{{ exp.title }}</h3>
-        <p>{{ exp.company }} — {{ exp.country }}</p>
-      </ion-label>
-    </ion-item>
-
-  </ion-list>
-
-  <div class="btn-row">
-    <ion-button
-      expand="block"
-      fill="outline"
-      color="primary"
-      class="next-btn"
-    >
-      Skip
+    <ion-button expand="block" class="add-btn" (click)="openAddExperience()">
+      <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+      Ajouter une expérience
     </ion-button>
 
-    <ion-button
-      expand="block"
-      color="primary"
-      class="next-btn"
-      (click)="submitExperience()"
-    >Next add Education>
-    </ion-button>
+    <div class="card" *ngIf="experiences.length">
+      <div class="card-head">
+        <div class="card-icon">
+          <ion-icon name="briefcase-outline" class="c-icon"></ion-icon>
+        </div>
+        <span class="card-title">Expériences ajoutées</span>
+        <span class="count-badge">{{ experiences.length }}</span>
+      </div>
+      <div class="timeline-list">
+        <div class="timeline-item" *ngFor="let exp of experiences">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <h4 class="tl-title">{{ exp.title }}</h4>
+            <p class="tl-sub">{{ exp.company }} · {{ exp.country }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="empty-state" *ngIf="!experiences.length">
+      <ion-icon name="briefcase-outline" class="empty-icon"></ion-icon>
+      <p class="empty-text">Aucune expérience ajoutée pour l'instant.</p>
+    </div>
+
+    <div class="footer">
+      <ion-button class="skip-btn" fill="clear">
+        Passer
+      </ion-button>
+      <ion-button class="submit-btn" (click)="submitExperience()">
+        Suivant
+        <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
+      </ion-button>
+    </div>
+
   </div>
 </ion-content>

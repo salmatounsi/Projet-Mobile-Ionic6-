@@ -1,41 +1,47 @@
-.products-content {
-  --background: linear-gradient(180deg, #f4eeee 0%, #efe7e7 100%);
-}
+$navy:       #152a5e;
+$navy-mid:   #1e3f8a;
+$navy-light: #a8c4ff;
+$bg-page:    #eef1f8;
+$border:     #dce4f2;
 
-.custom-toolbar {
-  --background: #f4eeee;
-  --color: #2b2b2b;
-  padding-inline: 8px;
-}
-
-.icon-btn {
-  --background: #8fb1f4;
+ion-toolbar {
+  --background: #{$navy};
   --color: #ffffff;
-  --border-radius: 12px;
-  width: 42px;
-  height: 42px;
-}
+  --border-width: 0;
+  ion-title { font-weight: 700; font-size: 16px; }
 
-.products-wrapper {
-  padding: 20px 16px 32px;
-}
-
-.hero-section {
-  margin-bottom: 18px;
-
-  h1 {
-    margin: 0;
-    font-size: 26px;
-    font-weight: 800;
-    color: #2b2b2b;
-    line-height: 1.2;
+  .icon-btn {
+    --background: rgba(255,255,255,0.15);
+    --color: #ffffff;
+    --border-radius: 10px;
+    width: 36px; height: 36px;
+    margin-right: 4px;
   }
+}
 
-  p {
-    margin: 8px 0 0;
-    font-size: 14px;
-    color: #6f6767;
-    line-height: 1.5;
+ion-content {
+  --background: #{$bg-page};
+}
+
+.body {
+  padding: 22px 14px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.top-block {
+  .page-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: $navy;
+    margin-bottom: 6px;
+    line-height: 1.25;
+  }
+  .page-sub {
+    font-size: 13px;
+    color: #64748b;
+    line-height: 1.55;
   }
 }
 
@@ -43,25 +49,26 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  background: #fcfbfb;
-  border: 1px solid #ddd4d4;
-  border-radius: 16px;
-  padding: 14px 16px;
-  margin-bottom: 22px;
-  box-shadow: 0 4px 12px rgba(80, 60, 60, 0.04);
+  background: #ffffff;
+  border: 1px solid $border;
+  border-radius: 14px;
+  padding: 12px 14px;
 
-  ion-icon {
-    font-size: 20px;
-    color: #857d7d;
+  .search-icon {
+    font-size: 18px;
+    color: #94a3b8;
+    flex-shrink: 0;
   }
 
   input {
-    width: 100%;
+    flex: 1;
     border: none;
     outline: none;
     background: transparent;
-    font-size: 15px;
-    color: #2b2b2b;
+    font-size: 14px;
+    color: #334155;
+
+    &::placeholder { color: #b0bdd4; }
   }
 }
 
@@ -69,33 +76,37 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 14px;
 
-  h2 {
-    margin: 0;
-    font-size: 18px;
+  .section-title {
+    font-size: 15px;
     font-weight: 700;
-    color: #2b2b2b;
+    color: $navy;
+    margin: 0;
   }
 
-  span {
-    font-size: 13px;
-    color: #7c7373;
+  .section-count {
+    font-size: 12px;
+    color: #94a3b8;
+    background: #ffffff;
+    border: 1px solid $border;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-weight: 600;
   }
 }
 
 .products-list {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
 }
 
 .product-card {
-  background: #fcfbfb;
-  border-radius: 22px;
-  padding: 16px;
-  border: 1px solid #e2d9d9;
-  box-shadow: 0 8px 18px rgba(90, 70, 70, 0.05);
+  background: #ffffff;
+  border-radius: 18px;
+  border: 1px solid $border;
+  overflow: hidden;
+  padding: 14px;
 }
 
 .card-top {
@@ -103,102 +114,103 @@
   align-items: flex-start;
   justify-content: space-between;
   gap: 12px;
-  margin-bottom: 14px;
+  margin-bottom: 12px;
 }
 
 .author-info {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .avatar {
-  width: 48px;
-  height: 48px;
-  border-radius: 14px;
-  background: #f1ebeb;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  ion-icon {
-    font-size: 24px;
-    color: #3a3535;
-  }
+  width: 42px; height: 42px;
+  border-radius: 12px;
+  background: #e8effe;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  ion-icon { font-size: 20px; color: $navy; }
 }
 
 .author-text {
-  h3 {
-    margin: 0;
-    font-size: 15px;
-    font-weight: 700;
-    color: #2b2b2b;
+  .author-name {
+    font-size: 14px; font-weight: 700;
+    color: $navy; margin: 0;
   }
-
-  p {
-    margin: 4px 0 0;
-    font-size: 13px;
-    color: #857d7d;
+  .author-role {
+    font-size: 12px; color: #94a3b8;
+    margin: 2px 0 0;
   }
 }
 
 .price-badge {
-  background: #8fb1f4;
+  background: $navy;
   color: #ffffff;
-  padding: 8px 12px;
-  border-radius: 999px;
-  font-size: 13px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
   font-weight: 700;
   white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .card-body {
-  h2 {
-    margin: 0 0 12px;
-    font-size: 20px;
-    line-height: 1.35;
-    color: #2b2b2b;
-    font-weight: 700;
+  border-top: 1px solid #f0f4fc;
+  padding-top: 12px;
+  margin-bottom: 12px;
+
+  .product-title {
+    font-size: 16px; font-weight: 700;
+    color: $navy; margin: 0 0 10px;
+    line-height: 1.3;
   }
 }
 
 .meta-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 7px;
 }
 
 .meta-chip {
   display: inline-flex;
   align-items: center;
-  padding: 7px 12px;
-  border-radius: 999px;
-  background: #f3efef;
-  color: #5e5555;
-  font-size: 13px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: #eaf0fc;
+  border: 1px solid $border;
+  color: $navy-mid;
+  font-size: 12px;
   font-weight: 600;
 }
 
 .card-footer {
   display: flex;
-  gap: 12px;
-  margin-top: 18px;
+  gap: 10px;
+  border-top: 1px solid #f0f4fc;
+  padding-top: 12px;
 }
 
 .details-btn {
   flex: 1;
-  --background: #f3efef;
-  --color: #4d4646;
-  --border-radius: 14px;
+  --color: #{$navy};
+  --border-radius: 22px;
+  border: 1.5px solid $border;
+  border-radius: 22px;
   font-weight: 700;
+  font-size: 13px;
+  height: 42px;
   text-transform: none;
 }
 
 .buy-btn {
   flex: 1;
-  --background: #8fb1f4;
+  --background: #{$navy};
   --color: #ffffff;
-  --border-radius: 14px;
+  --border-radius: 22px;
+  --box-shadow: none;
   font-weight: 700;
+  font-size: 13px;
+  height: 42px;
   text-transform: none;
 }

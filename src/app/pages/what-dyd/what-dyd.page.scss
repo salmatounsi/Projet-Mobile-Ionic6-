@@ -1,63 +1,165 @@
-/* Label au-dessus */
-.input-label {
-  display: block;
-  font-size: 1rem;
-  font-weight: 500;
-  color: #1a4f8b;
-  margin-bottom: 10px;
+$navy:       #152a5e;
+$navy-mid:   #1e3f8a;
+$navy-light: #a8c4ff;
+$bg-page:    #eef1f8;
+$border:     #dce4f2;
+
+ion-toolbar {
+  --background: #{$navy};
+  --color: #ffffff;
+  --border-width: 0;
+  ion-title { font-weight: 700; font-size: 16px; }
+
+  .step-badge {
+    --background: #{$navy-mid};
+    --color: #d0e0ff;
+    --border-radius: 20px;
+    --border-color: rgba(255,255,255,0.18);
+    --border-width: 1px;
+    --border-style: solid;
+    --box-shadow: none;
+    font-size: 11px; font-weight: 700;
+    height: 28px; margin-right: 4px;
+    text-transform: none;
+  }
 }
 
-/* Conteneur du select pour simuler l'input de l'image */
-.custom-input-item {
-  --border-radius: 12px;
-  --background: #ffffff;
-  --border-color: #444444; /* Bordure plus sombre comme sur l'image */
-  --padding-start: 15px;
-  margin-top: 5px;
-  height: 55px;
-}
-
-/* Style interne du Select */
-ion-select {
-  width: 100%;
-  font-weight: 400;
-  --placeholder-color: #666;
-  --placeholder-opacity: 1;
-}
-
-/* Personnalisation de l'icône de la flèche (le cercle sur votre image) */
-ion-select::part(icon) {
-  border: 1px solid #444;
-  border-radius: 50%;
-  padding: 2px;
-  width: 20px;
-  height: 20px;
-  color: #444;
-  opacity: 1;
-}
-
-/* Navigation footer */
-.navigation-footer {
-  margin-top: 100px;
+ion-content {
+  --background: #{$bg-page};
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 15px;
+  flex-direction: column;
 }
 
-.back-circle-button {
-  --border-radius: 50%;
-  --background: #757575;
-  --color: white;
-  width: 50px;
-  height: 50px;
+.top-section {
+  background: $navy;
+  padding: 10px 18px 28px;
+  border-radius: 0 0 28px 28px;
+
+  .progress-section {
+    margin-bottom: 16px;
+
+    .prog-label {
+      display: flex; justify-content: space-between; margin-bottom: 8px;
+      span   { font-size: 11px; color: rgba(255,255,255,0.45); }
+      strong { font-size: 11px; color: $navy-light; font-weight: 700; }
+    }
+
+    .prog-track {
+      height: 5px; background: rgba(255,255,255,0.1);
+      border-radius: 5px; overflow: hidden;
+
+      .prog-fill {
+        height: 100%; width: 33%;
+        background: $navy-light; border-radius: 5px;
+      }
+    }
+  }
+
+  .hero-kicker {
+    font-size: 11px; font-weight: 700; color: $navy-light;
+    letter-spacing: 1.4px; text-transform: uppercase; margin-bottom: 8px;
+  }
+
+  .hero-title {
+    font-size: 22px; font-weight: 800;
+    color: #ffffff; line-height: 1.25; margin-bottom: 8px;
+  }
+
+  .hero-sub {
+    font-size: 13px; color: rgba(255,255,255,0.58); line-height: 1.55;
+  }
 }
 
-.add-experience-button {
+.body {
+  padding: 18px 14px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
   flex: 1;
-  --background: #d6dde4;
-  --color: #1a4f8b;
-  font-weight: 600;
-  height: 50px;
-  text-transform: none;
+  height: 100%;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 14px;
+  }
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 18px;
+  border: 1px solid $border;
+  overflow: hidden;
+
+  .card-head {
+    display: flex; align-items: center; gap: 10px;
+    padding: 13px 14px 12px;
+    border-bottom: 1px solid #f0f4fc;
+  }
+
+  .card-icon {
+    width: 32px; height: 32px;
+    background: #e8effe; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    .c-icon { font-size: 16px; color: $navy; }
+  }
+
+  .card-title { font-size: 13px; font-weight: 700; color: $navy; }
+}
+
+.fields-wrap {
+  padding: 14px 14px 8px;
+}
+
+.field-group {
+  display: flex; flex-direction: column; gap: 5px;
+  margin-bottom: 14px;
+}
+
+.field-label {
+  font-size: 12px; font-weight: 600;
+  color: $navy; padding-left: 2px;
+}
+
+.field-item {
+  --background: #f4f7fd;
+  --border-radius: 10px;
+  --padding-start: 12px;
+  --padding-end: 12px;
+  --highlight-color-focused: #{$navy};
+  border: 1px solid $border;
+  border-radius: 10px;
+
+  ion-select {
+    font-size: 13px; color: #334155;
+    --placeholder-color: #b0bdd4;
+    width: 100%;
+  }
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 4px;
+  margin-top: auto;
+
+  .skip-btn {
+    --color: #{$navy};
+    font-size: 13px; font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-transform: none;
+  }
+
+  .submit-btn {
+    --background: #{$navy};
+    --color: #ffffff;
+    --border-radius: 26px;
+    --box-shadow: none;
+    font-weight: 700; font-size: 14px;
+    height: 48px; text-transform: none;
+  }
 }
