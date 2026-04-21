@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+
+
 @Component({
   selector: 'app-create-service',
-  standalone:false,
   templateUrl: './create-service.page.html',
+  standalone:false,
   styleUrls: ['./create-service.page.scss'],
 })
 export class CreateServicePage implements OnInit {
-
-  service:any = {
+service:any = {
   title: '',
   description: '',
   category: '',
@@ -30,7 +31,6 @@ selectedFile: File| null = null;
 
 onFileSelected(event: any) {
   this.selectedFile = event.target.files[0];
-  
 }
 
 submitService() {
@@ -59,10 +59,8 @@ submitService() {
     .subscribe(res => {
       console.log(res);
     });
-    this.router.navigate(['/freelancer-services']);
+    this.router.navigate(['/services']);
 }
  
-
-
 
 }

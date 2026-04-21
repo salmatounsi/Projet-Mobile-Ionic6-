@@ -1,95 +1,37 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Biographie et CV</ion-title>
-    <ion-buttons slot="end">
-      <ion-button fill="solid" class="step-badge">Étape 1 sur 6</ion-button>
-    </ion-buttons>
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>Bio</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <div class="top-section">
-    <div class="progress-section">
-      <div class="prog-label">
-        <span>Compléter le profil</span>
-        <strong>17%</strong>
-      </div>
-      <div class="prog-track">
-        <div class="prog-fill"></div>
-      </div>
-    </div>
+<ion-content class="ion-padding">
+  <div class="form-container">
+    <h2 class="title-underline">Tell the world about yourself.</h2>
+    
+    <p class="instruction-text">
+      Help people get to know you at a glance. What work do you do best? You can always edit later.
+    </p>
 
-    <div class="header-hero">
-      <p class="hero-kicker">Votre profil</p>
-      <h2 class="hero-title">Faites-vous connaître du monde entier.</h2>
-      <p class="hero-sub">
-        Permettez aux gens de vous connaître en un coup d'œil. Quel est votre domaine d'expertise ? Vous pourrez toujours modifier ces informations plus tard.
-      </p>
-    </div>
-  </div>
+    <ion-item lines="outline" class="custom-textarea-item ion-margin-bottom">
+      <ion-textarea rows="6" placeholder="A bit about me..." [(ngModel)]="bioText"></ion-textarea>
+    </ion-item>
 
-  <div class="body">
+    <p class="cv-text">
+      Upload your CV to let people know your previous projects and achievements.
+    </p>
 
-    <div class="card">
-      <div class="card-head">
-        <div class="card-icon">
-          <ion-icon name="create-outline" class="c-icon"></ion-icon>
-        </div>
-        <span class="card-title">À propos de moi</span>
-      </div>
-      <ion-item lines="none" class="textarea-item">
-        <ion-textarea
-          rows="5"
-          placeholder="Soyez bref, clair et professionnel."
-          [(ngModel)]="bioText"
-          maxlength="300">
-        </ion-textarea>
-      </ion-item>
-      <div class="char-row">
-        <span class="char-num">{{ bioText.length || 0 }} / 300</span>
-      </div>
-    </div>
+    <input type="file" #fileInput (change)="onFileSelected($event)" style="display: none;" accept=".pdf,.doc,.docx">
+    
+    <ion-button fill="solid" class="upload-cv-btn" (click)="fileInput.click()">
+      Upload CV
+    </ion-button>
 
-    <div class="card">
-      <div class="card-head">
-        <div class="card-icon">
-          <ion-icon name="document-outline" class="c-icon"></ion-icon>
-        </div>
-        <span class="card-title">CV / Résumé</span>
-      </div>
+    <p *ngIf="fileName" class="selected-file-name">{{ fileName }}</p>
 
-      <input type="file" #fileInput (change)="onFileSelected($event)"
-             style="display:none;" accept=".pdf,.doc,.docx">
-
-      <div class="upload-zone" (click)="fileInput.click()">
-        <div class="up-icon">
-          <ion-icon name="cloud-upload-outline" class="up-icon-svg"></ion-icon>
-        </div>
-        <div class="up-texts">
-          <span class="up-main">Déposer votre CV</span>
-          <span class="up-hint">PDF, DOC, DOCX · Max 5 Mo</span>
-        </div>
-        <div class="up-arrow">
-          <ion-icon name="arrow-forward-outline" class="arrow-icon"></ion-icon>
-        </div>
-      </div>
-
-      <div *ngIf="fileName" class="file-pill">
-        <span class="pill-dot"></span>
-        {{ fileName }}
-      </div>
-    </div>
-
-    <div class="footer">
-      <span class="skip-lnk" (click)="onSubmit()">Passer pour l'instant</span>
-      <ion-button class="submit-btn" (click)="onSubmit()">
-        Continuer
-        <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
+    <div class="footer-action">
+      <ion-button color="dark" shape="round" class="next-btn" (click)="onSubmit()">
+        NEXT
       </ion-button>
     </div>
-
   </div>
 </ion-content>

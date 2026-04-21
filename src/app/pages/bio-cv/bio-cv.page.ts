@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpEventType, HttpHeaders } from '@angular/common/http';
-import {AuthService} from "../../services/auth-service";
-import {Router} from "@angular/router";
+import { HttpClient, HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-bio-cv',
@@ -14,10 +12,10 @@ export class BioCvPage implements OnInit {
   fileName: string | null = null;
   bioText: string = '';
 
-  constructor(private http: HttpClient, private authService:AuthService,private router:Router) {}
+  constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-
+    
   }
   onFileSelected(event: any) {
     this.file = event.target.files[0];
@@ -30,10 +28,9 @@ export class BioCvPage implements OnInit {
     if (this.file) {
       formData.append('file', this.file);
     }
-    const token = this.authService.getToken();
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    this.http.post('http://127.0.0.1:5000/bio', formData,{headers:headers, withCredentials: true }).subscribe({
-      next: (res) => this.router.navigate(['/profile']),
+
+    this.http.post('http://127.0.0.1:5000/bio', formData,{ withCredentials: true }).subscribe({
+      next: (res) => console.log(res),
       error: (err) => console.error(err)
     });
   }

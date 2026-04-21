@@ -49,6 +49,18 @@ const routes: Routes = [
     path: 'bio-cv',
     loadChildren: () => import('./pages/bio-cv/bio-cv.module').then(m => m.BioCvPageModule),
   },
+  {
+    path: 'services',
+    loadChildren: () => import('./pages/services/services.module').then( m => m.ServicesPageModule)
+  },
+  {
+    path: 'menu',
+    loadChildren: () => import('./pages/menu/menu.module').then( m => m.MenuPageModule)
+  },
+  {
+    path: 'create-service',
+    loadChildren: () => import('./pages/create-service/create-service.module').then( m => m.CreateServicePageModule)
+  },
 
   // Auth/Profile
   {
