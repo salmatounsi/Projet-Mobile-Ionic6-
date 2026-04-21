@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ProductApiService, Product } from '../../services/product-api.service';
+import { ProductApiService } from '../../services/product-api.service';
 import { AuthService } from '../../services/auth-service';
 import { ProfileService } from '../../services/profile-service';
 import { User } from '../../models/User';
@@ -19,6 +19,9 @@ export class NewProductPage implements OnInit {
   galleryPreviews: string[] = [];
   isSubmitting = false;
   userProfile: User | null = null;
+
+  mainImageFile: File | null = null;
+  galleryImageFiles: File[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -59,6 +62,7 @@ export class NewProductPage implements OnInit {
       return;
     }
 
+    this.mainImageFile = file;
     this.mainImagePreview = file.name;
   }
 
@@ -70,9 +74,8 @@ export class NewProductPage implements OnInit {
       return;
     }
 
-    this.galleryPreviews = Array.from(files)
-      .slice(0, 3)
-      .map((file) => file.name);
+    this.galleryImageFiles = Array.from(files).slice(0, 3);
+    this.galleryPreviews = this.galleryImageFiles.map(file => file.name);
   }
 
   saveProduct(): void {
@@ -86,35 +89,39 @@ export class NewProductPage implements OnInit {
       return;
     }
 
+
     this.isSubmitting = true;
 
-    const userId = this.authService.getUserId();
-    if (!userId) {
-      alert('User not authenticated.');
-      this.isSubmitting = false;
-      return;
+    const formData = new FormData();
+
+    formData.append(
+      'seller_name',
+      `${this.userProfile.general_info?.first_name || ''} ${this.userProfile.general_info?.last_name || ''}`.trim() || 'Unknown'
+    );
+    formData.append('seller_role', this.userProfile.professional_role || 'Developer');
+    formData.append('title', this.productForm.value.title);
+    formData.append('description', this.productForm.value.description);
+    formData.append('version', this.productForm.value.version);
+    formData.append('license', this.productForm.value.license);
+    formData.append('price', String(Number(this.productForm.value.price)));
+
+    if (this.mainImageFile) {
+      formData.append('main_image', this.mainImageFile);
     }
 
-    const productPayload: Product = {
-      seller_id: userId,
-      seller_name: `${this.userProfile.general_info?.first_name} ${this.userProfile.general_info?.last_name}`.trim() || 'Unknown',
-      seller_role: this.userProfile.professional_role || 'Developer',
-      title: this.productForm.value.title,
-      description: this.productForm.value.description,
-      version: this.productForm.value.version,
-      license: this.productForm.value.license,
-      price: Number(this.productForm.value.price),
-      main_image: this.mainImagePreview || '',
-      gallery: this.galleryPreviews
-    };
+    this.galleryImageFiles.forEach((file) => {
+      formData.append('gallery', file);
+    });
 
-    this.productApi.createProduct(productPayload).subscribe({
-      next: (response: Product) => {
+    this.productApi.createProduct(formData).subscribe({
+      next: (response) => {
         console.log('Product created:', response);
         this.isSubmitting = false;
         this.productForm.reset();
         this.mainImagePreview = null;
         this.galleryPreviews = [];
+        this.mainImageFile = null;
+        this.galleryImageFiles = [];
         this.router.navigate(['/products']);
       },
       error: (error: unknown) => {

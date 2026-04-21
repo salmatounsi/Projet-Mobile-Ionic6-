@@ -1,32 +1,43 @@
-export interface Skill {
-  name: string;
-}
+export type Skill = string;
 
 export interface Language {
-  name: string;
-  level: string;
+  language: string;
+  proficiency: string;
 }
 
 export interface Education {
-  institution: string;
+  school: string;
   degree: string;
   field: string;
-  start_date: string;
-  end_date?: string;
+  currently:boolean;
+  startDate: string;
+  endDate?: string;
+  description?:string;
 }
 
 export interface Experience {
   title: string;
   company: string;
   location: string;
-  start_date: string;
-  end_date?: string;
+  startDate: string;
+  endDate?: string;
+  country?:string;
   description?: string;
+  currentlyInRole?:boolean;
+
 }
+
+export interface CategoryMain {
+  id: number;
+  name: string;
+  open?: boolean;
+}
+
 export interface Categories {
-  main: string | null;
+  main: CategoryMain | null;
   sub_categories: string[];
 }
+
 export interface GeneralInfo {
   first_name?: string;
   last_name?: string;
@@ -36,35 +47,42 @@ export interface GeneralInfo {
   profile_image?: string;
 }
 
+export interface SubscriptionPlan {
+  name: string;
+  billing: string;
+  autoRenew: boolean;
+  [key: string]: any;
+}
+
 export interface User {
   _id?: string;
 
   email: string;
-  password: string;
+  password?: string;
   role: string;
-  created_at: string;
-  earnings: number;
-  current_step: number;
-  signup_completed: boolean;
-  payment_completed: boolean;
+  created_at?: string;
+  earnings?: number;
+  current_step?: number;
+  signup_completed?: boolean;
+  payment_completed?: boolean;
 
-  general_info: GeneralInfo;
+  general_info?: GeneralInfo;
 
-  professional_role: string | null;
+  professional_role?: string | null;
 
-  experiences: Experience[];
+  experience  ?: Experience[];
 
-  education: Education[];
+  education?: Education[];
 
-  skills: Skill[];
-  suggestedSkills: Skill[];
-  categories: Categories;
+  skills?: Skill[];
+  suggestedSkills?: Skill[];
+  categories?: Categories;
 
-  languages: Language[];
+  languages?: Language[];
 
-  bio: string | null;
+  bio?: string | null;
 
-  cv_url: string | null;
+  cv_url?: string | null;
 
-  subscription_plan: string | null;
+  subscription_plan?: SubscriptionPlan | null;
 }

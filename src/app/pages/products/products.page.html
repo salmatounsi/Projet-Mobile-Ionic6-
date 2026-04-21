@@ -35,16 +35,12 @@
     <div class="products-list">
       <div class="product-card" *ngFor="let product of filteredProducts">
 
-        <div class="card-top">
-          <div class="author-info">
-            <div class="avatar">
-              <ion-icon name="person-outline"></ion-icon>
-            </div>
-            <div class="author-text">
-              <h4 class="author-name">{{ product.seller_name }}</h4>
-              <p class="author-role">{{ product.seller_role }}</p>
-            </div>
-          </div>
+        <div class="image-wrap">
+          <img
+            [src]="product?.main_image || 'assets/avatar.png'"
+            alt="product image"
+            class="product-image"
+          />
           <div class="price-badge">{{ product.price }} TND</div>
         </div>
 
@@ -53,6 +49,16 @@
           <div class="meta-row">
             <span class="meta-chip">v{{ product.version }}</span>
             <span class="meta-chip">{{ product.license }}</span>
+          </div>
+          <div class="seller-info">
+            <div class="seller-avatar">
+              <ion-icon name="person-outline"></ion-icon>
+            </div>
+
+            <div class="seller-text">
+              <p class="seller-name">{{ product.seller_name }}</p>
+              <p class="seller-role">{{ product.seller_role }}</p>
+            </div>
           </div>
         </div>
 
