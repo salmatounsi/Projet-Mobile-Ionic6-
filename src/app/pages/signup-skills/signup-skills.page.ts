@@ -24,10 +24,6 @@ export class SignupSkillsPage {
     'AI',
   ];
 
-
-
-
-
   constructor(
     public signup: SignupDataService,
     private router: Router,
@@ -50,11 +46,10 @@ export class SignupSkillsPage {
       return;
     }
 
-
-
-    this.api.updateSkills( this.signup.skills).subscribe({
+    // ✅ token-based (1 argument)
+    this.api.updateSkills(this.signup.skills).subscribe({
       next: () => this.router.navigateByUrl('/signup-languages'),
-      error: (err) => {
+      error: (err: any) => {
         console.error('updateSkills failed', err);
         alert('Failed to save skills. Is the backend running?');
       },

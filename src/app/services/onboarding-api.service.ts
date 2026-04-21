@@ -1,28 +1,29 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { LanguageItem } from './signup-data.service';
-import {AuthService} from "./auth-service";
+import { AuthService } from './auth-service';
 
 @Injectable({ providedIn: 'root' })
 export class OnboardingApiService {
   private baseUrl = 'http://127.0.0.1:5000/api/onboarding';
 
-  constructor(private http: HttpClient, private authService:AuthService) {}
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
-  updateSkills( skills: string[]): Observable<any> {
+  private headers() {
     const token = this.authService.getToken();
-    const headers = {
-      'Authorization': `Bearer ${token}`
-    }
-    return this.http.put(`${this.baseUrl}/skills`, { skills },{headers:headers});
+    return {
+      headers: new HttpHeaders({
+        Authorization: `Bearer ${token ?? ''}`,
+      }),
+    };
   }
 
-  updateLanguages(languages: LanguageItem[]): Observable<any>{
-  const token = this.authService.getToken();
-  const headers = {
-    'Authorization': `Bearer ${token}`
+  updateSkills(skills: string[]): Observable<any> {
+    return this.http.put(`${this.baseUrl}/skills`, { skills }, this.headers());
   }
-    return this.http.put(`${this.baseUrl}/languages`, { languages },{headers:headers});
+
+  updateLanguages(languages: LanguageItem[]): Observable<any> {
+    return this.http.put(`${this.baseUrl}/languages`, { languages }, this.headers());
   }
 }

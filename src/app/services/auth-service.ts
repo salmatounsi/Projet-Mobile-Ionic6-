@@ -30,4 +30,19 @@ export class AuthService {
   setToken(token: any) {
     localStorage.setItem("token",token);
   }
+
+  getPayload(): any | null {
+  const token = this.getToken();
+  if (!token) return null;
+  try {
+    return JSON.parse(atob(token.split('.')[1]));
+  } catch {
+    return null;
+  }
+}
+
+getRole(): 'client' | 'freelancer' | 'admin' | null {
+  const payload = this.getPayload();
+  return payload?.role ?? null;
+}
 }

@@ -23,19 +23,6 @@ ion-content {
   text-align: center;
   padding-bottom: 8px;
 
-  .logo-circle {
-    width: 64px; height: 64px;
-    background: $navy;
-    border-radius: 20px;
-    display: flex; align-items: center; justify-content: center;
-    margin-bottom: 18px;
-
-    .logo-icon {
-      font-size: 30px;
-      color: #ffffff;
-    }
-  }
-
   .page-title {
     font-size: 26px;
     font-weight: 800;
