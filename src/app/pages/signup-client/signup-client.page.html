@@ -1,0 +1,65 @@
+<ion-content class="ion-padding">
+  <div class="signup-container">
+
+    <h2>Sign up to hire talent</h2>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onCreateAccount()">
+      <ion-grid class="ion-no-padding">
+        <ion-row>
+          <ion-col size="6" class="ion-padding-end">
+            <ion-label position="stacked">First name</ion-label>
+            <ion-item fill="outline" lines="none">
+              <ion-input type="text" formControlName="firstName"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="6">
+            <ion-label position="stacked">Last name</ion-label>
+            <ion-item fill="outline" lines="none">
+              <ion-input type="text" formControlName="lastName"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <ion-label position="stacked">Work email address</ion-label>
+      <ion-item fill="outline" lines="none">
+        <ion-input type="email" formControlName="email"></ion-input>
+      </ion-item>
+
+      <ion-label position="stacked">Password</ion-label>
+      <ion-item fill="outline" lines="none">
+        <ion-input [type]="passwordType" placeholder="Password (6 or more characters)" formControlName="password"></ion-input>
+        <ion-icon [name]="passwordIcon" slot="end" (click)="togglePassword()"></ion-icon>
+      </ion-item>
+
+      <ion-label position="stacked">Country</ion-label>
+      <ion-item fill="outline" lines="none">
+        <ion-select interface="popover" value="Tunisia" formControlName="country">
+          <ion-select-option value="Tunisia">Tunisia</ion-select-option>
+          <ion-select-option value="France">France</ion-select-option>
+          <ion-select-option value="France">Canada</ion-select-option>
+
+          </ion-select>
+      </ion-item>
+
+      <div class="checkbox-container">
+        <ion-item lines="none" class="checkbox-item">
+          <ion-checkbox slot="start" mode="md" formControlName="termsEmail"></ion-checkbox>
+          <ion-label>Send me emails with tips on how to find talent that fits my needs.</ion-label>
+        </ion-item>
+
+        <ion-item lines="none" class="checkbox-item">
+          <ion-checkbox slot="start" mode="md" formControlName="terms"></ion-checkbox>
+          <ion-label class="terms-text">
+            Yes, I understand and agree to the <span class="link">Upwork Terms of Service</span>, 
+            including the <span class="link">User Agreement</span> and <span class="link">Privacy Policy</span>.
+          </ion-label>
+        </ion-item>
+      </div>
+
+      <ion-button expand="block" type="submit" class="create-btn">
+        Create my account
+      </ion-button>
+    </form>
+  </div>
+</ion-content>

@@ -1,0 +1,58 @@
+ion-content {
+  --background: #f6f8fb;
+}
+
+/* Title */
+h2 {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 10px 0 20px 10px;
+  color: #1e1e1e;
+}
+
+/* Job Card */
+ion-card {
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  margin-bottom: 15px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Hover effect (web + desktop) */
+ion-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+/* Card header */
+ion-card-header {
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 10px;
+}
+
+/* Title inside card */
+ion-card-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+/* Content */
+ion-card-content p {
+  font-size: 14px;
+  margin: 6px 0;
+  color: #555;
+}
+
+/* Labels (Skills, Budget, Type) */
+ion-card-content strong {
+  color: #222;
+}
+
+/* Skills highlight (optional improvement) */
+ion-card-content p:nth-child(1) {
+  background: #eef4ff;
+  padding: 6px 10px;
+  border-radius: 8px;
+  display: inline-block;
+}

@@ -1,0 +1,76 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Créer un service</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <form (ngSubmit)="submitService()">
+
+    <!-- Infos principales -->
+    <ion-item>
+      <ion-label position="floating">Titre du service</ion-label>
+      <ion-input [(ngModel)]="service.title" name="title" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Description</ion-label>
+      <ion-textarea [(ngModel)]="service.description" name="description"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Catégorie</ion-label>
+      <ion-input [(ngModel)]="service.category" name="category"></ion-input>
+    </ion-item>
+
+    <!-- Packages -->
+    <h3>Packages</h3>
+
+    <ion-item>
+      <ion-label position="floating">Prix Basic (€)</ion-label>
+      <ion-input type="number" [(ngModel)]="service.price_basic" name="price_basic"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Prix Standard (€)</ion-label>
+      <ion-input type="number" [(ngModel)]="service.price_standard" name="price_standard"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Prix Premium (€)</ion-label>
+      <ion-input type="number" [(ngModel)]="service.price_premium" name="price_premium"></ion-input>
+    </ion-item>
+
+    <!-- Détails -->
+    <h3>Détails</h3>
+
+    <ion-item>
+      <ion-label position="floating">Délai (jours)</ion-label>
+      <ion-input type="number" [(ngModel)]="service.delivery_time" name="delivery_time"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Révisions</ion-label>
+      <ion-input type="number" [(ngModel)]="service.revisions" name="revisions"></ion-input>
+    </ion-item>
+
+    <!-- Features -->
+    <ion-item>
+      <ion-label position="floating">Features (séparées par virgule)</ion-label>
+      <ion-input [(ngModel)]="featuresInput" name="features"></ion-input>
+    </ion-item>
+
+    <!-- Image -->
+    <ion-item>
+      <ion-label>Image</ion-label>
+      <input type="file" (change)="onFileSelected($event)" />
+    </ion-item>
+
+    <ion-button expand="full" type="submit">
+      Publier le service
+    </ion-button>
+
+  </form>
+
+</ion-content>

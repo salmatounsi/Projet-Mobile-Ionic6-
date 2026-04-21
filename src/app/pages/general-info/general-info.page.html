@@ -8,6 +8,17 @@
   <div class="form-container">
     <h2>Create Your Account</h2>
     <p>Please fill in the details below to get started.</p>
+  <ion-button expand="block" (click)="takePhoto()">Take Photo</ion-button>
+  <ion-button expand="block" (click)="pickImage()"
+    >Pick from Gallery</ion-button
+  >
+
+  <div *ngIf="photoDataUrl" class="preview">
+  <img [src]="photoDataUrl" alt="Preview" />
+  <ion-button color="success" expand="block" (click)="upload()">
+    Upload
+  </ion-button>
+</div>
 
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
       <ion-grid class="ion-no-padding">

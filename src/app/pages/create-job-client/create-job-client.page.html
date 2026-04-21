@@ -1,0 +1,95 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="dark">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Détails du Job</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  
+  <div class="section-header">
+    <h2>Commençons par un titre fort</h2>
+    <p>Cela aide votre annonce à se démarquer auprès des bons candidats.</p>
+  </div>
+  
+  <ion-item lines="outline" class="ion-margin-bottom">
+    <ion-label position="stacked">Titre du job</ion-label>
+    <ion-input placeholder="Ex: Développeur Angular/Ionic senior"></ion-input>
+  </ion-item>
+
+  <ion-item lines="outline" class="ion-margin-bottom">
+    <ion-label position="stacked">Compétences principales (max 10)</ion-label>
+    <ion-input placeholder="Rechercher des compétences..."></ion-input>
+  </ion-item>
+
+  <div class="section-header">
+    <h3>Estimez l'ampleur du travail</h3>
+  </div>
+
+  <ion-radio-group value="medium">
+    <ion-item lines="none" class="custom-radio">
+      <ion-label>
+        <strong>Large</strong>
+        <p>Initiatives complexes à long terme</p>
+      </ion-label>
+      <ion-radio slot="start" value="large"></ion-radio>
+    </ion-item>
+
+    <ion-item lines="none" class="custom-radio">
+      <ion-label>
+        <strong>Medium</strong>
+        <p>Projets bien définis</p>
+      </ion-label>
+      <ion-radio slot="start" value="medium"></ion-radio>
+    </ion-item>
+
+    <ion-item lines="none" class="custom-radio">
+      <ion-label>
+        <strong>Small</strong>
+        <p>Tâches rapides et directes</p>
+      </ion-label>
+      <ion-radio slot="start" value="small"></ion-radio>
+    </ion-item>
+  </ion-radio-group>
+
+  <div class="section-header ion-margin-top">
+    <h3>Budget</h3>
+  </div>
+
+  <ion-segment value="hourly">
+    <ion-segment-button value="hourly">
+      <ion-label>Taux Horaire</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="fixed">
+      <ion-label>Prix Fixe</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <ion-row class="ion-margin-top">
+    <ion-col>
+      <ion-item lines="outline">
+        <ion-label position="stacked">De ($)</ion-label>
+        <ion-input type="number" value="7.00"></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col>
+      <ion-item lines="outline">
+        <ion-label position="stacked">À ($)</ion-label>
+        <ion-input type="number" value="15.00"></ion-input>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+</ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-toolbar>
+    <ion-button expand="block" (click)="createJob()" color="success" class="ion-margin">
+    Créer le job
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

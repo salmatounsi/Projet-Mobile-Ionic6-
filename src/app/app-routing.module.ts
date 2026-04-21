@@ -63,7 +63,30 @@ const routes: Routes = [
   {
     path: 'products',
     loadChildren: () => import('./pages/products/products.module').then( m => m.ProductsPageModule)
+  },
+  {
+    path: 'freelancer-services',
+    loadChildren: () => import('./pages/frelaancer-services/frelaancer-services.module').then( m => m.FrelaancerServicesPageModule)
+  },
+  {
+    path: 'create-service',
+    loadChildren: () => import('./pages/create-service/create-service.module').then( m => m.CreateServicePageModule)
+  },
+  {
+    path: 'signup-client',
+    loadChildren: () => import('./pages/signup-client/signup-client.module').then( m => m.SignupClientPageModule)
+  },
+  {
+    path: 'create-job-client',
+    loadChildren: () => import('./pages/create-job-client/create-job-client.module').then( m => m.CreateJobClientPageModule)
+  },  {
+    path: 'jobs',
+    loadChildren: () => import('./pages/jobs/jobs.module').then( m => m.JobsPageModule)
   }
+
+
+
+
 
 
 ];

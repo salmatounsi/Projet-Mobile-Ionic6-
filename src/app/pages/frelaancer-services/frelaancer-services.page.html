@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar>
+
+    <ion-title>Services</ion-title>
+
+    <!-- Bouton ajouter -->
+    <ion-buttons slot="end">
+      <ion-button (click)="goToCreateService()">
+        + Ajouter service
+      </ion-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-grid>
+    <ion-row>
+
+      <ion-col size="6" *ngFor="let service of services">
+
+        <ion-card>
+
+          <img [src]="'http://localhost:5000/' + service.image" />
+
+          <ion-card-header>
+            <ion-card-title>
+              {{ service.title }}
+            </ion-card-title>
+          </ion-card-header>
+
+          <ion-card-content>
+
+            <p>⭐ {{ service.rating }} ({{ service.reviews_count }})</p>
+
+            <p>⏱ {{ service.delivery_time }} jours</p>
+
+            <h2>{{ service.price_basic }}€</h2>
+
+          </ion-card-content>
+
+        </ion-card>
+
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

@@ -1,0 +1,17 @@
+<ion-content class="ion-padding">
+
+  <h2>My Jobs</h2>
+
+  <ion-card *ngFor="let job of jobs">
+    <ion-card-header>
+      <ion-card-title>{{ job.title }}</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <p><strong>Skills:</strong> {{ job.skills }}</p>
+      <p><strong>Budget:</strong> {{ job.budgetFrom }} - {{ job.budgetTo }}</p>
+      <p><strong>Type:</strong> {{ job.budgetType }}</p>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>
