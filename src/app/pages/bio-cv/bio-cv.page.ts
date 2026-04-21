@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpEventType } from '@angular/common/http';
+import { HttpClient, HttpEventType, HttpHeaders } from '@angular/common/http';
 import {AuthService} from "../../services/auth-service";
 import {Router} from "@angular/router";
 
@@ -31,9 +31,7 @@ export class BioCvPage implements OnInit {
       formData.append('file', this.file);
     }
     const token = this.authService.getToken();
-    const headers = {
-      'Authorization': `Bearer ${token}`
-    }
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     this.http.post('http://127.0.0.1:5000/bio', formData,{headers:headers, withCredentials: true }).subscribe({
       next: (res) => this.router.navigate(['/profile']),
       error: (err) => console.error(err)

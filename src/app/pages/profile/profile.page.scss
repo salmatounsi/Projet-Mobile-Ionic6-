@@ -1,59 +1,242 @@
-.profile-container {
-  padding: 16px;
+$navy:       #152a5e;
+$navy-mid:   #1e3f8a;
+$navy-light: #a8c4ff;
+$bg-page:    #eef1f8;
+$border:     #dce4f2;
+
+ion-toolbar {
+  --background: #{$navy};
+  --color: #ffffff;
+  --border-width: 0;
+  ion-title { font-weight: 700; font-size: 16px; }
+
+  .icon-btn {
+    --background: rgba(255,255,255,0.15);
+    --color: #ffffff;
+    --border-radius: 10px;
+    width: 36px; height: 36px;
+    margin-right: 4px;
+  }
 }
 
-.top-bar {
+ion-content { --background: #{$bg-page}; }
+
+.body {
+  padding: 0 0 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+// ── Identity card ──────────────────────────────────────
+.identity-card {
+  background: #ffffff;
+  border-radius: 18px;
+  border: 1px solid $border;
+  margin: 14px 14px 0;
+  padding: 18px;
+
+  .top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+    .earnings-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: #eaf0fc;
+      color: $navy;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      border: 1px solid $border;
+      ion-icon { font-size: 15px; }
+    }
+
+    .menu-btn {
+      --color: #{$navy};
+      --padding-start: 0; --padding-end: 0;
+    }
+  }
+
+  .avatar-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    .avatar-wrap {
+      width: 88px; height: 88px;
+      border-radius: 26px;
+      overflow: hidden;
+      border: 3px solid $border;
+      margin-bottom: 14px;
+      .avatar-img { width: 100%; height: 100%; object-fit: cover; }
+    }
+
+    .user-name {
+      font-size: 20px; font-weight: 800;
+      color: $navy; margin-bottom: 4px;
+    }
+
+    .user-role {
+      font-size: 13px; color: #64748b;
+    }
+  }
+}
+
+// ── Cards ──────────────────────────────────────────────
+.card {
+  background: #ffffff;
+  border-radius: 18px;
+  border: 1px solid $border;
+  overflow: hidden;
+  margin: 0 14px;
+
+  .card-head {
+    display: flex; align-items: center; gap: 10px;
+    padding: 13px 14px 12px;
+    border-bottom: 1px solid #f0f4fc;
+  }
+
+  .card-icon {
+    width: 32px; height: 32px;
+    background: #e8effe; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    .c-icon { font-size: 16px; color: $navy; }
+  }
+
+  .card-title {
+    font-size: 13px; font-weight: 700; color: $navy; flex: 1;
+  }
+
+  .head-action-btn {
+    --color: #{$navy-mid};
+    --padding-start: 6px; --padding-end: 0;
+    font-size: 12px; font-weight: 700;
+    text-transform: none; height: auto;
+  }
+}
+
+// ── Bio ────────────────────────────────────────────────
+.bio-text {
+  padding: 14px;
+  font-size: 13px; color: #475569;
+  line-height: 1.65;
+}
+
+// ── Chips ──────────────────────────────────────────────
+.chips-wrap {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  padding: 14px 14px 10px;
+}
+
+.chip {
+  padding: 6px 13px;
+  border-radius: 20px;
+  font-size: 12px; font-weight: 600;
+  background: #eaf0fc;
+  border: 1px solid $border;
+  color: $navy-mid;
+
+  &.active {
+    background: $navy;
+    color: #ffffff;
+    border-color: $navy;
+  }
+}
+
+.section-divider {
+  height: 1px; background: #f0f4fc; margin: 4px 14px 0;
+}
+
+.subsection-label {
+  font-size: 11px; font-weight: 700;
+  color: #94a3b8; letter-spacing: 0.8px;
+  text-transform: uppercase;
+  padding: 10px 14px 0;
+}
+
+// ── Languages ──────────────────────────────────────────
+.lang-list { padding: 8px 14px 14px; }
+
+.lang-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  padding: 9px 0;
+  border-bottom: 1px solid #f0f4fc;
+
+  &:last-child { border-bottom: none; }
+
+  .lang-name { font-size: 13px; font-weight: 600; color: $navy; }
+  .lang-level {
+    font-size: 12px; color: $navy-mid;
+    background: #eaf0fc;
+    padding: 3px 10px; border-radius: 20px;
+    font-weight: 600;
+  }
 }
 
-.avatar-section {
-  text-align: center;
+// ── Checkboxes ─────────────────────────────────────────
+.check-list { padding: 6px 0 6px; }
+
+.check-item {
+  --background: transparent;
+  --padding-start: 14px;
+  --padding-end: 14px;
+  --min-height: 40px;
+
+  .nav-check {
+    --checkbox-background-checked: #{$navy};
+    --border-color-checked: #{$navy};
+    --border-color: #b0bdd4;
+    margin-right: 12px;
+  }
+
+  .check-label {
+    font-size: 13px; color: #334155;
+    white-space: normal;
+  }
 }
 
-ion-avatar {
-  width: 120px;
-  height: 120px;
-  margin: auto;
-}
+// ── Timeline ───────────────────────────────────────────
+.timeline-list { padding: 14px 14px 8px; }
 
-.bio-card {
-  background: #f3f3f3;
-  border-radius: 12px;
-  padding: 12px;
-  margin-top: 16px;
-}
-
-.section {
-  margin-top: 20px;
-}
-
-.chips {
+.timeline-item {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  gap: 12px;
+  margin-bottom: 16px;
+
+  &:last-child { margin-bottom: 4px; }
 }
 
-.language-row {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 8px;
+.timeline-dot {
+  width: 10px; height: 10px;
+  background: $navy;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 5px;
 }
 
-.second-section {
-  margin-top: 30px;
-}
+.timeline-content {
+  flex: 1;
 
-.section-title {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 20px;
-}
+  .tl-title {
+    font-size: 14px; font-weight: 700;
+    color: $navy; margin: 0 0 3px;
+  }
 
-.card-item {
-  border-bottom: 1px solid #ddd;
-  padding: 10px 0;
+  .tl-sub {
+    font-size: 12px; color: #64748b; margin: 0 0 4px;
+  }
+
+  .tl-date {
+    font-size: 11px; color: #94a3b8;
+    font-weight: 600;
+  }
 }

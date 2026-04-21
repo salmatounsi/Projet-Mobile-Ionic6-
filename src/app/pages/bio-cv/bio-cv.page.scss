@@ -1,75 +1,228 @@
-/* Conteneur principal identique à general-info */
-.form-container {
-  padding: 20px;
-  background-color: #ffffff;
-  border-radius: 12px;
+$navy:       #152a5e;
+$navy-mid:   #1e3f8a;
+$navy-light: #a8c4ff;
+$bg-page:    #eef1f8;
+$border:     #dce4f2;
+
+ion-toolbar {
+  --background: #{$navy};
+  --color: #ffffff;
+  --border-width: 0;
+
+  ion-title { font-weight: 700; font-size: 16px; }
+
+  .step-badge {
+    --background: #{$navy-mid};
+    --color: #d0e0ff;
+    --border-radius: 20px;
+    --border-color: rgba(255,255,255,0.18);
+    --border-width: 1px;
+    --border-style: solid;
+    --box-shadow: none;
+    font-size: 11px;
+    font-weight: 700;
+    height: 28px;
+    margin-right: 4px;
+    text-transform: none;
+  }
 }
 
-/* Titre bleu profond */
-h2 {
-  color: #1a4f8b; /* Le bleu de la première page */
-  font-weight: 700;
-  margin-bottom: 8px;
-  border-bottom: none; /* On retire le soulignement pour rester sur le style initial */
+ion-content {
+  --background: #{$bg-page};
 }
 
-/* Textes d'instruction */
-.instruction-text, .cv-text {
-  color: #667c99; /* Bleu gris pour le sous-titre */
-  font-size: 0.9rem;
-  line-height: 1.4;
-  margin-bottom: 20px;
+.top-section {
+  background: $navy;
+  padding-bottom: 28px;
+  border-radius: 0 0 28px 28px;
 }
 
-/* Zone de texte (Textarea) stylisée comme les inputs */
-.custom-textarea-item {
-  --background: #f8faff; /* Blanc bleuté léger */
-  --border-color: #d1d9e6;
-  --border-radius: 8px;
-  --highlight-color-focused: #3880ff;
-  margin-bottom: 12px;
+.progress-section {
+  padding: 10px 18px 14px;
+
+  .prog-label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    span   { font-size: 11px; color: rgba(255,255,255,0.45); }
+    strong { font-size: 11px; color: $navy-light; font-weight: 700; }
+  }
+
+  .prog-track {
+    height: 5px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 5px;
+    overflow: hidden;
+
+    .prog-fill {
+      height: 100%;
+      width: 16.6%;
+      background: $navy-light;
+      border-radius: 5px;
+    }
+  }
 }
 
-/* Labels des items */
-ion-label {
-  color: #4a6984 !important;
-  font-weight: 500;
+.header-hero {
+  padding: 8px 18px 0;
+
+  .hero-kicker {
+    font-size: 11px;
+    font-weight: 700;
+    color: $navy-light;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .hero-title {
+    font-size: 21px;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.25;
+    margin-bottom: 10px;
+  }
+
+  .hero-sub {
+    font-size: 13px;
+    color: rgba(255,255,255,0.58);
+    line-height: 1.6;
+  }
 }
 
-/* Bouton Upload CV (Adapté au style bleu/blanc) */
-.upload-cv-btn {
-  --background: #d6dde4; /* Gris bleuté clair */
-  --color: #1a4f8b;
-  --border-radius: 10px;
-  --box-shadow: none;
-  font-weight: 600;
-  text-transform: none;
-  height: 45px;
-  margin-top: 10px;
+.body {
+  padding: 18px 14px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
 
-/* Bouton NEXT (Style bouton principal bleu) */
-.footer-action {
+.card {
+  background: #ffffff;
+  border-radius: 18px;
+  border: 1px solid $border;
+  overflow: hidden;
+
+  .card-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 13px 14px 12px;
+    border-bottom: 1px solid #f0f4fc;
+  }
+
+  .card-icon {
+    width: 32px; height: 32px;
+    background: #e8effe;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    .c-icon { font-size: 16px; color: $navy; }
+  }
+
+  .card-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: $navy;
+  }
+}
+
+.textarea-item {
+  --background: transparent;
+  --padding-start: 14px;
+  --padding-end: 14px;
+  --padding-top: 10px;
+  --highlight-color-focused: #{$navy};
+
+  ion-textarea {
+    font-size: 13px;
+    color: #334155;
+    --placeholder-color: #b0bdd4;
+    --placeholder-font-style: italic;
+  }
+}
+
+.char-row {
+  padding: 4px 14px 12px;
   display: flex;
   justify-content: flex-end;
-  margin-top: 40px;
+
+  .char-num { font-size: 11px; color: #94a3b8; }
 }
 
-.next-btn {
-  --background: #1a4f8b; /* Bleu principal */
-  --color: #ffffff;
-  --border-radius: 10px;
-  width: 120px;
-  font-weight: 600;
-  height: 45px;
+.upload-zone {
+  margin: 13px 14px;
+  border: 1.5px dashed #b4c6e8;
+  border-radius: 14px;
+  padding: 13px 14px;
+  display: flex; align-items: center; gap: 12px;
+  background: #f4f7fd;
+  cursor: pointer;
+
+  .up-icon {
+    width: 42px; height: 42px;
+    background: $navy;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    .up-icon-svg { font-size: 20px; color: #ffffff; }
+  }
+
+  .up-texts {
+    display: flex; flex-direction: column; gap: 3px; flex: 1;
+    .up-main { font-size: 13px; font-weight: 700; color: $navy; }
+    .up-hint  { font-size: 11px; color: #94a3b8; }
+  }
+
+  .up-arrow {
+    width: 28px; height: 28px;
+    background: #dce6f8;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    .arrow-icon { font-size: 14px; color: $navy; }
+  }
 }
 
-/* Affichage du nom du fichier sélectionné */
-.selected-file-name {
-  font-size: 0.85rem;
-  color: #3880ff;
-  font-weight: 500;
-  margin-top: 8px;
+.file-pill {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: #eaf0fc;
+  border: 1px solid #c2d4f0;
+  border-radius: 20px;
+  padding: 6px 12px;
+  font-size: 12px; font-weight: 600; color: $navy-mid;
+  margin: 0 14px 14px;
+
+  .pill-dot {
+    width: 7px; height: 7px;
+    background: $navy-mid;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+}
+
+.footer {
   display: flex;
+  justify-content: space-between;
   align-items: center;
+  padding-top: 4px;
+
+  .skip-lnk {
+    font-size: 13px;
+    color: #5a739e;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+  }
+
+  .submit-btn {
+    --background: #{$navy};
+    --color: #ffffff;
+    --border-radius: 26px;
+    --box-shadow: none;
+    font-weight: 700;
+    font-size: 14px;
+    height: 48px;
+    text-transform: none;
+  }
 }

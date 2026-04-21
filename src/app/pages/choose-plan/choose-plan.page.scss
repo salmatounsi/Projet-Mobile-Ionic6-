@@ -1,81 +1,173 @@
-h2 {
-  margin: 6px 0 6px;
-  font-weight: 700;
-  font-size: 22px;
+$navy:       #152a5e;
+$navy-mid:   #1e3f8a;
+$navy-light: #a8c4ff;
+$bg-page:    #eef1f8;
+$border:     #dce4f2;
+
+ion-toolbar {
+  --background: #{$navy};
+  --color: #ffffff;
+  --border-width: 0;
+  ion-title { font-weight: 700; font-size: 16px; }
 }
 
-.hint {
-  margin: 0 0 14px;
-  color: var(--ion-color-medium);
-  line-height: 1.35;
+ion-content {
+  --background: #{$bg-page};
+}
+
+.body {
+  padding: 18px 14px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.top-block {
+  padding: 2px 0 4px;
+
+  .page-title {
+    font-size: 21px;
+    font-weight: 800;
+    color: $navy;
+    margin-bottom: 6px;
+  }
+
+  .page-hint {
+    font-size: 13px;
+    color: #64748b;
+    line-height: 1.55;
+  }
 }
 
 .plan-card {
-  border: 1px solid rgba(0,0,0,0.08);
-  border-radius: 16px;
-  padding: 14px;
-  background: var(--ion-background-color, #fff);
+  background: $navy;
+  border-radius: 20px;
+  overflow: hidden;
+
+  .plan-top {
+    padding: 18px 18px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .plan-name {
+    font-size: 16px;
+    font-weight: 800;
+    color: #ffffff;
+  }
+
+  .plan-sub {
+    font-size: 12px;
+    color: $navy-light;
+    margin-top: 3px;
+  }
+
+  .price-box { text-align: right; }
+
+  .amount {
+    font-size: 26px;
+    font-weight: 900;
+    color: #ffffff;
+    line-height: 1;
+  }
+
+  .unit {
+    font-size: 11px;
+    color: $navy-light;
+    margin-top: 3px;
+  }
+
+  .plan-divider {
+    height: 1px;
+    background: rgba(255,255,255,0.12);
+    margin: 0 18px;
+  }
+
+  .features {
+    padding: 14px 18px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .feat {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: #e2eaff;
+  }
+
+  .feat-dot {
+    width: 20px; height: 20px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    ion-icon { color: #ffffff; font-size: 12px; }
+  }
 }
 
-.top {
-  display: flex;
-  justify-content: space-between;
-  gap: 14px;
-  align-items: flex-start;
+.white-card {
+  background: #ffffff;
+  border-radius: 18px;
+  border: 1px solid $border;
+  overflow: hidden;
+
+  .toggle-item {
+    --padding-start: 14px;
+    --padding-end: 14px;
+    --background: transparent;
+
+    .toggle-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: $navy;
+    }
+
+    ion-toggle {
+      --track-background-checked: #{$navy};
+    }
+  }
+
+  .check-item {
+    --padding-start: 14px;
+    --padding-end: 14px;
+    --background: transparent;
+    border-top: 1px solid #f0f4fc;
+    align-items: flex-start;
+
+    ion-checkbox {
+      --checkbox-background-checked: #{$navy};
+      --border-color-checked: #{$navy};
+      margin-top: 2px;
+    }
+
+    .check-label {
+      font-size: 12px;
+      color: #64748b;
+      line-height: 1.5;
+      white-space: normal;
+    }
+  }
 }
 
-.plan-name {
-  font-weight: 800;
-  font-size: 16px;
+.activate-btn {
+  --background: #{$navy};
+  --color: #ffffff;
+  --border-radius: 26px;
+  --box-shadow: none;
+  font-weight: 700;
+  font-size: 15px;
+  height: 52px;
+  text-transform: none;
+  margin: 0;
 }
 
-.plan-sub {
-  margin-top: 4px;
-  color: var(--ion-color-medium);
-  font-size: 13px;
-}
-
-.price {
-  text-align: right;
-}
-
-.amount {
-  font-size: 22px;
-  font-weight: 900;
-}
-
-.unit {
+.foot-note {
   font-size: 12px;
-  color: var(--ion-color-medium);
-}
-
-.divider {
-  height: 1px;
-  background: rgba(0,0,0,0.08);
-  margin: 12px 0;
-}
-
-.features {
-  display: grid;
-  gap: 8px;
-}
-
-.feat {
-  font-size: 14px;
-}
-
-.toggle {
-  margin-top: 12px;
-  --padding-start: 0;
-}
-
-.small {
-  font-size: 12px;
-  color: var(--ion-color-medium);
-}
-
-.foot {
-  margin-top: 12px;
-  font-size: 12px;
-  color: var(--ion-color-medium);
+  color: #94a3b8;
+  text-align: center;
+  line-height: 1.55;
 }

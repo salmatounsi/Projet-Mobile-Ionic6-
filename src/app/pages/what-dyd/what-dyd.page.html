@@ -1,43 +1,73 @@
-<ion-header [translucent]="true">
-  <ion-toolbar color="primary">
-    <ion-title>Professional Role</ion-title>
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Inscription</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="solid" class="step-badge">Étape 2 sur 6</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <div class="form-container">
-    <h2>Got it. Now, add a title to tell the world what you do</h2>
-    <p>
-      It's the very final first thing clients see, so make it count. 
-      Stand out by describing your expertise in your own words.
-    </p>
-
-    <form [formGroup]="roleForm" (ngSubmit)="onSubmit()">
-    <div class="role-selection-container ion-margin-top">
-      <ion-label class="input-label">Your professional role</ion-label>
-      
-      <ion-item lines="outline" class="custom-input-item">
-        <ion-select placeholder="Select your role" formControlName="role" interface="popover" justify="space-between">
-          <ion-select-option value="fullstack">Full stack web developer</ion-select-option>
-          <ion-select-option value="frontend">Front-end Developer</ion-select-option>
-          <ion-select-option value="backend">Back-end Developer</ion-select-option>
-          <ion-select-option value="uiux">UI/UX Designer</ion-select-option>
-          <ion-select-option value="mobile">Mobile App Developer</ion-select-option>
-          <ion-select-option value="data">Data Scientist</ion-select-option>
-        </ion-select>
-        </ion-item>
+<ion-content>
+  <div class="top-section">
+    <div class="progress-section">
+      <div class="prog-label">
+        <span>Compléter le profil</span>
+        <strong>33%</strong>
+      </div>
+      <div class="prog-track">
+        <div class="prog-fill"></div>
+      </div>
     </div>
-
-    <div class="navigation-footer">
-      <ion-button fill="clear" class="back-circle-button">
-        <ion-icon slot="icon-only" name="chevron-back-outline"></ion-icon>
-      </ion-button>
-
-      <ion-button expand="block" type="submit" shape="round" class="add-experience-button">
-        Add experience
-      </ion-button>
-    </div>
-     </form>
+    <div class="hero-kicker">Votre identité pro</div>
+    <h2 class="hero-title">Quel est votre rôle ?</h2>
+    <p class="hero-sub">C'est la première chose que les clients voient — décrivez votre expertise avec vos propres mots.</p>
   </div>
- 
+
+  <div class="body">
+    <form [formGroup]="roleForm" (ngSubmit)="onSubmit()">
+
+      <div class="card">
+        <div class="card-head">
+          <div class="card-icon">
+            <ion-icon name="briefcase-outline" class="c-icon"></ion-icon>
+          </div>
+          <span class="card-title">Rôle professionnel</span>
+        </div>
+
+        <div class="fields-wrap">
+          <div class="field-group">
+            <label class="field-label">Sélectionnez votre rôle</label>
+            <ion-item lines="none" class="field-item">
+              <ion-select
+                placeholder="Choisir un rôle..."
+                formControlName="role"
+                interface="popover"
+                justify="space-between">
+                <ion-select-option value="fullstack">Full Stack Developer</ion-select-option>
+                <ion-select-option value="frontend">Front-end Developer</ion-select-option>
+                <ion-select-option value="backend">Back-end Developer</ion-select-option>
+                <ion-select-option value="uiux">UI/UX Designer</ion-select-option>
+                <ion-select-option value="mobile">Mobile App Developer</ion-select-option>
+                <ion-select-option value="data">Data Scientist</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <ion-button class="skip-btn" fill="clear" (click)="onSubmit()">
+          ← Retour
+        </ion-button>
+        <ion-button class="submit-btn" type="submit">
+          Suivant
+          <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
+        </ion-button>
+      </div>
+
+    </form>
+  </div>
 </ion-content>

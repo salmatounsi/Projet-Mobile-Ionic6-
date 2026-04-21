@@ -1,41 +1,67 @@
-<ion-content class="login-page">
+<ion-content>
+  <div class="body">
 
-  <div class="login-container">
-
-    <h2>Log in</h2>
-
-    <div class="form-group">
-      <label>Username or Email</label>
-      <ion-input
-        [(ngModel)]="email"
-        placeholder="Username or Email"
-        fill="outline">
-      </ion-input>
+    <div class="top-block">
+      <div class="logo-circle">
+        <ion-icon name="briefcase-outline" class="logo-icon"></ion-icon>
+      </div>
+      <h2 class="page-title">Connectez-vous.</h2>
+      <p class="page-sub">Accédez à votre espace FreelanceHub.</p>
     </div>
 
-    <div class="form-group">
-      <label>Password</label>
-      <ion-input
-        [(ngModel)]="password"
-        type="password"
-        placeholder="Password"
-        fill="outline">
-      </ion-input>
+    <div class="card">
+      <div class="card-head">
+        <div class="card-icon">
+          <ion-icon name="person-outline" class="c-icon"></ion-icon>
+        </div>
+        <span class="card-title">Vos identifiants</span>
+      </div>
+
+      <div class="fields-wrap">
+        <div class="field-group">
+          <label class="field-label">Nom d'utilisateur ou Email</label>
+          <ion-item lines="none" class="field-item">
+            <ion-input
+              [(ngModel)]="email"
+              type="email"
+              placeholder="jean.dupont@email.com">
+            </ion-input>
+          </ion-item>
+        </div>
+
+        <div class="field-group">
+          <div class="label-row">
+            <label class="field-label">Mot de passe</label>
+            <span class="forgot-link">Mot de passe oublié ?</span>
+          </div>
+          <ion-item lines="none" class="field-item">
+            <ion-input
+              [(ngModel)]="password"
+              type="password"
+              placeholder="••••••••">
+            </ion-input>
+          </ion-item>
+        </div>
+      </div>
     </div>
+
     <p class="error-message" *ngIf="errorMessage">
+      <ion-icon name="alert-circle-outline"></ion-icon>
       {{ errorMessage }}
     </p>
-    <ion-button expand="block" (click)="login()">
-      Continue
+
+    <ion-button expand="block" class="submit-btn" (click)="login()">
+      Se connecter
+      <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
     </ion-button>
 
-    <div class="signup-section">
-      <p>Don't have an account ?</p>
-      <ion-button fill="solid" size="small" routerLink="/general-info">
-        Sign Up
+    <div class="signup-row">
+      <p class="signup-text">Pas encore de compte ?</p>
+      <ion-button fill="clear" class="signup-link" routerLink="/signup">
+        S'inscrire
+        <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
       </ion-button>
     </div>
 
   </div>
-
 </ion-content>

@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import {AuthService} from "./auth-service";
 
 export interface Product {
   _id?: string;
@@ -22,15 +23,20 @@ export interface Product {
 })
 export class ProductApiService {
   private apiUrl = 'http://127.0.0.1:5000/api/products';
+  private authService = inject(AuthService);
 
-  constructor(private http: HttpClient) {}
-
+  constructor() {}
+  private http = inject(HttpClient)
   getProducts(): Observable<Product[]> {
     return this.http.get<Product[]>(this.apiUrl);
   }
 
-  createProduct(product: Product): Observable<Product> {
-    return this.http.post<Product>(this.apiUrl, product);
+  createProduct(payload: FormData): Observable<Product> {
+    const token = this.authService.getToken();
+    const headers = {
+      'Authorization': `Bearer ${token}`
+    }
+    return this.http.post<Product>(this.apiUrl, payload, { headers });
   }
 
   getProductById(id: string): Observable<Product> {

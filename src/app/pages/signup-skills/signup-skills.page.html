@@ -1,56 +1,101 @@
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-title>Create Your Profile</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Inscription</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="solid" class="step-badge">Étape 6 sur 6</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <h2>What work are you here to do?</h2>
-  <p class="hint">
-    Your skills show clients what you can offer and help us recommend relevant jobs.
-  </p>
-
-  <ion-item>
-    <ion-label position="stacked">Your skills</ion-label>
-    <ion-input
-      [(ngModel)]="skillInput"
-      placeholder="Type a skill and press Add"
-      (keyup.enter)="addFromInput()"
-    ></ion-input>
-  </ion-item>
-
-  <ion-button expand="block" fill="outline" (click)="addFromInput()">
-    Add Skill
-  </ion-button>
-
-  <div class="section">
-    <ion-text color="medium"><small>Selected skills</small></ion-text>
-    <div class="chips">
-      <ion-chip *ngFor="let s of signup.skills" (click)="signup.removeSkill(s)">
-        <ion-label>{{ s }}</ion-label>
-        <ion-icon name="close-circle" color="medium"></ion-icon>
-      </ion-chip>
-
-      <ion-text *ngIf="signup.skills.length === 0" color="medium">
-        <small>No skills selected yet.</small>
-      </ion-text>
+<ion-content>
+  <div class="top-section">
+    <div class="progress-section">
+      <div class="prog-label">
+        <span>Compléter le profil</span>
+        <strong>100%</strong>
+      </div>
+      <div class="prog-track">
+        <div class="prog-fill"></div>
+      </div>
     </div>
+    <div class="hero-kicker">Votre profil</div>
+    <h2 class="hero-title">Vos compétences.</h2>
+    <p class="hero-sub">Vos compétences montrent aux clients ce que vous pouvez offrir et nous aident à recommander des missions pertinentes.</p>
   </div>
 
-  <div class="section">
-    <ion-text color="medium"><small>Suggested skills</small></ion-text>
-    <div class="chips">
-      <ion-chip
-        *ngFor="let s of suggestedSkills"
-        [outline]="!signup.skills.includes(s)"
-        (click)="toggleSuggested(s)"
-      >
-        <ion-label>{{ s }}</ion-label>
-      </ion-chip>
-    </div>
-  </div>
+  <div class="body">
 
-  <ion-button expand="block" [disabled]="signup.skills.length === 0" (click)="next()">
-    Next add Languages →
-  </ion-button>
+    <div class="card">
+      <div class="card-head">
+        <div class="card-icon">
+          <ion-icon name="flash-outline" class="c-icon"></ion-icon>
+        </div>
+        <span class="card-title">Ajouter une compétence</span>
+      </div>
+      <div class="input-row">
+        <ion-item lines="none" class="field-item">
+          <ion-input
+            [(ngModel)]="skillInput"
+            placeholder="Ex : JavaScript, Design, Python..."
+            (keyup.enter)="addFromInput()">
+          </ion-input>
+        </ion-item>
+        <ion-button class="add-inline-btn" (click)="addFromInput()">
+          <ion-icon name="add-outline"></ion-icon>
+        </ion-button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div class="card-icon">
+          <ion-icon name="checkmark-circle-outline" class="c-icon"></ion-icon>
+        </div>
+        <span class="card-title">Compétences sélectionnées</span>
+        <span class="count-badge" *ngIf="signup.skills.length">{{ signup.skills.length }}</span>
+      </div>
+      <div class="chips-wrap">
+        <span class="chip active"
+              *ngFor="let s of signup.skills"
+              (click)="signup.removeSkill(s)">
+          {{ s }}
+          <ion-icon name="close-outline" class="chip-close"></ion-icon>
+        </span>
+        <p class="empty-chips" *ngIf="signup.skills.length === 0">
+          Aucune compétence sélectionnée.
+        </p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div class="card-icon">
+          <ion-icon name="bulb-outline" class="c-icon"></ion-icon>
+        </div>
+        <span class="card-title">Compétences suggérées</span>
+      </div>
+      <div class="chips-wrap">
+        <span class="chip"
+              *ngFor="let s of suggestedSkills"
+              [class.active]="signup.skills.includes(s)"
+              (click)="toggleSuggested(s)">
+          {{ s }}
+        </span>
+      </div>
+    </div>
+
+    <div class="footer">
+      <ion-button class="submit-btn"
+                  expand="block"
+                  [disabled]="signup.skills.length === 0"
+                  (click)="next()">
+        Terminer
+        <ion-icon name="checkmark-outline" slot="end"></ion-icon>
+      </ion-button>
+    </div>
+
+  </div>
 </ion-content>

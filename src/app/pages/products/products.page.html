@@ -1,7 +1,6 @@
 <ion-header class="ion-no-border">
-  <ion-toolbar class="custom-toolbar">
+  <ion-toolbar>
     <ion-title>Products</ion-title>
-
     <ion-buttons slot="end">
       <ion-button class="icon-btn" (click)="goToNewProduct()">
         <ion-icon name="add-outline"></ion-icon>
@@ -10,69 +9,71 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="products-content">
-  <div class="products-wrapper">
-    <div class="hero-section">
-      <h1>Digital Products Marketplace</h1>
-      <p>
-        Browse useful templates, datasets, starter kits and code resources.
-      </p>
+<ion-content [fullscreen]="true">
+  <div class="body">
+
+    <div class="top-block">
+      <h2 class="page-title">Digital Products Marketplace</h2>
+      <p class="page-sub">Parcourez les templates, datasets, kits et ressources.</p>
     </div>
 
     <div class="search-box">
-      <ion-icon name="search-outline"></ion-icon>
+      <ion-icon name="search-outline" class="search-icon"></ion-icon>
       <input
         type="text"
-        placeholder="Search products, authors or licenses"
+        placeholder="Rechercher un produit, auteur ou licence..."
         [(ngModel)]="searchTerm"
         (input)="onSearchChange()"
       />
     </div>
 
     <div class="section-header">
-      <h2>Available Products</h2>
-      <span>{{ filteredProducts.length }} items</span>
+      <h3 class="section-title">Produits disponibles</h3>
+      <span class="section-count">{{ filteredProducts.length }} résultats</span>
     </div>
 
     <div class="products-list">
       <div class="product-card" *ngFor="let product of filteredProducts">
-        <div class="card-top">
-          <div class="author-info">
-            <div class="avatar">
-              <ion-icon name="person-outline"></ion-icon>
-            </div>
 
-            <div class="author-text">
-              <h3>{{ product.seller_name }}</h3>
-              <p>{{ product.seller_role }}</p>
-            </div>
-          </div>
-
-          <div class="price-badge">
-            {{ product.price }} TND
-          </div>
+        <div class="image-wrap">
+          <img
+            [src]="product?.main_image || 'assets/avatar.png'"
+            alt="product image"
+            class="product-image"
+          />
+          <div class="price-badge">{{ product.price }} TND</div>
         </div>
 
         <div class="card-body">
-          <h2>{{ product.title }}</h2>
-
+          <h3 class="product-title">{{ product.title }}</h3>
           <div class="meta-row">
-            <span class="meta-chip">Version {{ product.version }}</span>
+            <span class="meta-chip">v{{ product.version }}</span>
             <span class="meta-chip">{{ product.license }}</span>
+          </div>
+          <div class="seller-info">
+            <div class="seller-avatar">
+              <ion-icon name="person-outline"></ion-icon>
+            </div>
+
+            <div class="seller-text">
+              <p class="seller-name">{{ product.seller_name }}</p>
+              <p class="seller-role">{{ product.seller_role }}</p>
+            </div>
           </div>
         </div>
 
         <div class="card-footer">
           <ion-button fill="clear" class="details-btn">
-            Details
+            Détails
           </ion-button>
-
           <ion-button class="buy-btn" (click)="buyProduct(product)">
             <ion-icon name="cart-outline" slot="start"></ion-icon>
-            Buy Now
+            Acheter
           </ion-button>
         </div>
+
       </div>
     </div>
+
   </div>
 </ion-content>

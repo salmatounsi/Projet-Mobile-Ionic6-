@@ -1,53 +1,72 @@
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-title>Specialties</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Inscription</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="solid" class="step-badge">Étape 5 sur 6</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content>
+  <div class="top-section">
+    <div class="progress-section">
+      <div class="prog-label">
+        <span>Compléter le profil</span>
+        <strong>83%</strong>
+      </div>
+      <div class="prog-track">
+        <div class="prog-fill"></div>
+      </div>
+    </div>
+    <div class="hero-kicker">Votre profil</div>
+    <h2 class="hero-title">Vos spécialités.</h2>
+    <p class="hero-sub">Quel type de travail souhaitez-vous faire ? Choisissez vos domaines d'expertise.</p>
+  </div>
 
-  <h2>What kind of work are you here to do ?</h2>
+  <div class="body">
 
-  <ion-list>
+    <div class="count-bar" *ngIf="selectedSpecialties.length > 0">
+      <ion-icon name="checkmark-circle-outline"></ion-icon>
+      {{ selectedSpecialties.length }} spécialité(s) sélectionnée(s)
+    </div>
 
-    <div *ngFor="let cat of categories">
-
-      <ion-item button (click)="toggleCategory(cat)">
-        <ion-label>{{ cat.name }}</ion-label>
+    <div class="card" *ngFor="let cat of categories">
+      <div class="cat-header" (click)="toggleCategory(cat)">
+        <div class="card-icon">
+          <ion-icon name="grid-outline" class="c-icon"></ion-icon>
+        </div>
+        <span class="cat-title">{{ cat.name }}</span>
         <ion-icon
-          [name]="cat.open ? 'chevron-up' : 'chevron-down'"
-          slot="end">
+          class="chevron"
+          [name]="cat.open ? 'chevron-up-outline' : 'chevron-down-outline'">
         </ion-icon>
-      </ion-item>
+      </div>
 
-      <div *ngIf="cat.open">
-        <ion-item
-          *ngFor="let spec of cat.specialties"
-          lines="none">
-
+      <div class="spec-list" *ngIf="cat.open">
+        <div class="spec-item" *ngFor="let spec of cat.specialties">
           <ion-checkbox
-            slot="start"
+            class="spec-check"
             [checked]="isSelected(spec)"
             (ionChange)="toggleSpecialty(spec)">
           </ion-checkbox>
-
-          <ion-label>{{ spec }}</ion-label>
-
-        </ion-item>
+          <span class="spec-label">{{ spec }}</span>
+        </div>
       </div>
-
     </div>
 
-  </ion-list>
+    <div class="footer">
+      <ion-button
+        class="submit-btn"
+        expand="block"
+        [disabled]="selectedSpecialties.length === 0"
+        (click)="next()">
+        Suivant
+        <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
+      </ion-button>
+    </div>
 
-  <ion-button
-    expand="block"
-    [disabled]="selectedSpecialties.length === 0"
-    class="next-btn"
-    (click)="next()"
-  >
-
-   Next add skills>
-  </ion-button>
-
+  </div>
 </ion-content>

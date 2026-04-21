@@ -7,52 +7,81 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <h2>Monthly Subscription</h2>
-  <p class="hint">
-    Activate your Business Plan to unlock premium features for your FreelanceHub account.
-  </p>
+<ion-content>
+  <div class="body">
 
-  <div class="plan-card">
-    <div class="top">
-      <div>
-        <div class="plan-name">Business Plan</div>
-        <div class="plan-sub">Billed monthly • Cancel anytime</div>
+    <div class="top-block">
+      <h2 class="page-title">Abonnement mensuel</h2>
+      <p class="page-hint">
+        Activez votre Business Plan pour débloquer les fonctionnalités premium de votre compte FreelanceHub.
+      </p>
+    </div>
+
+    <div class="plan-card">
+      <div class="plan-top">
+        <div>
+          <div class="plan-name">Business Plan</div>
+          <div class="plan-sub">Facturation mensuelle · Annulable</div>
+        </div>
+        <div class="price-box">
+          <div class="amount">19.99</div>
+          <div class="unit">TND / mois</div>
+        </div>
       </div>
 
-      <div class="price">
-        <div class="amount">19.99</div>
-        <div class="unit">TND / month</div>
+      <div class="plan-divider"></div>
+
+      <div class="features">
+        <div class="feat">
+          <div class="feat-dot">
+            <ion-icon name="checkmark-outline"></ion-icon>
+          </div>
+          Propositions illimitées
+        </div>
+        <div class="feat">
+          <div class="feat-dot">
+            <ion-icon name="checkmark-outline"></ion-icon>
+          </div>
+          Support prioritaire
+        </div>
+        <div class="feat">
+          <div class="feat-dot">
+            <ion-icon name="checkmark-outline"></ion-icon>
+          </div>
+          Accès aux offres premium
+        </div>
+        <div class="feat">
+          <div class="feat-dot">
+            <ion-icon name="checkmark-outline"></ion-icon>
+          </div>
+          Réductions boutique
+        </div>
       </div>
     </div>
 
-    <div class="divider"></div>
+    <div class="white-card">
+      <ion-item lines="none" class="toggle-item">
+        <ion-label class="toggle-label">Renouvellement automatique</ion-label>
+        <ion-toggle [(ngModel)]="autoRenew" slot="end"></ion-toggle>
+      </ion-item>
 
-    <div class="features">
-      <div class="feat">✅ Unlimited proposals</div>
-      <div class="feat">✅ Priority support</div>
-      <div class="feat">✅ Access to premium gigs</div>
-      <div class="feat">✅ Store discounts</div>
+      <ion-item lines="none" class="check-item">
+        <ion-checkbox slot="start" [(ngModel)]="agreed"></ion-checkbox>
+        <ion-label class="check-label">
+          J'accepte les conditions et comprends qu'il s'agit d'un paiement simulé.
+        </ion-label>
+      </ion-item>
     </div>
+
+    <ion-button expand="block" class="activate-btn"
+                [disabled]="!agreed" (click)="continue()">
+      Activer l'abonnement
+      <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
+    </ion-button>
+
+    <p class="foot-note">
+      Vous pouvez annuler à tout moment. Si le renouvellement automatique est activé, votre abonnement se renouvelle chaque mois.
+    </p>
+
   </div>
-
-  <ion-item lines="none" class="toggle">
-    <ion-label>Auto-renew every month</ion-label>
-    <ion-toggle [(ngModel)]="autoRenew"></ion-toggle>
-  </ion-item>
-
-  <ion-item lines="none" class="toggle">
-    <ion-checkbox slot="start" [(ngModel)]="agreed"></ion-checkbox>
-    <ion-label class="small">
-      I agree to the Terms and understand this is a simulated payment.
-    </ion-label>
-  </ion-item>
-
-  <ion-button expand="block" [disabled]="!agreed" (click)="continue()">
-    Activate Subscription
-  </ion-button>
-
-  <p class="foot">
-    You can cancel anytime. If auto-renew is enabled, your subscription renews monthly.
-  </p>
 </ion-content>

@@ -1,62 +1,27 @@
-import {Component, inject, OnInit} from '@angular/core';
-import { FormBuilder, FormGroup, Validators,ReactiveFormsModule } from '@angular/forms';
+import { Component, inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import {AuthService} from "../../services/auth-service";
-import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
-
+import { AuthService } from "../../services/auth-service";
 
 @Component({
   selector: 'app-general-info',
-  standalone:false,
+  standalone: false,
   templateUrl: './general-info.page.html',
   styleUrls: ['./general-info.page.scss'],
 })
 export class GeneralInfoPage implements OnInit {
-photoDataUrl: string | null = null;
-registerForm: FormGroup; 
- async takePhoto() {
-    const image = await Camera.getPhoto({
-      quality: 80,
-      resultType: CameraResultType.DataUrl,
-      source: CameraSource.Camera
-    });
-    this.photoDataUrl = image.dataUrl!;
-  }
+  registerForm: FormGroup;
+  selectedImageFile: File | null = null;
+  imagePreview: string | ArrayBuffer | null = null;
 
-  async pickImage() {
-    const image = await Camera.getPhoto({
-      quality: 80,
-      resultType: CameraResultType.DataUrl,
-      source: CameraSource.Photos
-    });
-    this.photoDataUrl = image.dataUrl!;
-  }
-  private blob ?: Blob;
-  private formData ?: FormData;
-  upload() {
-    if (!this.photoDataUrl) return;
+  authService = inject(AuthService);
 
-    this.blob = this.dataUrlToBlob(this.photoDataUrl);
-    this.formData = new FormData();
-    this.formData.append('file', this.blob, 'photo.jpg');
-   
-  }
-
-  private dataUrlToBlob(dataUrl: string): Blob {
-    const arr = dataUrl.split(',');
-    const mime = arr[0].match(/:(.*?);/)![1];
-    const bstr = atob(arr[1]);
-    let n = bstr.length;
-    const u8arr = new Uint8Array(n);
-    while (n--) {
-      u8arr[n] = bstr.charCodeAt(n);
-    }
-    return new Blob([u8arr], { type: mime });
-  }
-  constructor(private fb: FormBuilder, private http: HttpClient,  private router: Router
-) {
-
+  constructor(
+    private fb: FormBuilder,
+    private http: HttpClient,
+    private router: Router
+  ) {
     this.registerForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
@@ -67,17 +32,41 @@ registerForm: FormGroup;
       terms: [false, Validators.requiredTrue]
     });
   }
-  ngOnInit(): void {
 
+  ngOnInit(): void {}
+
+  onImageSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const file = input.files && input.files[0];
+
+    if (!file) return;
+
+    this.selectedImageFile = file;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.imagePreview = reader.result;
+    };
+    reader.readAsDataURL(file);
   }
-  authService = inject(AuthService);
-  onSubmit() {
-    if (this.registerForm.valid) {
-      console.log(this.registerForm.value);
 
-      this.http.post('http://127.0.0.1:5000/register', this.registerForm.value,{ withCredentials: true })
-        .subscribe((response:any) => {
-          console.log('Success:', response);
+  onSubmit() {
+    if (this.registerForm.invalid) return;
+
+    const formData = new FormData();
+    formData.append('firstName', this.registerForm.get('firstName')?.value);
+    formData.append('lastName', this.registerForm.get('lastName')?.value);
+    formData.append('email', this.registerForm.get('email')?.value);
+    formData.append('password', this.registerForm.get('password')?.value);
+    formData.append('country', this.registerForm.get('country')?.value);
+
+    if (this.selectedImageFile) {
+      formData.append('profile_image', this.selectedImageFile);
+    }
+
+    this.http.post('http://127.0.0.1:5000/register', formData, { withCredentials: true })
+      .subscribe({
+        next: (response: any) => {
           this.authService.setToken(response.token);
            const headers = {
           'Authorization': `Bearer ${response.token}`
@@ -88,12 +77,10 @@ registerForm: FormGroup;
           error: err => console.error('Upload failed', err)
           });
           this.router.navigate(['/what-dyd']);
-
-        }, error => {
+        },
+        error: (error) => {
           console.error('Error:', error);
-        });
-    }
+        }
+      });
   }
-
-
 }
