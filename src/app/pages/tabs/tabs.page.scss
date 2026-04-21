@@ -1,0 +1,46 @@
+/* Barre du bas : clean, moderne, harmonique */
+ion-tab-bar {
+  --background: #ffffff;
+  --border: rgba(0, 0, 0, 0.06);
+  --color: rgba(18, 38, 63, 0.55);
+  --color-selected: var(--ion-color-primary);
+
+  height: 70px;
+  padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
+  box-shadow: 0 -10px 28px rgba(0, 0, 0, 0.08);
+}
+
+/* Bouton tab */
+ion-tab-button {
+  --ripple-color: rgba(56, 128, 255, 0.12);
+  border-radius: 16px;
+  transition: transform 160ms ease, background 160ms ease;
+
+  ion-icon {
+    font-size: 22px;
+    margin-bottom: 4px;
+    transition: transform 160ms ease, color 160ms ease;
+  }
+
+  ion-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    transition: color 160ms ease;
+  }
+}
+
+/* Onglet actif : “pill” léger + lift */
+ion-tab-button.tab-selected {
+  background: rgba(56, 128, 255, 0.10);
+  transform: translateY(-2px);
+
+  ion-icon {
+    transform: scale(1.08);
+  }
+
+  ion-icon,
+  ion-label {
+    color: var(--ion-color-primary);
+  }
+}

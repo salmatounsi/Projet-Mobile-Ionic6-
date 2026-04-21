@@ -1,0 +1,64 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/messages"></ion-back-button>
+    </ion-buttons>
+    <div class="chat-header-info">
+      <div class="chat-avatar">{{ contact?.name | slice:0:1 }}</div>
+      <div class="chat-header-texts">
+        <span class="chat-name">{{ contact?.name || 'Conversation' }}</span>
+        <span class="chat-status">{{ contact?.role || 'Freelancer' }}</span>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content #scrollContent>
+  <div class="messages-body">
+
+    <div class="empty-chat" *ngIf="messages.length === 0">
+      <ion-icon name="chatbubble-outline" class="empty-icon"></ion-icon>
+      <p>Aucun message pour l'instant.<br>Commencez la conversation !</p>
+    </div>
+
+    <div *ngFor="let group of groupedMessages">
+      <div class="day-separator">
+        <span>{{ group.date }}</span>
+      </div>
+
+      <div class="messages-list">
+        <div class="msg-row"
+             *ngFor="let msg of group.msgs"
+             [class.sent]="msg.sent"
+             [class.received]="!msg.sent">
+
+          <div class="msg-avatar" *ngIf="!msg.sent">
+            {{ contact?.name | slice:0:1 }}
+          </div>
+
+          <div class="msg-bubble">
+            <p class="msg-text">{{ msg.text }}</p>
+            <span class="msg-time">{{ msg.time }}</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</ion-content>
+
+<div class="input-bar">
+  <ion-item lines="none" class="input-item">
+    <ion-input
+      [(ngModel)]="newMessage"
+      placeholder="Écrire un message..."
+      (keyup.enter)="sendMessage()">
+    </ion-input>
+  </ion-item>
+  <ion-button class="send-btn"
+              (click)="sendMessage()"
+              [disabled]="!newMessage.trim()">
+    <ion-icon name="send-outline"></ion-icon>
+  </ion-button>
+</div>

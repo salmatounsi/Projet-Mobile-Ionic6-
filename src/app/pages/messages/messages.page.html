@@ -1,0 +1,59 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>Messages</ion-title>
+  </ion-toolbar>
+  <div class="search-bar-wrap">
+    <div class="search-box">
+      <ion-icon name="search-outline" class="search-icon"></ion-icon>
+      <input
+        type="text"
+        placeholder="Rechercher une conversation..."
+        [(ngModel)]="searchTerm"
+        (input)="onSearch()"
+      />
+    </div>
+  </div>
+</ion-header>
+
+<ion-content>
+  <div class="body">
+
+    <div class="section-header">
+      <h3 class="section-title">Conversations</h3>
+      <span class="section-count">{{ filteredConversations.length }}</span>
+    </div>
+
+    <div class="empty-state" *ngIf="filteredConversations.length === 0">
+      <ion-icon name="chatbubbles-outline" class="empty-icon"></ion-icon>
+      <p class="empty-text">Aucune conversation pour l'instant.</p>
+    </div>
+
+    <div class="conv-list">
+      <div class="conv-card"
+           *ngFor="let conv of filteredConversations"
+           (click)="openChat(conv)">
+
+        <div class="avatar-wrap">
+          <div class="avatar-initials">{{ conv.name | slice:0:1 }}</div>
+          <span class="online-dot" *ngIf="conv.online"></span>
+        </div>
+
+        <div class="conv-info">
+          <div class="conv-top">
+            <span class="conv-name">{{ conv.name }}</span>
+            <div class="conv-datetime">
+              <span class="conv-date">{{ conv.lastDate }}</span>
+              <span class="conv-time">{{ conv.lastTime }}</span>
+            </div>
+          </div>
+          <div class="conv-bottom">
+            <span class="conv-preview">{{ conv.lastMessage }}</span>
+            <span class="unread-badge" *ngIf="conv.unread > 0">{{ conv.unread }}</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</ion-content>
