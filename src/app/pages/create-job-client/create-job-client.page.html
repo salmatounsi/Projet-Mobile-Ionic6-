@@ -1,95 +1,184 @@
-<ion-header [translucent]="true">
+<ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button color="dark">
-        <ion-icon name="close-outline"></ion-icon>
+      <ion-button (click)="goBack()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>Détails du Job</ion-title>
+    <ion-title>Publier une offre</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  
-  <div class="section-header">
-    <h2>Commençons par un titre fort</h2>
-    <p>Cela aide votre annonce à se démarquer auprès des bons candidats.</p>
-  </div>
-  
-  <ion-item lines="outline" class="ion-margin-bottom">
-    <ion-label position="stacked">Titre du job</ion-label>
-    <ion-input placeholder="Ex: Développeur Angular/Ionic senior"></ion-input>
-  </ion-item>
+<ion-content>
+  <div class="body">
 
-  <ion-item lines="outline" class="ion-margin-bottom">
-    <ion-label position="stacked">Compétences principales (max 10)</ion-label>
-    <ion-input placeholder="Rechercher des compétences..."></ion-input>
-  </ion-item>
+    <!-- TITRE -->
+    <div class="form-section">
+      <div class="section-label">
+        <ion-icon name="create-outline"></ion-icon>
+        <span>Titre du poste</span>
+      </div>
+      <div class="field-wrap">
+        <input
+          class="field-input"
+          type="text"
+          placeholder="Ex : Développeur Angular senior"
+          [(ngModel)]="job.title"
+        />
+      </div>
+    </div>
 
-  <div class="section-header">
-    <h3>Estimez l'ampleur du travail</h3>
-  </div>
+    <!-- DESCRIPTION -->
+    <div class="form-section">
+      <div class="section-label">
+        <ion-icon name="document-text-outline"></ion-icon>
+        <span>Description</span>
+      </div>
+      <div class="field-wrap">
+        <textarea
+          class="field-textarea"
+          rows="4"
+          placeholder="Décrivez le poste, les responsabilités et les attentes..."
+          [(ngModel)]="job.description"
+        ></textarea>
+      </div>
+    </div>
 
-  <ion-radio-group value="medium">
-    <ion-item lines="none" class="custom-radio">
-      <ion-label>
-        <strong>Large</strong>
-        <p>Initiatives complexes à long terme</p>
-      </ion-label>
-      <ion-radio slot="start" value="large"></ion-radio>
-    </ion-item>
+    <!-- COMPÉTENCES -->
+    <div class="form-section">
+      <div class="section-label">
+        <ion-icon name="code-slash-outline"></ion-icon>
+        <span>Compétences requises</span>
+      </div>
+      <div class="field-wrap">
+        <input
+          class="field-input"
+          type="text"
+          placeholder="Angular, Python, UI/UX... (séparées par virgule)"
+          [(ngModel)]="job.skills"
+        />
+      </div>
+    </div>
 
-    <ion-item lines="none" class="custom-radio">
-      <ion-label>
-        <strong>Medium</strong>
-        <p>Projets bien définis</p>
-      </ion-label>
-      <ion-radio slot="start" value="medium"></ion-radio>
-    </ion-item>
+    <!-- CATÉGORIE -->
+    <div class="form-section">
+      <div class="section-label">
+        <ion-icon name="folder-outline"></ion-icon>
+        <span>Catégorie</span>
+      </div>
+      <div class="field-wrap select-wrap">
+        <select class="field-select" [(ngModel)]="job.category">
+          <option value="">Sélectionner une catégorie</option>
+          <option value="Développement">Développement</option>
+          <option value="Design">Design</option>
+          <option value="Marketing">Marketing</option>
+          <option value="Rédaction">Rédaction</option>
+          <option value="Finance">Finance</option>
+          <option value="Autre">Autre</option>
+        </select>
+        <ion-icon name="chevron-down-outline" class="select-arrow"></ion-icon>
+      </div>
+    </div>
 
-    <ion-item lines="none" class="custom-radio">
-      <ion-label>
-        <strong>Small</strong>
-        <p>Tâches rapides et directes</p>
-      </ion-label>
-      <ion-radio slot="start" value="small"></ion-radio>
-    </ion-item>
-  </ion-radio-group>
+    <!-- TAILLE DU PROJET -->
+    <div class="form-section">
+      <div class="section-label">
+        <ion-icon name="resize-outline"></ion-icon>
+        <span>Taille du projet</span>
+      </div>
+      <div class="size-grid">
+        <div class="size-card" [class.active]="job.size === 'small'" (click)="job.size = 'small'">
+          <ion-icon name="leaf-outline"></ion-icon>
+          <strong>Small</strong>
+          <span>Tâche rapide</span>
+        </div>
+        <div class="size-card" [class.active]="job.size === 'medium'" (click)="job.size = 'medium'">
+          <ion-icon name="albums-outline"></ion-icon>
+          <strong>Medium</strong>
+          <span>Projet défini</span>
+        </div>
+        <div class="size-card" [class.active]="job.size === 'large'" (click)="job.size = 'large'">
+          <ion-icon name="rocket-outline"></ion-icon>
+          <strong>Large</strong>
+          <span>Long terme</span>
+        </div>
+      </div>
+    </div>
 
-  <div class="section-header ion-margin-top">
-    <h3>Budget</h3>
-  </div>
+    <!-- BUDGET TYPE -->
+    <div class="form-section">
+      <div class="section-label">
+        <ion-icon name="cash-outline"></ion-icon>
+        <span>Type de budget</span>
+      </div>
+      <div class="toggle-row">
+        <div class="toggle-btn" [class.active]="job.budgetType === 'hourly'" (click)="job.budgetType = 'hourly'">
+          <ion-icon name="time-outline"></ion-icon> Taux horaire
+        </div>
+        <div class="toggle-btn" [class.active]="job.budgetType === 'fixed'" (click)="job.budgetType = 'fixed'">
+          <ion-icon name="pricetag-outline"></ion-icon> Prix fixe
+        </div>
+      </div>
+    </div>
 
-  <ion-segment value="hourly">
-    <ion-segment-button value="hourly">
-      <ion-label>Taux Horaire</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="fixed">
-      <ion-label>Prix Fixe</ion-label>
-    </ion-segment-button>
-  </ion-segment>
+    <!-- BUDGET RANGE -->
+    <div class="form-section">
+      <div class="section-label">
+        <ion-icon name="wallet-outline"></ion-icon>
+        <span>Budget (DT)</span>
+      </div>
+      <div class="budget-row">
+        <div class="field-wrap budget-field">
+          <label class="budget-label">De</label>
+          <input class="field-input" type="number" placeholder="0" [(ngModel)]="job.budgetFrom" />
+        </div>
+        <div class="budget-sep">—</div>
+        <div class="field-wrap budget-field">
+          <label class="budget-label">À</label>
+          <input class="field-input" type="number" placeholder="0" [(ngModel)]="job.budgetTo" />
+        </div>
+      </div>
+    </div>
 
-  <ion-row class="ion-margin-top">
-    <ion-col>
-      <ion-item lines="outline">
-        <ion-label position="stacked">De ($)</ion-label>
-        <ion-input type="number" value="7.00"></ion-input>
-      </ion-item>
-    </ion-col>
-    <ion-col>
-      <ion-item lines="outline">
-        <ion-label position="stacked">À ($)</ion-label>
-        <ion-input type="number" value="15.00"></ion-input>
-      </ion-item>
-    </ion-col>
-  </ion-row>
+    <!-- NIVEAU D'EXPÉRIENCE -->
+    <div class="form-section">
+      <div class="section-label">
+        <ion-icon name="bar-chart-outline"></ion-icon>
+        <span>Niveau d'expérience</span>
+      </div>
+      <div class="field-wrap select-wrap">
+        <select class="field-select" [(ngModel)]="job.experienceLevel">
+          <option value="">Sélectionner un niveau</option>
+          <option value="Junior">Junior</option>
+          <option value="Intermédiaire">Intermédiaire</option>
+          <option value="Senior">Senior</option>
+          <option value="Expert">Expert</option>
+        </select>
+        <ion-icon name="chevron-down-outline" class="select-arrow"></ion-icon>
+      </div>
+    </div>
 
-</ion-content>
+    <!-- LOCALISATION -->
+    <div class="form-section">
+      <div class="section-label">
+        <ion-icon name="location-outline"></ion-icon>
+        <span>Localisation</span>
+      </div>
+      <div class="field-wrap">
+        <input
+          class="field-input"
+          type="text"
+          placeholder="Ex : Tunis, Remote..."
+          [(ngModel)]="job.location"
+        />
+      </div>
+    </div>
 
-<ion-footer class="ion-no-border">
-  <ion-toolbar>
-    <ion-button expand="block" (click)="createJob()" color="success" class="ion-margin">
-    Créer le job
+    <!-- SUBMIT -->
+    <ion-button expand="block" class="submit-btn" (click)="createJob()">
+      Publier l'offre
+      <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
     </ion-button>
-  </ion-toolbar>
-</ion-footer>
+
+  </div>
+</ion-content>

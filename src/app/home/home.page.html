@@ -1,272 +1,155 @@
 <ion-content [fullscreen]="true" class="home-page">
 
-  <div class="background-overlay"></div>
-
   <!-- HERO -->
   <section class="hero-section">
     <div class="hero-content">
-      <div class="hero-text">
-        <span class="hero-badge">Jobs • Services • Products</span>
-
-        <h1>Hire talent, sell your skills, and grow your business in one place</h1>
-
-        <p>
-          Clients can post jobs and hire faster. Freelancers can work on projects,
-          offer services, and sell digital products to reach more customers.
-        </p>
-
-        <div class="hero-actions">
-          <ion-button shape="round" class="primary-btn" (click)="clientSignup()">
-            Start Hiring
-          </ion-button>
-
-          <ion-button fill="outline" shape="round" class="secondary-btn" (click)="freelancer()">
-            Start Earning
-          </ion-button>
-        </div>
-
-        <div class="hero-mini-points">
-          <div class="mini-point">
-            <ion-icon name="briefcase-outline"></ion-icon>
-            <span>Post jobs in minutes</span>
-          </div>
-          <div class="mini-point">
-            <ion-icon name="construct-outline"></ion-icon>
-            <span>Sell services easily</span>
-          </div>
-          <div class="mini-point">
-            <ion-icon name="cart-outline"></ion-icon>
-            <span>Offer digital products</span>
-          </div>
-        </div>
+      <span class="hero-badge">Emplois • Services • Produits</span>
+      <h1>Recrutez, vendez,<br><span class="hero-accent">développez-vous.</span></h1>
+      <p>La plateforme tout-en-un pour clients et freelancers.</p>
+      <div class="hero-actions">
+        <ion-button shape="round" class="btn-primary" (click)="clientSignup()">Trouver un talent</ion-button>
+        <ion-button fill="outline" shape="round" class="btn-ghost" (click)="freelancer()">Offrir mes services</ion-button>
       </div>
+    </div>
 
-      <div class="hero-side-card">
-        <div class="info-card">
-          <h3>Why join?</h3>
-          <ul>
-            <li>Clients get access to jobs, services, and ready-made products.</li>
-            <li>Freelancers can earn in more than one way.</li>
-            <li>A single platform for hiring, working, and selling.</li>
-          </ul>
-        </div>
-      </div>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-num">+10K</span><span class="stat-lbl">Freelancers</span></div>
+      <div class="stat-divider"></div>
+      <div class="stat"><span class="stat-num">+2K</span><span class="stat-lbl">Services</span></div>
+      <div class="stat-divider"></div>
+      <div class="stat"><span class="stat-num">100%</span><span class="stat-lbl">Sécurisé</span></div>
     </div>
   </section>
 
-  <!-- VALUE SECTION -->
+  <!-- VALUE -->
   <section class="value-section">
-    <div class="section-header center">
-      <h2>Everything users need from day one</h2>
-      <p>
-        This platform is not just for job posting. It also lets freelancers create
-        service listings and sell products directly.
-      </p>
-    </div>
-
+    <p class="section-label">Pourquoi FreelanceHub ?</p>
     <div class="value-grid">
       <div class="value-card">
-        <ion-icon name="megaphone-outline"></ion-icon>
-        <h3>For Clients</h3>
-        <p>Post jobs, discover skilled freelancers, or buy ready-made services and products.</p>
+        <div class="value-icon"><ion-icon name="megaphone-outline"></ion-icon></div>
+        <div>
+          <h3>Clients</h3>
+          <p>Publiez des offres et achetez des services ou produits.</p>
+        </div>
       </div>
-
       <div class="value-card">
-        <ion-icon name="people-outline"></ion-icon>
-        <h3>For Freelancers</h3>
-        <p>Apply to jobs, publish services, and create new income streams with products.</p>
+        <div class="value-icon"><ion-icon name="people-outline"></ion-icon></div>
+        <div>
+          <h3>Freelancers</h3>
+          <p>Postulez, proposez vos services et vendez vos créations.</p>
+        </div>
       </div>
-
       <div class="value-card">
-        <ion-icon name="flash-outline"></ion-icon>
-        <h3>For Growth</h3>
-        <p>Users understand the platform immediately because they can see real opportunities.</p>
+        <div class="value-icon"><ion-icon name="flash-outline"></ion-icon></div>
+        <div>
+          <h3>Croissance</h3>
+          <p>Des opportunités réelles visibles dès votre arrivée.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- FEATURED SERVICES -->
+  <!-- SERVICES -->
   <section class="listing-section">
-    <div class="section-header">
+    <div class="sec-head">
       <div>
-        <span class="section-tag">Featured Services</span>
-        <h2>Popular services clients can order instantly</h2>
-        <p>Show what freelancers can offer directly on the platform.</p>
+        <p class="section-label">En vedette</p>
+        <h2>Services populaires</h2>
       </div>
-
-      <ion-button fill="clear" (click)="browseServices()">
-        View all services
-      </ion-button>
+      <ion-button fill="clear" class="see-all" (click)="browseServices()">Voir tout →</ion-button>
     </div>
 
     <div class="cards-grid" *ngIf="services?.length; else noServices">
       <div class="listing-card" *ngFor="let service of services; trackBy: trackById">
-        <div class="listing-image-wrapper">
-          <img [src]="getImageUrl(service.image)" [alt]="service.title" class="listing-image" />
+        <div class="card-img">
+          <img [src]="getImageUrl(service.image)" [alt]="service.title" />
         </div>
-
-        <div class="listing-content">
-          <div class="top-row">
-            <span class="category">{{ service.category }}</span>
-            <span class="rating">
-              <ion-icon name="star"></ion-icon>
-              {{ service.rating }} ({{ service.reviews_count }})
-            </span>
+        <div class="card-body">
+          <div class="card-top">
+            <span class="tag">{{ service.category }}</span>
+            <span class="rating"><ion-icon name="star"></ion-icon>{{ service.rating }}</span>
           </div>
-
           <h3>{{ service.title }}</h3>
-          <p>{{ getShortDescription(service.description, 110) }}</p>
-
-          <div class="feature-list" *ngIf="service.features?.length">
-            <span class="feature-chip" *ngFor="let feature of service.features | slice:0:3">
-              {{ feature }}
-            </span>
-          </div>
-
-          <div class="meta-row">
-            <span>{{ service.delivery_time }} days delivery</span>
-            <span>{{ service.revisions }} revisions</span>
-          </div>
-
           <div class="price-row">
-            <div class="price-block">
-              <small>Basic</small>
-              <strong>{{ service.price_basic }} DT</strong>
-            </div>
-            <div class="price-block">
-              <small>Standard</small>
-              <strong>{{ service.price_standard }} DT</strong>
-            </div>
-            <div class="price-block">
-              <small>Premium</small>
-              <strong>{{ service.price_premium }} DT</strong>
-            </div>
+            <div class="price-block"><small>Basic</small><strong>{{ service.price_basic }} DT</strong></div>
+            <div class="price-block"><small>Standard</small><strong>{{ service.price_standard }} DT</strong></div>
+            <div class="price-block"><small>Premium</small><strong>{{ service.price_premium }} DT</strong></div>
           </div>
         </div>
       </div>
     </div>
-
     <ng-template #noServices>
-      <div class="empty-state">
-        <p>No service samples yet.</p>
-      </div>
+      <div class="empty-state">Aucun service pour l'instant.</div>
     </ng-template>
   </section>
 
-  <!-- FEATURED PRODUCTS -->
-  <section class="listing-section alt-section">
-    <div class="section-header">
+  <!-- PRODUCTS -->
+  <section class="listing-section">
+    <div class="sec-head">
       <div>
-        <span class="section-tag">Featured Products</span>
-        <h2>Digital products freelancers can sell</h2>
-        <p>Templates, starter kits, assets, guides, and more.</p>
+        <p class="section-label">En vedette</p>
+        <h2>Produits numériques</h2>
       </div>
-
-      <ion-button fill="clear" (click)="browseProducts()">
-        View all products
-      </ion-button>
+      <ion-button fill="clear" class="see-all" (click)="browseProducts()">Voir tout →</ion-button>
     </div>
 
     <div class="cards-grid" *ngIf="products?.length; else noProducts">
       <div class="listing-card" *ngFor="let product of products; trackBy: trackById">
-        <div class="listing-image-wrapper">
-          <img [src]="getImageUrl(product.main_image)" [alt]="product.title" class="listing-image" />
+        <div class="card-img">
+          <img [src]="getImageUrl(product.main_image)" [alt]="product.title" />
         </div>
-
-        <div class="listing-content">
-
-
+        <div class="card-body">
           <h3>{{ product.title }}</h3>
-          <p>{{ getShortDescription(product.description, 110) }}</p>
-
-
-
-
-          <div class="meta-row">
-            <span>Version {{ product.version }}</span>
-            <span>{{ product.gallery?.length || 0 }} gallery items</span>
-          </div>
-
-          <div class="single-price-row">
-            <span>Starting at</span>
+          <p class="card-desc">{{ getShortDescription(product.description, 60) }}</p>
+          <div class="single-price">
+            <span>À partir de</span>
             <strong>{{ product.price }} DT</strong>
           </div>
         </div>
       </div>
     </div>
-
     <ng-template #noProducts>
-      <div class="empty-state">
-        <p>No product samples yet.</p>
-      </div>
+      <div class="empty-state">Aucun produit pour l'instant.</div>
     </ng-template>
   </section>
 
-  <!-- FEATURED JOBS -->
+  <!-- JOBS -->
   <section class="listing-section">
-    <div class="section-header">
+    <div class="sec-head">
       <div>
-        <span class="section-tag">Featured Jobs</span>
-        <h2>Recent opportunities for freelancers</h2>
-        <p>Let visitors immediately see that work is happening on the platform.</p>
+        <p class="section-label">En vedette</p>
+        <h2>Opportunités récentes</h2>
       </div>
-
-      <ion-button fill="clear" (click)="browseJobs()">
-        View all jobs
-      </ion-button>
+      <ion-button fill="clear" class="see-all" (click)="browseJobs()">Voir tout →</ion-button>
     </div>
 
     <div class="jobs-grid" *ngIf="jobs?.length; else noJobs">
       <div class="job-card" *ngFor="let job of jobs; trackBy: trackById">
-        <div class="job-top">
-          <span class="category">{{ job.category }}</span>
-          <span class="job-budget">{{ job.budget }} DT / {{ job.budget_type }}</span>
+        <div class="job-head">
+          <span class="tag">{{ job.category }}</span>
+          <span class="budget-tag">{{ job.budget }} DT / {{ job.budget_type }}</span>
         </div>
-
         <h3>{{ job.title }}</h3>
-        <p>{{ getShortDescription(job.description, 120) }}</p>
-
-        <div class="job-meta">
-          <span *ngIf="job.experience_level">{{ job.experience_level }}</span>
-          <span *ngIf="job.location">{{ job.location }}</span>
-        </div>
-
-        <div class="feature-list" *ngIf="job.skills?.length">
-          <span class="feature-chip" *ngFor="let skill of job.skills | slice:0:4">
-            {{ skill }}
-          </span>
+        <div class="chips" *ngIf="job.skills?.length">
+          <span class="chip" *ngFor="let skill of job.skills | slice:0:3">{{ skill }}</span>
         </div>
       </div>
     </div>
-
     <ng-template #noJobs>
-      <div class="empty-state">
-        <p>No job samples yet.</p>
-      </div>
+      <div class="empty-state">Aucune offre pour l'instant.</div>
     </ng-template>
   </section>
 
-  <!-- FINAL CTA -->
-  <section class="final-cta-section">
+  <!-- CTA -->
+  <section class="cta-section">
     <div class="cta-card">
-      <h2>Join a platform built for both hiring and earning</h2>
-      <p>
-        Whether you want to post a job, offer a service, or sell a product,
-        create your account and get started.
-      </p>
-
+      <h2>Prêt à vous lancer ?</h2>
+      <p>Créez votre compte gratuitement.</p>
       <div class="cta-actions">
-        <ion-button shape="round" class="primary-btn" (click)="postJob()">
-          Post a Job
-        </ion-button>
-
-        <ion-button fill="outline" shape="round" class="secondary-btn" (click)="startSelling()">
-          Sell a Service or Product
-        </ion-button>
+        <ion-button expand="block" shape="round" class="btn-primary" (click)="postJob()">Créer un compte</ion-button>
       </div>
-
-      <div class="login-section">
-        <p>Already have an account? <a (click)="login()">Log in</a></p>
+      <div class="cta-login">
+        Déjà un compte ? <a (click)="login()">Se connecter</a>
       </div>
     </div>
   </section>

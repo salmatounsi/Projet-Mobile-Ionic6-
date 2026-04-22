@@ -1,66 +1,70 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-
+import { AuthService } from '../../services/auth-service';
 
 @Component({
   selector: 'app-create-service',
   templateUrl: './create-service.page.html',
-  standalone:false,
+  standalone: false,
   styleUrls: ['./create-service.page.scss'],
 })
 export class CreateServicePage implements OnInit {
-service:any = {
-  title: '',
-  description: '',
-  category: '',
-  price_basic: null,
-  price_standard: null,
-  price_premium: null,
-  delivery_time: null,
-  revisions: null
-};
 
-featuresInput: string = '';
-selectedFile: File| null = null;
+  service: any = {
+    title: '',
+    description: '',
+    category: '',
+    price_basic: null,
+    price_standard: null,
+    price_premium: null,
+    delivery_time: null,
+    revisions: null
+  };
 
- constructor(private http: HttpClient,private router:Router) { }
+  featuresInput: string = '';
+  selectedFile: File | null = null;
+  private api = 'http://localhost:5000';
 
-  ngOnInit() {
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private authService: AuthService
+  ) {}
+
+  ngOnInit() {}
+
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0];
   }
 
-onFileSelected(event: any) {
-  this.selectedFile = event.target.files[0];
-}
+  submitService() {
+    const formData = new FormData();
 
-submitService() {
-  const formData = new FormData();
+    formData.append('title', this.service.title);
+    formData.append('description', this.service.description);
+    formData.append('category', this.service.category);
+    formData.append('price_basic', this.service.price_basic);
+    formData.append('price_standard', this.service.price_standard);
+    formData.append('price_premium', this.service.price_premium);
+    formData.append('delivery_time', this.service.delivery_time);
+    formData.append('revisions', this.service.revisions);
 
-  formData.append('title', this.service.title);
-  formData.append('description', this.service.description);
-  formData.append('category', this.service.category);
+    const featuresArray = this.featuresInput.split(',').map(f => f.trim());
+    formData.append('features', JSON.stringify(featuresArray));
 
-  formData.append('price_basic', this.service.price_basic);
-  formData.append('price_standard', this.service.price_standard);
-  formData.append('price_premium', this.service.price_premium);
+    if (this.selectedFile) {
+      formData.append('image', this.selectedFile);
+    }
 
-  formData.append('delivery_time', this.service.delivery_time);
-  formData.append('revisions', this.service.revisions);
+    const headers = { Authorization: `Bearer ${this.authService.getToken()}` };
 
-  // transformer les features
-  const featuresArray = this.featuresInput.split(',').map(f => f.trim());
-  formData.append('features', JSON.stringify(featuresArray));
-
-  if (this.selectedFile) {
-    formData.append('image', this.selectedFile);
-  }
-
-  this.http.post('http://localhost:5000/services', formData)
-    .subscribe(res => {
-      console.log(res);
+    this.http.post(`${this.api}/services`, formData, { headers }).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.router.navigate(['/services']);
+      },
+      error: (err) => console.error(err)
     });
-    this.router.navigate(['/services']);
-}
- 
-
+  }
 }

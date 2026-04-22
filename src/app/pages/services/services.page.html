@@ -1,50 +1,60 @@
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar>
-
     <ion-title>Services</ion-title>
-
-    <!-- Bouton ajouter -->
     <ion-buttons slot="end">
-      <ion-button (click)="goToCreateService()">
-        + Ajouter service
+      <ion-button class="add-btn" (click)="goToCreateService()">
+        <ion-icon name="add-outline" slot="start"></ion-icon>
+        Ajouter
       </ion-button>
     </ion-buttons>
-
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <div class="body">
 
-  <ion-grid>
-    <ion-row>
+    <div class="section-header">
+      <h3 class="section-title">Mes services</h3>
+      <span class="section-count">{{ services.length }}</span>
+    </div>
 
-      <ion-col size="6" *ngFor="let service of services">
+    <div class="services-grid">
+      <div class="service-card" *ngFor="let service of services">
 
-        <ion-card>
+        <div class="card-image">
+          <img [src]="service.image" alt="{{ service.title }}" />
+        </div>
 
-          <img [src]="'http://localhost:5000/' + service.image" />
+        <div class="card-body">
+          <h3 class="card-title">{{ service.title }}</h3>
 
-          <ion-card-header>
-            <ion-card-title>
-              {{ service.title }}
-            </ion-card-title>
-          </ion-card-header>
+          <div class="card-meta">
+            <div class="meta-item">
+              <ion-icon name="star" class="star-icon"></ion-icon>
+              <span>{{ service.rating }} ({{ service.reviews_count }})</span>
+            </div>
+            <div class="meta-item">
+              <ion-icon name="time-outline"></ion-icon>
+              <span>{{ service.delivery_time }}j</span>
+            </div>
+          </div>
 
-          <ion-card-content>
+          <div class="card-footer">
+            <span class="price-label">À partir de</span>
+            <span class="price">{{ service.price_basic }}€</span>
+          </div>
+        </div>
 
-            <p>⭐ {{ service.rating }} ({{ service.reviews_count }})</p>
+      </div>
+    </div>
 
-            <p>⏱ {{ service.delivery_time }} jours</p>
+    <div class="empty-state" *ngIf="services.length === 0">
+      <ion-icon name="briefcase-outline" class="empty-icon"></ion-icon>
+      <p class="empty-text">Aucun service pour l'instant.</p>
+      <ion-button class="empty-btn" (click)="goToCreateService()">
+        Créer mon premier service
+      </ion-button>
+    </div>
 
-            <h2>{{ service.price_basic }}€</h2>
-
-          </ion-card-content>
-
-        </ion-card>
-
-      </ion-col>
-
-    </ion-row>
-  </ion-grid>
-
+  </div>
 </ion-content>

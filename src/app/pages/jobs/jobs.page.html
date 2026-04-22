@@ -1,17 +1,72 @@
-<ion-content class="ion-padding">
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>Offres d'emploi</ion-title>
+    <ion-buttons slot="end">
+      <ion-button class="add-btn" routerLink="/create-job-client">
+        <ion-icon name="add-outline" slot="start"></ion-icon>
+        Publier
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <div class="search-bar-wrap">
+    <div class="search-box">
+      <ion-icon name="search-outline" class="search-icon"></ion-icon>
+      <input
+        type="text"
+        placeholder="Rechercher une offre..."
+        [(ngModel)]="searchTerm"
+        (input)="onSearch()"
+      />
+    </div>
+  </div>
+</ion-header>
 
-  <h2>My Jobs</h2>
+<ion-content>
+  <div class="body">
 
-  <ion-card *ngFor="let job of jobs">
-    <ion-card-header>
-      <ion-card-title>{{ job.title }}</ion-card-title>
-    </ion-card-header>
+    <div class="section-header">
+      <h3 class="section-title">Toutes les offres</h3>
+      <span class="section-count">{{ filteredJobs.length }}</span>
+    </div>
 
-    <ion-card-content>
-      <p><strong>Skills:</strong> {{ job.skills }}</p>
-      <p><strong>Budget:</strong> {{ job.budgetFrom }} - {{ job.budgetTo }}</p>
-      <p><strong>Type:</strong> {{ job.budgetType }}</p>
-    </ion-card-content>
-  </ion-card>
+    <div class="jobs-grid" *ngIf="filteredJobs.length > 0">
+      <div class="job-card" *ngFor="let job of filteredJobs">
 
+        <div class="card-image">
+          <ion-icon name="briefcase-outline" class="job-icon"></ion-icon>
+        </div>
+
+        <div class="card-body">
+          <h3 class="job-title">{{ job.title }}</h3>
+
+          <div class="card-meta">
+            <div class="meta-item" *ngIf="job.budgetType">
+              <ion-icon name="time-outline"></ion-icon>
+              <span>{{ job.budgetType }}</span>
+            </div>
+            <div class="meta-item" *ngIf="job.size">
+              <ion-icon name="resize-outline"></ion-icon>
+              <span>{{ job.size }}</span>
+            </div>
+          </div>
+
+          <div class="skills-row" *ngIf="job.skills?.length">
+            <span class="skill-chip" *ngFor="let s of job.skills | slice:0:2">{{ s }}</span>
+          </div>
+
+          <div class="card-footer">
+            <span class="price-label">Budget</span>
+            <span class="price">{{ job.budgetFrom }} - {{ job.budgetTo }} DT</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="empty-state" *ngIf="filteredJobs.length === 0">
+      <ion-icon name="briefcase-outline" class="empty-icon"></ion-icon>
+      <p class="empty-text">Aucune offre disponible.</p>
+    </div>
+
+  </div>
 </ion-content>

@@ -1,23 +1,193 @@
-.section-header {
-  margin-bottom: 20px;
-  h2 { font-weight: bold; font-size: 1.5rem; }
-  h3 { font-weight: 600; font-size: 1.2rem; }
-  p { color: #666; font-size: 0.9rem; }
+$navy:       #152a5e;
+$navy-mid:   #1e3f8a;
+$navy-light: #a8c4ff;
+$bg-page:    #eef1f8;
+$border:     #dce4f2;
+
+ion-toolbar {
+  --background: #{$navy};
+  --color: #ffffff;
+  --border-width: 0;
+  ion-title { font-weight: 700; font-size: 16px; }
+  ion-button { --color: #ffffff; }
 }
 
-.custom-radio {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  margin-bottom: 10px;
-  --padding-start: 10px;
-  
-  &.item-radio-checked {
-    --border-color: var(--ion-color-primary);
-    border: 2px solid var(--ion-color-primary);
-  }
+ion-content { --background: #{$bg-page}; }
 
-  ion-label {
-    strong { display: block; margin-bottom: 4px; }
-    p { margin: 0; font-size: 0.85rem; }
+.body {
+  padding: 18px 14px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.form-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: $navy;
+
+  ion-icon { font-size: 16px; color: $navy-mid; }
+}
+
+.field-wrap {
+  background: #ffffff;
+  border: 1px solid $border;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+}
+
+.field-input {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 13px;
+  color: #334155;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: inherit;
+
+  &::placeholder { color: #b0bdd4; }
+}
+
+.field-textarea {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 13px;
+  color: #334155;
+  background: transparent;
+  border: none;
+  outline: none;
+  resize: none;
+  font-family: inherit;
+  line-height: 1.6;
+
+  &::placeholder { color: #b0bdd4; }
+}
+
+.select-wrap {
+  display: flex;
+  align-items: center;
+
+  .select-arrow {
+    position: absolute;
+    right: 14px;
+    font-size: 14px;
+    color: #94a3b8;
+    pointer-events: none;
   }
+}
+
+.field-select {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 13px;
+  color: #334155;
+  background: transparent;
+  border: none;
+  outline: none;
+  appearance: none;
+  font-family: inherit;
+}
+
+// ── SIZE CARDS ────────────────────────────────────
+.size-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.size-card {
+  background: #ffffff;
+  border: 1.5px solid $border;
+  border-radius: 14px;
+  padding: 14px 10px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  ion-icon { font-size: 22px; color: #94a3b8; }
+  strong { font-size: 13px; color: #64748b; font-weight: 700; }
+  span { font-size: 10px; color: #94a3b8; }
+
+  &.active {
+    border-color: $navy;
+    background: #f0f4ff;
+    ion-icon { color: $navy; }
+    strong { color: $navy; }
+  }
+}
+
+// ── TOGGLE ROW ────────────────────────────────────
+.toggle-row {
+  display: flex;
+  gap: 10px;
+}
+
+.toggle-btn {
+  flex: 1;
+  height: 46px;
+  background: #ffffff;
+  border: 1.5px solid $border;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #64748b;
+  cursor: pointer;
+
+  ion-icon { font-size: 16px; }
+
+  &.active {
+    border-color: $navy;
+    background: #f0f4ff;
+    color: $navy;
+    ion-icon { color: $navy; }
+  }
+}
+
+// ── BUDGET ROW ────────────────────────────────────
+.budget-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  .budget-field { flex: 1; }
+  .budget-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    color: #94a3b8;
+    padding: 8px 14px 0;
+  }
+  .budget-sep { font-size: 18px; color: #94a3b8; font-weight: 300; }
+}
+
+// ── SUBMIT ────────────────────────────────────────
+.submit-btn {
+  --background: #{$navy};
+  --color: #ffffff;
+  --border-radius: 26px;
+  --box-shadow: none;
+  font-weight: 700;
+  font-size: 15px;
+  height: 52px;
+  text-transform: none;
+  margin-top: 8px;
 }

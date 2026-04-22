@@ -3,13 +3,13 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'home',
-    loadChildren: () => import('./home/home.module').then(m => m.HomePageModule),
-  },
-  {
     path: '',
     redirectTo: 'home',
     pathMatch: 'full',
+  },
+  {
+    path: 'home',
+    loadChildren: () => import('./home/home.module').then(m => m.HomePageModule),
   },
 
   // Signup flow
@@ -49,83 +49,61 @@ const routes: Routes = [
     path: 'bio-cv',
     loadChildren: () => import('./pages/bio-cv/bio-cv.module').then(m => m.BioCvPageModule),
   },
-  {
-    path: 'services',
-    loadChildren: () => import('./pages/services/services.module').then( m => m.ServicesPageModule)
-  },
-  {
-    path: 'menu',
-    loadChildren: () => import('./pages/menu/menu.module').then( m => m.MenuPageModule)
-  },
-  {
-    path: 'create-service',
-    loadChildren: () => import('./pages/create-service/create-service.module').then( m => m.CreateServicePageModule)
-  },
 
-  // Auth/Profile
-  {
-    path: 'profile',
-    loadChildren: () => import('./pages/profile/profile.module').then(m => m.ProfilePageModule),
-  },
+  // Auth
   {
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule),
-  },
-
-  // Products / Store
-  {
-    path: 'new-product',
-    loadChildren: () => import('./pages/new-product/new-product.module').then(m => m.NewProductPageModule),
-  },
-  {
-    path: 'products',
-    loadChildren: () => import('./pages/products/products.module').then(m => m.ProductsPageModule),
-  },
-
-  // Messaging
-  {
-    path: 'messages',
-    loadChildren: () => import('./pages/messages/messages.module').then(m => m.MessagesPageModule),
-  },
-  {
-    path: 'chat/:id',
-    loadChildren: () => import('./pages/chat/chat.module').then(m => m.ChatPageModule),
-  },
-
-  // Tabs + role hub + pages principales
-  {
-    path: 'tabs',
-    loadChildren: () => import('./pages/tabs/tabs.module').then(m => m.TabsPageModule),
-  },
-  {
-    path: 'home-hub',
-    loadChildren: () => import('./pages/home-hub/home-hub.module').then(m => m.HomeHubPageModule),
-  },
-  {
-    path: 'jobs',
-    loadChildren: () => import('./pages/jobs/jobs.module').then(m => m.JobsPageModule),
-  },
-  {
-    path: 'services',
-    loadChildren: () => import('./pages/services/services.module').then(m => m.ServicesPageModule),
-  },
-
-  // Other existing routes from upstream
-  {
-    path: 'freelancer-services',
-    loadChildren: () => import('./pages/frelaancer-services/frelaancer-services.module').then(m => m.FrelaancerServicesPageModule),
-  },
-  {
-    path: 'create-service',
-    loadChildren: () => import('./pages/create-service/create-service.module').then(m => m.CreateServicePageModule),
   },
   {
     path: 'signup-client',
     loadChildren: () => import('./pages/signup-client/signup-client.module').then(m => m.SignupClientPageModule),
   },
+
+  // Products
+  {
+    path: 'new-product',
+    loadChildren: () => import('./pages/new-product/new-product.module').then(m => m.NewProductPageModule),
+  },
+
+  // Services
+  {
+    path: 'create-service',
+    loadChildren: () => import('./pages/create-service/create-service.module').then(m => m.CreateServicePageModule),
+  },
+  {
+    path: 'freelancer-services',
+    loadChildren: () => import('./pages/frelaancer-services/frelaancer-services.module').then(m => m.FrelaancerServicesPageModule),
+  },
+
+  // Jobs
   {
     path: 'create-job-client',
     loadChildren: () => import('./pages/create-job-client/create-job-client.module').then(m => m.CreateJobClientPageModule),
+  },
+
+  // Chat (hors tabs car route dynamique)
+  {
+    path: 'chat/:id',
+    loadChildren: () => import('./pages/chat/chat.module').then(m => m.ChatPageModule),
+  },
+
+  // Menu
+  {
+    path: 'menu',
+    loadChildren: () => import('./pages/menu/menu.module').then(m => m.MenuPageModule),
+  },
+
+  // Hub
+  {
+    path: 'home-hub',
+    loadChildren: () => import('./pages/home-hub/home-hub.module').then(m => m.HomeHubPageModule),
+  },
+
+  // Tabs (contient home, jobs, products, messages, profile, services)
+  {
+    path: 'tabs',
+    loadChildren: () => import('./pages/tabs/tabs.module').then(m => m.TabsPageModule),
   },
 ];
 
