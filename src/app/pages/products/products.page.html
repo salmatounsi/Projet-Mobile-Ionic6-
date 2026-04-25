@@ -1,11 +1,16 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-title>Products</ion-title>
-    <ion-buttons slot="end">
-      <ion-button class="icon-btn" (click)="goToNewProduct()">
-        <ion-icon name="add-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
+    <ion-title>Produits</ion-title>
+<ion-buttons slot="end">
+  <ion-button
+    *ngIf="role === 'freelancer' && selectedView === 'mine'"
+    class="add-btn"
+    (click)="goToNewProduct()"
+  >
+    <ion-icon name="add-outline" slot="start"></ion-icon>
+    Ajouter
+  </ion-button>
+</ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -14,7 +19,9 @@
 
     <div class="top-block">
       <h2 class="page-title">Digital Products Marketplace</h2>
-      <p class="page-sub">Parcourez les templates, datasets, kits et ressources.</p>
+      <p class="page-sub">
+        Parcourez les templates, datasets, kits et ressources.
+      </p>
     </div>
 
     <div class="search-box">
@@ -27,12 +34,38 @@
       />
     </div>
 
+    <ion-segment
+      *ngIf="role === 'freelancer'"
+      [value]="selectedView"
+      class="products-segment"
+      (ionChange)="switchView($event.detail.value)"
+    >
+      <ion-segment-button value="all">
+        <ion-label>Produits</ion-label>
+      </ion-segment-button>
+
+      <ion-segment-button value="mine">
+        <ion-label>Mes produits</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
     <div class="section-header">
-      <h3 class="section-title">Produits disponibles</h3>
-      <span class="section-count">{{ filteredProducts.length }} résultats</span>
+      <h3 class="section-title">
+        {{
+          role === 'client'
+            ? 'Produits disponibles'
+            : selectedView === 'all'
+              ? 'Produits disponibles'
+              : 'Mes produits'
+        }}
+      </h3>
+
+      <span class="section-count">
+        {{ filteredProducts.length }} résultats
+      </span>
     </div>
 
-    <div class="products-list">
+    <div class="products-list" *ngIf="filteredProducts.length > 0">
       <div class="product-card" *ngFor="let product of filteredProducts">
 
         <div class="image-wrap">
@@ -46,10 +79,12 @@
 
         <div class="card-body">
           <h3 class="product-title">{{ product.title }}</h3>
+
           <div class="meta-row">
             <span class="meta-chip">v{{ product.version }}</span>
             <span class="meta-chip">{{ product.license }}</span>
           </div>
+
           <div class="seller-info">
             <div class="seller-avatar">
               <ion-icon name="person-outline"></ion-icon>
@@ -66,13 +101,39 @@
           <ion-button fill="clear" class="details-btn">
             Détails
           </ion-button>
-          <ion-button class="buy-btn" (click)="buyProduct(product)">
+
+          <ion-button
+            *ngIf="role === 'client' || selectedView === 'all'"
+            class="buy-btn"
+            (click)="buyProduct(product)"
+          >
             <ion-icon name="cart-outline" slot="start"></ion-icon>
             Acheter
           </ion-button>
         </div>
 
       </div>
+    </div>
+
+    <div class="empty-state" *ngIf="filteredProducts.length === 0">
+      <ion-icon name="cube-outline" class="empty-icon"></ion-icon>
+
+      <p class="empty-text">
+        {{
+          role === 'freelancer' && selectedView === 'mine'
+            ? 'Vous n’avez publié aucun produit pour le moment.'
+            : 'Aucun produit disponible pour le moment.'
+        }}
+      </p>
+
+    <ion-button
+  *ngIf="role === 'freelancer' && selectedView === 'mine'"
+  class="empty-btn"
+  (click)="goToNewProduct()"
+>
+  <ion-icon name="add-outline" slot="start"></ion-icon>
+  Ajouter
+</ion-button>
     </div>
 
   </div>

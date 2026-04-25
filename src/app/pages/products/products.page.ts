@@ -13,24 +13,55 @@ export class ProductsPage implements OnInit {
   products: Product[] = [];
   filteredProducts: Product[] = [];
 
+  role: string = '';
+  selectedView: 'all' | 'mine' = 'all';
+
   constructor(
     private router: Router,
     private productApi: ProductApiService
   ) {}
 
   ngOnInit(): void {
-    this.loadProducts();
+    this.initPage();
   }
 
   ionViewWillEnter(): void {
+    this.initPage();
+  }
+
+  initPage(): void {
+    this.role = (localStorage.getItem('role') || '').toLowerCase().trim();
+
+    if (this.role === 'freelancer' && !this.selectedView) {
+      this.selectedView = 'mine';
+    }
+
+    if (this.role !== 'freelancer') {
+      this.selectedView = 'all';
+    }
+
+    this.loadProducts();
+  }
+
+  switchView(view: any): void {
+    if (view !== 'all' && view !== 'mine') {
+      return;
+    }
+
+    this.selectedView = view;
     this.loadProducts();
   }
 
   loadProducts(): void {
-    this.productApi.getProducts().subscribe({
+    const request =
+      this.role === 'freelancer' && this.selectedView === 'mine'
+        ? this.productApi.getMyProducts()
+        : this.productApi.getProducts();
+
+    request.subscribe({
       next: (data: Product[]) => {
         this.products = data ?? [];
-        this.filteredProducts = [...this.products];
+        this.applySearch();
       },
       error: (error: unknown) => {
         console.error('Error loading products:', error);
@@ -41,6 +72,10 @@ export class ProductsPage implements OnInit {
   }
 
   onSearchChange(): void {
+    this.applySearch();
+  }
+
+  applySearch(): void {
     const term = this.searchTerm.trim().toLowerCase();
 
     if (!term) {

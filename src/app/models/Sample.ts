@@ -33,14 +33,11 @@ export interface ProductSample {
 
 export interface JobSample {
   _id: string;
-  client_id: string;
   title: string;
-  description: string;
-  category: string;
-  budget: number;
-  budget_type: 'fixed' | 'hourly';
-  experience_level?: string;
-  location?: string;
   skills?: string[];
-  created_at: string | Date;
+  size?: string;
+  budgetType?: string;
+  budgetFrom?: number;
+  budgetTo?: number;
+  createdAt?: string;
 }

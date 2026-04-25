@@ -1,76 +1,146 @@
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button
+        defaultHref="/tabs/services"
+        text=""
+        icon="chevron-back-outline"
+      ></ion-back-button>
+    </ion-buttons>
+
     <ion-title>Créer un service</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content>
+  <div class="body">
 
-  <form (ngSubmit)="submitService()">
+    <div class="intro-card">
+      <h2>Nouveau service</h2>
+      <p>Ajoute les informations nécessaires pour publier ton service et le rendre visible aux clients.</p>
+    </div>
 
-    <!-- Infos principales -->
-    <ion-item>
-      <ion-label position="floating">Titre du service</ion-label>
-      <ion-input [(ngModel)]="service.title" name="title" required></ion-input>
-    </ion-item>
+    <form (ngSubmit)="submitService()" class="service-form">
 
-    <ion-item>
-      <ion-label position="floating">Description</ion-label>
-      <ion-textarea [(ngModel)]="service.description" name="description"></ion-textarea>
-    </ion-item>
+      <div class="form-section">
+        <h3 class="section-title">Informations principales</h3>
 
-    <ion-item>
-      <ion-label position="floating">Catégorie</ion-label>
-      <ion-input [(ngModel)]="service.category" name="category"></ion-input>
-    </ion-item>
+        <ion-item lines="none" class="form-item">
+          <ion-label position="stacked">Titre du service</ion-label>
+          <ion-input
+            [(ngModel)]="service.title"
+            name="title"
+            required
+            placeholder="Ex: Développement application mobile"
+          ></ion-input>
+        </ion-item>
 
-    <!-- Packages -->
-    <h3>Packages</h3>
+        <ion-item lines="none" class="form-item textarea-item">
+          <ion-label position="stacked">Description</ion-label>
+          <ion-textarea
+            [(ngModel)]="service.description"
+            name="description"
+            rows="5"
+            placeholder="Décris ton service en quelques lignes..."
+          ></ion-textarea>
+        </ion-item>
 
-    <ion-item>
-      <ion-label position="floating">Prix Basic (€)</ion-label>
-      <ion-input type="number" [(ngModel)]="service.price_basic" name="price_basic"></ion-input>
-    </ion-item>
+        <ion-item lines="none" class="form-item">
+          <ion-label position="stacked">Catégorie</ion-label>
+          <ion-input
+            [(ngModel)]="service.category"
+            name="category"
+            placeholder="Ex: Mobile, Web, Design..."
+          ></ion-input>
+        </ion-item>
+      </div>
 
-    <ion-item>
-      <ion-label position="floating">Prix Standard (€)</ion-label>
-      <ion-input type="number" [(ngModel)]="service.price_standard" name="price_standard"></ion-input>
-    </ion-item>
+      <div class="form-section">
+        <h3 class="section-title">Packages</h3>
 
-    <ion-item>
-      <ion-label position="floating">Prix Premium (€)</ion-label>
-      <ion-input type="number" [(ngModel)]="service.price_premium" name="price_premium"></ion-input>
-    </ion-item>
+        <ion-item lines="none" class="form-item">
+          <ion-label position="stacked">Prix Basic (€)</ion-label>
+          <ion-input
+            type="number"
+            [(ngModel)]="service.price_basic"
+            name="price_basic"
+            placeholder="50"
+          ></ion-input>
+        </ion-item>
 
-    <!-- Détails -->
-    <h3>Détails</h3>
+        <ion-item lines="none" class="form-item">
+          <ion-label position="stacked">Prix Standard (€)</ion-label>
+          <ion-input
+            type="number"
+            [(ngModel)]="service.price_standard"
+            name="price_standard"
+            placeholder="100"
+          ></ion-input>
+        </ion-item>
 
-    <ion-item>
-      <ion-label position="floating">Délai (jours)</ion-label>
-      <ion-input type="number" [(ngModel)]="service.delivery_time" name="delivery_time"></ion-input>
-    </ion-item>
+        <ion-item lines="none" class="form-item">
+          <ion-label position="stacked">Prix Premium (€)</ion-label>
+          <ion-input
+            type="number"
+            [(ngModel)]="service.price_premium"
+            name="price_premium"
+            placeholder="150"
+          ></ion-input>
+        </ion-item>
+      </div>
 
-    <ion-item>
-      <ion-label position="floating">Révisions</ion-label>
-      <ion-input type="number" [(ngModel)]="service.revisions" name="revisions"></ion-input>
-    </ion-item>
+      <div class="form-section">
+        <h3 class="section-title">Détails</h3>
 
-    <!-- Features -->
-    <ion-item>
-      <ion-label position="floating">Features (séparées par virgule)</ion-label>
-      <ion-input [(ngModel)]="featuresInput" name="features"></ion-input>
-    </ion-item>
+        <ion-item lines="none" class="form-item">
+          <ion-label position="stacked">Délai en jours</ion-label>
+          <ion-input
+            type="number"
+            [(ngModel)]="service.delivery_time"
+            name="delivery_time"
+            placeholder="7"
+          ></ion-input>
+        </ion-item>
 
-    <!-- Image -->
-    <ion-item>
-      <ion-label>Image</ion-label>
-      <input type="file" (change)="onFileSelected($event)" />
-    </ion-item>
+        <ion-item lines="none" class="form-item">
+          <ion-label position="stacked">Révisions</ion-label>
+          <ion-input
+            type="number"
+            [(ngModel)]="service.revisions"
+            name="revisions"
+            placeholder="2"
+          ></ion-input>
+        </ion-item>
 
-    <ion-button expand="full" type="submit">
-      Publier le service
-    </ion-button>
+        <ion-item lines="none" class="form-item">
+          <ion-label position="stacked">Features</ion-label>
+          <ion-input
+            [(ngModel)]="featuresInput"
+            name="features"
+            placeholder="UI, Backend, Authentification..."
+          ></ion-input>
+        </ion-item>
 
-  </form>
+        <div class="upload-box">
+          <div class="upload-text">
+            <ion-icon name="image-outline"></ion-icon>
+            <div>
+              <h4>Image du service</h4>
+              <p>Choisis une image claire pour présenter ton service.</p>
+            </div>
+          </div>
 
+          <label class="file-btn">
+            Choisir une image
+            <input type="file" hidden (change)="onFileSelected($event)" />
+          </label>
+        </div>
+      </div>
+
+      <ion-button expand="block" type="submit" class="submit-btn">
+        Publier le service
+      </ion-button>
+
+    </form>
+  </div>
 </ion-content>

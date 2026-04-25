@@ -16,6 +16,10 @@ export class LoginPage implements OnInit {
   private authService = inject(AuthService);
   private router = inject(Router);
 
+  constructor() {}
+
+  ngOnInit() {}
+
   login() {
     if (!this.email || !this.password) {
       this.errorMessage = 'Please fill in all fields';
@@ -30,10 +34,21 @@ export class LoginPage implements OnInit {
     this.authService.login(payload).subscribe({
       next: (res: any) => {
         localStorage.setItem('token', res.token);
+
+        const role = (res.role || '').toLowerCase().trim();
+
+        localStorage.setItem('role', role);
+        console.log('Role:', role);
+
         this.errorMessage = '';
 
-        // ✅ IMPORTANT: entrer dans le layout Tabs pour garder le menu en bas
-       this.router.navigateByUrl('/tabs/start', { replaceUrl: true });
+        if (role === 'client') {
+          this.router.navigateByUrl('/tabs/services', { replaceUrl: true });
+        } else if (role === 'freelancer') {
+          this.router.navigateByUrl('/tabs/jobs', { replaceUrl: true });
+        } else {
+          this.router.navigateByUrl('/tabs/start', { replaceUrl: true });
+        }
       },
       error: (err) => {
         if (err.status === 404) {
@@ -47,8 +62,4 @@ export class LoginPage implements OnInit {
       },
     });
   }
-
-  constructor() {}
-
-  ngOnInit() {}
 }

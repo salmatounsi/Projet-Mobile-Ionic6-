@@ -1,11 +1,9 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Inscription</ion-title>
+    <ion-title>Profil freelancer</ion-title>
+
     <ion-buttons slot="end">
-      <ion-button fill="solid" class="step-badge">Étape 3 sur 6</ion-button>
+      <ion-button fill="solid" class="step-badge">Étape 3/6</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -14,22 +12,26 @@
   <div class="top-section">
     <div class="progress-section">
       <div class="prog-label">
-        <span>Compléter le profil</span>
-        <strong>50%</strong>
+        <span>Progression</span>
+        <strong>Expérience</strong>
       </div>
+
       <div class="prog-track">
         <div class="prog-fill"></div>
       </div>
     </div>
-    <div class="hero-kicker">Votre parcours</div>
-    <h2 class="hero-title">Votre expérience.</h2>
-    <p class="hero-sub">Si vous avez des expériences pertinentes, partagez-les ici.</p>
+
+    <div class="hero-kicker">FreelanceHub</div>
+    <h2 class="hero-title">Ajoutez vos expériences</h2>
+    <p class="hero-sub">
+      Partagez vos expériences pertinentes pour renforcer votre profil freelancer.
+    </p>
   </div>
 
   <div class="body">
 
     <ion-button expand="block" class="add-btn" (click)="openAddExperience()">
-      <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+      <ion-icon name="add-outline" slot="start"></ion-icon>
       Ajouter une expérience
     </ion-button>
 
@@ -38,12 +40,15 @@
         <div class="card-icon">
           <ion-icon name="briefcase-outline" class="c-icon"></ion-icon>
         </div>
+
         <span class="card-title">Expériences ajoutées</span>
         <span class="count-badge">{{ experiences.length }}</span>
       </div>
+
       <div class="timeline-list">
         <div class="timeline-item" *ngFor="let exp of experiences">
           <div class="timeline-dot"></div>
+
           <div class="timeline-content">
             <h4 class="tl-title">{{ exp.title }}</h4>
             <p class="tl-sub">{{ exp.company }} · {{ exp.country }}</p>
@@ -54,15 +59,18 @@
 
     <div class="empty-state" *ngIf="!experiences.length">
       <ion-icon name="briefcase-outline" class="empty-icon"></ion-icon>
-      <p class="empty-text">Aucune expérience ajoutée pour l'instant.</p>
+      <p class="empty-text">
+        Aucune expérience ajoutée pour l’instant.
+      </p>
     </div>
 
     <div class="footer">
-      <ion-button class="skip-btn" fill="clear">
-        Passer
-      </ion-button>
+      <span class="skip-lnk">
+        Ignorer pour l’instant
+      </span>
+
       <ion-button class="submit-btn" (click)="submitExperience()">
-        Suivant
+        Continuer
         <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
       </ion-button>
     </div>

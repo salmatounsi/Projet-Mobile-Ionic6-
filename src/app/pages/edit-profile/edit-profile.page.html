@@ -1,0 +1,461 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button
+        defaultHref="/tabs/profile"
+        text=""
+        icon="chevron-back-outline"
+      ></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>Modifier le profil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="body">
+    <form [formGroup]="profileForm" (ngSubmit)="saveProfile()">
+
+      <!-- Photo de profil -->
+      <div class="card">
+        <div class="card-head">
+          <div class="card-icon">
+            <ion-icon name="camera-outline" class="c-icon"></ion-icon>
+          </div>
+          <span class="card-title">Photo de profil</span>
+        </div>
+
+        <div class="photo-section">
+          <div class="profile-preview">
+            <img
+              *ngIf="imagePreview; else emptyAvatar"
+              [src]="imagePreview"
+              alt="Photo de profil"
+            />
+
+            <ng-template #emptyAvatar>
+              <ion-icon name="person-outline"></ion-icon>
+            </ng-template>
+          </div>
+
+          <label class="upload-photo-btn">
+            <ion-icon name="cloud-upload-outline"></ion-icon>
+            Changer la photo
+            <input
+              type="file"
+              accept="image/*"
+              hidden
+              (change)="onImageSelected($event)"
+            />
+          </label>
+        </div>
+      </div>
+
+      <!-- Informations personnelles -->
+      <div class="card">
+        <div class="card-head">
+          <div class="card-icon">
+            <ion-icon name="person-outline" class="c-icon"></ion-icon>
+          </div>
+          <span class="card-title">Informations personnelles</span>
+        </div>
+
+        <div class="fields-wrap">
+          <div class="double-fields">
+            <div class="field-group">
+              <label class="field-label">Prénom</label>
+              <ion-item lines="none" class="field-item">
+                <ion-input formControlName="first_name" placeholder="Prénom"></ion-input>
+              </ion-item>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label">Nom</label>
+              <ion-item lines="none" class="field-item">
+                <ion-input formControlName="last_name" placeholder="Nom"></ion-input>
+              </ion-item>
+            </div>
+          </div>
+
+          <div class="double-fields">
+            <div class="field-group">
+              <label class="field-label">Adresse email</label>
+              <ion-item lines="none" class="field-item">
+                <ion-input
+                  type="email"
+                  formControlName="email"
+                  placeholder="email@example.com"
+                ></ion-input>
+              </ion-item>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label">Pays</label>
+              <ion-item lines="none" class="field-item">
+                <ion-input
+                  formControlName="country"
+                  placeholder="Tunisie"
+                ></ion-input>
+              </ion-item>
+            </div>
+          </div>
+
+          <ng-container *ngIf="role === 'freelancer'">
+            <div class="field-group">
+              <label class="field-label">Rôle professionnel</label>
+              <ion-item lines="none" class="field-item">
+                <ion-input
+                  formControlName="professional_role"
+                  placeholder="Ex : Développeur mobile"
+                ></ion-input>
+              </ion-item>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label">Bio</label>
+              <ion-item lines="none" class="field-item textarea-item">
+                <ion-textarea
+                  rows="5"
+                  formControlName="bio"
+                  placeholder="Parlez de vous, de vos compétences et de votre expérience."
+                ></ion-textarea>
+              </ion-item>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+      <!-- Sections uniquement Freelancer -->
+      <ng-container *ngIf="role === 'freelancer'">
+
+        <!-- Compétences -->
+        <div class="card">
+          <div class="card-head">
+            <div class="card-icon">
+              <ion-icon name="flash-outline" class="c-icon"></ion-icon>
+            </div>
+            <span class="card-title">Compétences</span>
+          </div>
+
+          <div class="fields-wrap">
+            <div class="skill-input-row">
+              <ion-item lines="none" class="field-item skill-input">
+                <ion-input
+                  [(ngModel)]="skillInput"
+                  [ngModelOptions]="{ standalone: true }"
+                  placeholder="Ex : Ionic, Flask, MongoDB..."
+                ></ion-input>
+              </ion-item>
+
+              <ion-button type="button" class="small-add-btn" (click)="addSkill()">
+                <ion-icon name="add-outline"></ion-icon>
+              </ion-button>
+            </div>
+
+            <div class="chips-wrap" *ngIf="skills.length > 0">
+              <span class="chip active" *ngFor="let skill of skills">
+                {{ skill }}
+                <ion-icon name="close-outline" (click)="removeSkill(skill)"></ion-icon>
+              </span>
+            </div>
+
+            <p class="empty-text" *ngIf="skills.length === 0">
+              Aucune compétence ajoutée.
+            </p>
+          </div>
+        </div>
+
+        <!-- CV -->
+        <div class="card">
+          <div class="card-head">
+            <div class="card-icon">
+              <ion-icon name="document-attach-outline" class="c-icon"></ion-icon>
+            </div>
+            <span class="card-title">CV</span>
+          </div>
+
+          <div class="cv-section">
+            <p class="cv-text">Importez ou remplacez votre CV.</p>
+
+            <label class="upload-photo-btn secondary">
+              <ion-icon name="cloud-upload-outline"></ion-icon>
+              Importer un CV
+              <input
+                type="file"
+                accept=".pdf,.doc,.docx"
+                hidden
+                (change)="onCvSelected($event)"
+              />
+            </label>
+
+            <p class="selected-file" *ngIf="cvFileName">
+              {{ cvFileName }}
+            </p>
+          </div>
+        </div>
+
+        <!-- Langues -->
+        <div class="card">
+          <div class="card-head">
+            <div class="card-icon">
+              <ion-icon name="language-outline" class="c-icon"></ion-icon>
+            </div>
+            <span class="card-title">Langues</span>
+          </div>
+
+          <div class="fields-wrap">
+            <div class="editable-row" *ngFor="let lang of languages; let i = index">
+              <ion-item lines="none" class="field-item">
+                <ion-input
+                  [(ngModel)]="lang.language"
+                  [ngModelOptions]="{ standalone: true }"
+                  placeholder="Langue"
+                ></ion-input>
+              </ion-item>
+
+              <ion-item lines="none" class="field-item">
+                <ion-input
+                  [(ngModel)]="lang.proficiency"
+                  [ngModelOptions]="{ standalone: true }"
+                  placeholder="Niveau"
+                ></ion-input>
+              </ion-item>
+
+              <ion-button
+                type="button"
+                fill="clear"
+                class="delete-btn"
+                (click)="removeLanguage(i)"
+              >
+                <ion-icon name="trash-outline"></ion-icon>
+              </ion-button>
+            </div>
+
+            <ion-button type="button" class="add-line-btn" (click)="addLanguage()">
+              <ion-icon name="add-outline" slot="start"></ion-icon>
+              Ajouter une langue
+            </ion-button>
+          </div>
+        </div>
+
+        <!-- Spécialités -->
+        <div class="card">
+          <div class="card-head">
+            <div class="card-icon">
+              <ion-icon name="grid-outline" class="c-icon"></ion-icon>
+            </div>
+            <span class="card-title">Spécialités</span>
+          </div>
+
+          <div class="fields-wrap">
+            <div class="field-group">
+              <label class="field-label">Catégorie principale</label>
+              <ion-item lines="none" class="field-item">
+                <ion-input
+                  [(ngModel)]="categoryMain"
+                  [ngModelOptions]="{ standalone: true }"
+                  placeholder="Ex : IT & Networking"
+                ></ion-input>
+              </ion-item>
+            </div>
+
+            <div class="skill-input-row">
+              <ion-item lines="none" class="field-item skill-input">
+                <ion-input
+                  [(ngModel)]="subCategoryInput"
+                  [ngModelOptions]="{ standalone: true }"
+                  placeholder="Ex : Mobile Development"
+                ></ion-input>
+              </ion-item>
+
+              <ion-button type="button" class="small-add-btn" (click)="addSubCategory()">
+                <ion-icon name="add-outline"></ion-icon>
+              </ion-button>
+            </div>
+
+            <div class="chips-wrap" *ngIf="subCategories.length > 0">
+              <span class="chip active" *ngFor="let sub of subCategories">
+                {{ sub }}
+                <ion-icon name="close-outline" (click)="removeSubCategory(sub)"></ion-icon>
+              </span>
+            </div>
+
+            <p class="empty-text" *ngIf="subCategories.length === 0">
+              Aucune spécialité ajoutée.
+            </p>
+          </div>
+        </div>
+
+        <!-- Formation -->
+        <div class="card">
+          <div class="card-head">
+            <div class="card-icon">
+              <ion-icon name="school-outline" class="c-icon"></ion-icon>
+            </div>
+            <span class="card-title">Formation</span>
+          </div>
+
+          <div class="fields-wrap">
+            <div class="repeat-card" *ngFor="let edu of education; let i = index">
+              <ion-item lines="none" class="field-item">
+                <ion-input
+                  [(ngModel)]="edu.school"
+                  [ngModelOptions]="{ standalone: true }"
+                  placeholder="École / Université"
+                ></ion-input>
+              </ion-item>
+
+              <ion-item lines="none" class="field-item">
+                <ion-input
+                  [(ngModel)]="edu.degree"
+                  [ngModelOptions]="{ standalone: true }"
+                  placeholder="Diplôme"
+                ></ion-input>
+              </ion-item>
+
+              <ion-item lines="none" class="field-item">
+                <ion-input
+                  [(ngModel)]="edu.field"
+                  [ngModelOptions]="{ standalone: true }"
+                  placeholder="Domaine"
+                ></ion-input>
+              </ion-item>
+
+              <div class="double-fields">
+                <ion-item lines="none" class="field-item">
+                  <ion-input
+                    type="date"
+                    [(ngModel)]="edu.startDate"
+                    [ngModelOptions]="{ standalone: true }"
+                  ></ion-input>
+                </ion-item>
+
+                <ion-item lines="none" class="field-item">
+                  <ion-input
+                    type="date"
+                    [(ngModel)]="edu.endDate"
+                    [ngModelOptions]="{ standalone: true }"
+                  ></ion-input>
+                </ion-item>
+              </div>
+
+              <ion-item lines="none" class="field-item textarea-item">
+                <ion-textarea
+                  rows="3"
+                  [(ngModel)]="edu.description"
+                  [ngModelOptions]="{ standalone: true }"
+                  placeholder="Description"
+                ></ion-textarea>
+              </ion-item>
+
+              <ion-button
+                type="button"
+                fill="clear"
+                class="remove-line-btn"
+                (click)="removeEducation(i)"
+              >
+                Supprimer cette formation
+              </ion-button>
+            </div>
+
+            <ion-button type="button" class="add-line-btn" (click)="addEducation()">
+              <ion-icon name="add-outline" slot="start"></ion-icon>
+              Ajouter une formation
+            </ion-button>
+          </div>
+        </div>
+
+        <!-- Expérience -->
+        <div class="card">
+          <div class="card-head">
+            <div class="card-icon">
+              <ion-icon name="briefcase-outline" class="c-icon"></ion-icon>
+            </div>
+            <span class="card-title">Expérience</span>
+          </div>
+
+          <div class="fields-wrap">
+            <div class="repeat-card" *ngFor="let exp of experience; let i = index">
+              <ion-item lines="none" class="field-item">
+                <ion-input
+                  [(ngModel)]="exp.title"
+                  [ngModelOptions]="{ standalone: true }"
+                  placeholder="Poste"
+                ></ion-input>
+              </ion-item>
+
+              <ion-item lines="none" class="field-item">
+                <ion-input
+                  [(ngModel)]="exp.company"
+                  [ngModelOptions]="{ standalone: true }"
+                  placeholder="Entreprise"
+                ></ion-input>
+              </ion-item>
+
+              <div class="double-fields">
+                <ion-item lines="none" class="field-item">
+                  <ion-input
+                    [(ngModel)]="exp.location"
+                    [ngModelOptions]="{ standalone: true }"
+                    placeholder="Ville"
+                  ></ion-input>
+                </ion-item>
+
+                <ion-item lines="none" class="field-item">
+                  <ion-input
+                    [(ngModel)]="exp.country"
+                    [ngModelOptions]="{ standalone: true }"
+                    placeholder="Pays"
+                  ></ion-input>
+                </ion-item>
+              </div>
+
+              <div class="double-fields">
+                <ion-item lines="none" class="field-item">
+                  <ion-input
+                    type="date"
+                    [(ngModel)]="exp.startDate"
+                    [ngModelOptions]="{ standalone: true }"
+                  ></ion-input>
+                </ion-item>
+
+                <ion-item lines="none" class="field-item">
+                  <ion-input
+                    type="date"
+                    [(ngModel)]="exp.endDate"
+                    [ngModelOptions]="{ standalone: true }"
+                  ></ion-input>
+                </ion-item>
+              </div>
+
+              <ion-button
+                type="button"
+                fill="clear"
+                class="remove-line-btn"
+                (click)="removeExperience(i)"
+              >
+                Supprimer cette expérience
+              </ion-button>
+            </div>
+
+            <ion-button type="button" class="add-line-btn" (click)="addExperience()">
+              <ion-icon name="add-outline" slot="start"></ion-icon>
+              Ajouter une expérience
+            </ion-button>
+          </div>
+        </div>
+
+      </ng-container>
+
+      <ion-button
+        expand="block"
+        type="submit"
+        class="submit-btn"
+        [disabled]="loading"
+      >
+        {{ loading ? 'Enregistrement...' : 'Enregistrer les modifications' }}
+      </ion-button>
+
+    </form>
+  </div>
+</ion-content>

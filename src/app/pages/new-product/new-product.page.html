@@ -1,14 +1,14 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
+      <ion-back-button
+        defaultHref="/tabs/products"
+        text=""
+        icon="chevron-back-outline"
+      ></ion-back-button>
     </ion-buttons>
-    <ion-title>New Product</ion-title>
-    <ion-buttons slot="end">
-      <ion-button class="icon-btn">
-        <ion-icon name="cube-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
+
+    <ion-title>Nouveau produit</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -16,7 +16,7 @@
   <div class="body">
 
     <div class="top-block">
-  <h2 class="page-title">Créer un produit.</h2>
+  <h2 class="page-title">Créer un produit</h2>
   <p class="page-sub">Ajoutez un produit digital avec ses détails, son prix et ses images.</p>
 </div>
     <form [formGroup]="productForm" (ngSubmit)="saveProduct()">
@@ -119,15 +119,11 @@
       </div>
 
       <div class="action-row">
-        <ion-button type="button" fill="clear" class="draft-btn">
-          <ion-icon name="save-outline" slot="start"></ion-icon>
-          Brouillon
-        </ion-button>
-        <ion-button type="submit" class="submit-btn">
-          <ion-icon name="checkmark-outline" slot="start"></ion-icon>
-          Publier
-        </ion-button>
-      </div>
+  <ion-button type="submit" class="submit-btn full">
+    <ion-icon name="checkmark-outline" slot="start"></ion-icon>
+    Publier le produit
+  </ion-button>
+</div>
 
     </form>
   </div>

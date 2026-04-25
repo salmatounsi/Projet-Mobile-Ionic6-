@@ -39,29 +39,32 @@ togglePassword() {
       this.passwordIcon = 'eye-off-outline';
     }
   }
-
-  onCreateAccount() {
-    if (this.registerForm.invalid) {
+onCreateAccount() {
+  if (this.registerForm.invalid) {
     console.log('Form is invalid');
+    this.registerForm.markAllAsTouched();
     return;
   }
 
   const formData = this.registerForm.value;
 
-
   this.http.post('http://localhost:5000/api/signup', formData)
     .subscribe({
       next: (res: any) => {
         localStorage.setItem('token', res.token);
-        console.log('Token:', res.token);
-        alert('Account created successfully');
+        localStorage.setItem('role', res.role || 'client');
 
-        this.router.navigate(['/freelancer-services']);
+        console.log('Signup client response:', res);
+        console.log('Role saved:', localStorage.getItem('role'));
+
+        alert('Compte créé avec succès');
+
+        this.router.navigateByUrl('/choose-plan');
       },
       error: (err) => {
         console.error('Error:', err);
-        alert(err.error?.error || 'Something went wrong');
+        alert(err.error?.error || 'Une erreur est survenue');
       }
     });
-  }
+}
 }

@@ -1,90 +1,222 @@
-.signup-container {
-  max-width: 500px;
-  margin: 0 auto;
-  text-align: left;
+$navy:       #152a5e;
+$navy-mid:   #1e3f8a;
+$navy-light: #a8c4ff;
+$bg-page:    #eef1f8;
+$border:     #dce4f2;
+$muted:      #64748b;
 
-  .logo-section {
-    text-align: center;
-    margin: 20px 0;
-    .logo { width: 120px; }
+ion-toolbar {
+  --background: #{$navy};
+  --color: #ffffff;
+  --border-width: 0;
+  --min-height: 58px;
+  padding: 0 8px;
+
+  ion-title {
+    font-size: 16px;
+    font-weight: 800;
   }
+
+  ion-back-button {
+    --color: #ffffff;
+    --icon-font-size: 24px;
+  }
+}
+
+ion-content {
+  --background: #{$bg-page};
+}
+
+.signup-container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 24px 14px 36px;
+}
+
+.top-block {
+  margin-bottom: 18px;
 
   h2 {
-    font-size: 1.8rem;
-    font-weight: 600;
-    text-align: center;
-    margin-bottom: 30px;
-    color: #000;
+    margin: 0 0 8px;
+    color: $navy;
+    font-size: 26px;
+    font-weight: 900;
+    line-height: 1.2;
   }
 
-  ion-label[position="stacked"] {
-    font-weight: 600;
-    color: #000;
-    margin-bottom: 8px;
-    transform: none !important; 
+  p {
+    margin: 0;
+    color: $muted;
+    font-size: 14px;
+    line-height: 1.5;
   }
+}
 
-  ion-item {
-    --inner-border-width: 0; 
-    --border-width: 1px;
-    --border-style: solid;
-    --border-color: #d0d0d0;
-    --border-radius: 8px;
-    
-    margin-bottom: 20px;
-    --padding-start: 12px;
-    --background: #ffffff;
-    
-    
-    --highlight-height: 0;
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
 
-    &:focus-within {
-      --border-color: #14a800; 
-    }
+.form-card,
+.checkbox-card {
+  background: #ffffff;
+  border: 1px solid $border;
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: 0 10px 24px rgba(21, 42, 94, 0.06);
+}
 
-    ion-input, ion-select {
-      --padding-top: 12px;
-      --padding-bottom: 12px;
-    }
-  }
+.card-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 14px 12px;
+  border-bottom: 1px solid #f0f4fc;
 
-  .checkbox-container {
-    margin-top: 20px;
+  .card-icon {
+    width: 32px;
+    height: 32px;
+    background: #e8effe;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    .checkbox-item {
-      --background: transparent;
-      --padding-start: 0;
-      align-items: flex-start;
-      margin-bottom: 10px;
-
-      ion-checkbox {
-        --size: 20px;
-        --border-radius: 4px;
-        --checkbox-background-checked: #14a800;
-        margin-top: 4px;
-      }
-
-      ion-label {
-        font-size: 0.9rem;
-        white-space: normal !important;
-        line-height: 1.4;
-        color: #333;
-      }
-
-      .link {
-        color: #14a800;
-        text-decoration: underline;
-      }
+    ion-icon {
+      font-size: 16px;
+      color: $navy;
     }
   }
 
-  .create-btn {
-    --background: #14a800;
-    --background-activated: #108a00;
-    --border-radius: 25px;
-    margin-top: 30px;
-    font-weight: 600;
-    text-transform: none;
-    height: 45px;
+  span {
+    font-size: 13px;
+    font-weight: 800;
+    color: $navy;
+  }
+}
+
+.fields-wrap {
+  padding: 14px;
+}
+
+.name-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 14px;
+}
+
+.field-label {
+  font-size: 12px;
+  font-weight: 800;
+  color: $navy;
+  padding-left: 2px;
+}
+
+.field-item {
+  --background: #f8faff;
+  --border-radius: 14px;
+  --padding-start: 14px;
+  --padding-end: 14px;
+  --inner-padding-end: 8px;
+  --highlight-color-focused: #{$navy};
+  --min-height: 64px;
+
+  border: 1px solid $border;
+  border-radius: 14px;
+  overflow: hidden;
+
+  ion-input,
+  ion-select {
+    --color: #172554;
+    --placeholder-color: #94a3b8;
+    --placeholder-opacity: 1;
+    font-size: 14px;
+  }
+
+  .password-icon {
+    color: #64748b;
+    font-size: 20px;
+    cursor: pointer;
+  }
+}
+
+.checkbox-card {
+  padding: 8px 14px;
+}
+
+.checkbox-item {
+  --background: transparent;
+  --padding-start: 0;
+  --inner-padding-end: 0;
+  --min-height: auto;
+
+  display: flex;
+  align-items: flex-start;
+  margin: 8px 0;
+
+  ion-checkbox {
+    --size: 20px;
+    --border-radius: 5px;
+    --checkbox-background-checked: #{$navy};
+    --border-color-checked: #{$navy};
+    --border-color: #b0bdd4;
+
+    margin-top: 3px;
+    margin-right: 10px;
+  }
+
+  ion-label {
+    color: $muted;
+    font-size: 13px;
+    line-height: 1.5;
+    white-space: normal !important;
+  }
+
+  .link {
+    color: $navy;
+    font-weight: 800;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+}
+
+.create-btn {
+  --background: #{$navy};
+  --background-activated: #{$navy-mid};
+  --color: #ffffff;
+  --border-radius: 28px;
+  --box-shadow: none;
+
+  height: 54px;
+  font-size: 15px;
+  font-weight: 800;
+  text-transform: none;
+  margin-top: 4px;
+}
+
+@media (max-width: 420px) {
+  .signup-container {
+    padding: 20px 12px 32px;
+  }
+
+  .top-block h2 {
+    font-size: 23px;
+  }
+
+  .name-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .fields-wrap {
+    padding: 14px;
   }
 }

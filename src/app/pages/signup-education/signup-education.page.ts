@@ -40,7 +40,7 @@ export class SignupEducationPage implements OnInit {
 
   submitEducation() {
     this.signupService.updateEducation(this.educations).subscribe({
-      next: () => this.router.navigateByUrl('/signup-skills'),
+      next: () => this.router.navigateByUrl('/signup-specialties'),
       error: (err: any) => console.error(err),
     });
   }

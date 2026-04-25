@@ -1,64 +1,112 @@
-<ion-content class="ion-padding">
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button
+        defaultHref="/home"
+        text=""
+        icon="chevron-back-outline"
+      ></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>Inscription client</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
   <div class="signup-container">
 
-    <h2>Sign up to hire talent</h2>
+    <div class="top-block">
+      <h2>Créer votre compte </h2>
+      <p>Publiez des offres, trouvez des freelancers et achetez des services ou produits digitaux.</p>
+    </div>
 
     <form [formGroup]="registerForm" (ngSubmit)="onCreateAccount()">
-      <ion-grid class="ion-no-padding">
-        <ion-row>
-          <ion-col size="6" class="ion-padding-end">
-            <ion-label position="stacked">First name</ion-label>
-            <ion-item fill="outline" lines="none">
-              <ion-input type="text" formControlName="firstName"></ion-input>
+
+      <div class="form-card">
+        <div class="card-head">
+          <div class="card-icon">
+            <ion-icon name="person-outline"></ion-icon>
+          </div>
+          <span>Vos informations</span>
+        </div>
+
+        <div class="fields-wrap">
+
+          <div class="name-row">
+            <div class="field-group">
+              <label class="field-label">Prénom</label>
+              <ion-item lines="none" class="field-item">
+                <ion-input type="text" placeholder="John" formControlName="firstName"></ion-input>
+              </ion-item>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label">Nom</label>
+              <ion-item lines="none" class="field-item">
+                <ion-input type="text" placeholder="Doe" formControlName="lastName"></ion-input>
+              </ion-item>
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label">Adresse email professionnelle</label>
+            <ion-item lines="none" class="field-item">
+              <ion-input type="email" placeholder="john.doe@company.com" formControlName="email"></ion-input>
             </ion-item>
-          </ion-col>
-          <ion-col size="6">
-            <ion-label position="stacked">Last name</ion-label>
-            <ion-item fill="outline" lines="none">
-              <ion-input type="text" formControlName="lastName"></ion-input>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label">Mot de passe</label>
+            <ion-item lines="none" class="field-item">
+              <ion-input
+                [type]="passwordType"
+                placeholder="Mot de passe de 6 caractères ou plus"
+                formControlName="password"
+              ></ion-input>
+              <ion-icon
+                [name]="passwordIcon"
+                slot="end"
+                class="password-icon"
+                (click)="togglePassword()"
+              ></ion-icon>
             </ion-item>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+          </div>
 
-      <ion-label position="stacked">Work email address</ion-label>
-      <ion-item fill="outline" lines="none">
-        <ion-input type="email" formControlName="email"></ion-input>
-      </ion-item>
+          <div class="field-group">
+            <label class="field-label">Pays</label>
+            <ion-item lines="none" class="field-item">
+              <ion-select interface="popover" placeholder="Sélectionner votre pays" formControlName="country">
+                <ion-select-option value="Tunisia">Tunisie</ion-select-option>
+                <ion-select-option value="France">France</ion-select-option>
+                <ion-select-option value="Canada">Canada</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </div>
 
-      <ion-label position="stacked">Password</ion-label>
-      <ion-item fill="outline" lines="none">
-        <ion-input [type]="passwordType" placeholder="Password (6 or more characters)" formControlName="password"></ion-input>
-        <ion-icon [name]="passwordIcon" slot="end" (click)="togglePassword()"></ion-icon>
-      </ion-item>
+        </div>
+      </div>
 
-      <ion-label position="stacked">Country</ion-label>
-      <ion-item fill="outline" lines="none">
-        <ion-select interface="popover" value="Tunisia" formControlName="country">
-          <ion-select-option value="Tunisia">Tunisia</ion-select-option>
-          <ion-select-option value="France">France</ion-select-option>
-          <ion-select-option value="France">Canada</ion-select-option>
-
-          </ion-select>
-      </ion-item>
-
-      <div class="checkbox-container">
+      <div class="checkbox-card">
         <ion-item lines="none" class="checkbox-item">
           <ion-checkbox slot="start" mode="md" formControlName="termsEmail"></ion-checkbox>
-          <ion-label>Send me emails with tips on how to find talent that fits my needs.</ion-label>
+          <ion-label>
+            Envoyez-moi des conseils pour trouver les talents adaptés à mes besoins.
+          </ion-label>
         </ion-item>
 
         <ion-item lines="none" class="checkbox-item">
           <ion-checkbox slot="start" mode="md" formControlName="terms"></ion-checkbox>
           <ion-label class="terms-text">
-            Yes, I understand and agree to the <span class="link">Upwork Terms of Service</span>, 
-            including the <span class="link">User Agreement</span> and <span class="link">Privacy Policy</span>.
+            Oui, j’ai lu et j’accepte les
+            <span class="link">conditions d’utilisation</span>,
+            l’<span class="link">accord utilisateur</span> et la
+            <span class="link">politique de confidentialité</span>.
           </ion-label>
         </ion-item>
       </div>
 
       <ion-button expand="block" type="submit" class="create-btn">
-        Create my account
+        Créer mon compte
       </ion-button>
     </form>
   </div>

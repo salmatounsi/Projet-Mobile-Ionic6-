@@ -11,8 +11,9 @@ export class HomeHubPage implements OnInit {
   constructor(private router: Router, private auth: AuthService) {}
 
   ngOnInit() {
-    const role = this.auth.getRole?.() ?? 'client';
-
+    //const role = this.auth.getRole?.() ?? 'client';
+    const role = localStorage.getItem("role");
+    
     if (role === 'freelancer') {
       this.router.navigateByUrl('/tabs/jobs');
     } else {

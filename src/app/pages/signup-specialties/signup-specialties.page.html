@@ -1,11 +1,9 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Inscription</ion-title>
+    <ion-title>Profil freelancer</ion-title>
+
     <ion-buttons slot="end">
-      <ion-button fill="solid" class="step-badge">Étape 5 sur 6</ion-button>
+      <ion-button fill="solid" class="step-badge">Étape 5/6</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -14,16 +12,20 @@
   <div class="top-section">
     <div class="progress-section">
       <div class="prog-label">
-        <span>Compléter le profil</span>
-        <strong>83%</strong>
+        <span>Progression</span>
+        <strong>Spécialités</strong>
       </div>
+
       <div class="prog-track">
         <div class="prog-fill"></div>
       </div>
     </div>
-    <div class="hero-kicker">Votre profil</div>
-    <h2 class="hero-title">Vos spécialités.</h2>
-    <p class="hero-sub">Quel type de travail souhaitez-vous faire ? Choisissez vos domaines d'expertise.</p>
+
+    <div class="hero-kicker">FreelanceHub</div>
+    <h2 class="hero-title">Choisissez vos spécialités</h2>
+    <p class="hero-sub">
+      Sélectionnez les domaines dans lesquels vous souhaitez proposer vos services.
+    </p>
   </div>
 
   <div class="body">
@@ -38,11 +40,13 @@
         <div class="card-icon">
           <ion-icon name="grid-outline" class="c-icon"></ion-icon>
         </div>
+
         <span class="cat-title">{{ cat.name }}</span>
+
         <ion-icon
           class="chevron"
-          [name]="cat.open ? 'chevron-up-outline' : 'chevron-down-outline'">
-        </ion-icon>
+          [name]="cat.open ? 'chevron-up-outline' : 'chevron-down-outline'"
+        ></ion-icon>
       </div>
 
       <div class="spec-list" *ngIf="cat.open">
@@ -50,8 +54,9 @@
           <ion-checkbox
             class="spec-check"
             [checked]="isSelected(spec)"
-            (ionChange)="toggleSpecialty(spec)">
-          </ion-checkbox>
+            (ionChange)="toggleSpecialty(spec)"
+          ></ion-checkbox>
+
           <span class="spec-label">{{ spec }}</span>
         </div>
       </div>
@@ -62,8 +67,9 @@
         class="submit-btn"
         expand="block"
         [disabled]="selectedSpecialties.length === 0"
-        (click)="next()">
-        Suivant
+        (click)="next()"
+      >
+        Continuer
         <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
       </ion-button>
     </div>

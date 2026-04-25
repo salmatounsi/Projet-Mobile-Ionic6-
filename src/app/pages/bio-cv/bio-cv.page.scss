@@ -8,17 +8,23 @@ ion-toolbar {
   --background: #{$navy};
   --color: #ffffff;
   --border-width: 0;
+  --min-height: 58px;
+  padding: 0 8px;
 
-  ion-title { font-weight: 700; font-size: 16px; }
+  ion-title {
+    font-weight: 800;
+    font-size: 16px;
+  }
 
   .step-badge {
-    --background: #{$navy-mid};
+    --background: rgba(255, 255, 255, 0.12);
     --color: #d0e0ff;
     --border-radius: 20px;
-    --border-color: rgba(255,255,255,0.18);
+    --border-color: rgba(255, 255, 255, 0.2);
     --border-width: 1px;
     --border-style: solid;
     --box-shadow: none;
+
     font-size: 11px;
     font-weight: 700;
     height: 28px;
@@ -32,31 +38,41 @@ ion-content {
 }
 
 .top-section {
-  background: $navy;
+  background: linear-gradient(145deg, #0f1f47 0%, $navy-mid 100%);
   padding-bottom: 28px;
   border-radius: 0 0 28px 28px;
+  box-shadow: 0 10px 22px rgba(21, 42, 94, 0.16);
 }
 
 .progress-section {
-  padding: 10px 18px 14px;
+  padding: 14px 18px 14px;
 
   .prog-label {
     display: flex;
     justify-content: space-between;
     margin-bottom: 8px;
-    span   { font-size: 11px; color: rgba(255,255,255,0.45); }
-    strong { font-size: 11px; color: $navy-light; font-weight: 700; }
+
+    span {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.48);
+    }
+
+    strong {
+      font-size: 11px;
+      color: $navy-light;
+      font-weight: 800;
+    }
   }
 
   .prog-track {
     height: 5px;
-    background: rgba(255,255,255,0.1);
+    background: rgba(255, 255, 255, 0.12);
     border-radius: 5px;
     overflow: hidden;
 
     .prog-fill {
       height: 100%;
-      width: 16.6%;
+      width: 33%;
       background: $navy-light;
       border-radius: 5px;
     }
@@ -67,25 +83,29 @@ ion-content {
   padding: 8px 18px 0;
 
   .hero-kicker {
-    font-size: 11px;
-    font-weight: 700;
+    display: inline-flex;
+    padding: 5px 11px;
+    border-radius: 20px;
+    background: rgba(168, 196, 255, 0.15);
     color: $navy-light;
-    letter-spacing: 1.4px;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
     text-transform: uppercase;
-    margin-bottom: 8px;
+    margin-bottom: 12px;
   }
 
   .hero-title {
-    font-size: 21px;
-    font-weight: 800;
+    font-size: 22px;
+    font-weight: 900;
     color: #ffffff;
     line-height: 1.25;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
   }
 
   .hero-sub {
     font-size: 13px;
-    color: rgba(255,255,255,0.58);
+    color: rgba(255, 255, 255, 0.65);
     line-height: 1.6;
   }
 }
@@ -102,6 +122,7 @@ ion-content {
   border-radius: 18px;
   border: 1px solid $border;
   overflow: hidden;
+  box-shadow: 0 8px 20px rgba(21, 42, 94, 0.05);
 
   .card-head {
     display: flex;
@@ -112,17 +133,24 @@ ion-content {
   }
 
   .card-icon {
-    width: 32px; height: 32px;
+    width: 32px;
+    height: 32px;
     background: #e8effe;
     border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     flex-shrink: 0;
-    .c-icon { font-size: 16px; color: $navy; }
+
+    .c-icon {
+      font-size: 16px;
+      color: $navy;
+    }
   }
 
   .card-title {
     font-size: 13px;
-    font-weight: 700;
+    font-weight: 800;
     color: $navy;
   }
 }
@@ -137,8 +165,8 @@ ion-content {
   ion-textarea {
     font-size: 13px;
     color: #334155;
-    --placeholder-color: #b0bdd4;
-    --placeholder-font-style: italic;
+    --placeholder-color: #94a3b8;
+    --placeholder-opacity: 1;
   }
 }
 
@@ -147,53 +175,94 @@ ion-content {
   display: flex;
   justify-content: flex-end;
 
-  .char-num { font-size: 11px; color: #94a3b8; }
+  .char-num {
+    font-size: 11px;
+    color: #94a3b8;
+    font-weight: 600;
+  }
 }
 
 .upload-zone {
-  margin: 13px 14px;
+  margin: 14px;
   border: 1.5px dashed #b4c6e8;
   border-radius: 14px;
-  padding: 13px 14px;
-  display: flex; align-items: center; gap: 12px;
+  padding: 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
   background: #f4f7fd;
   cursor: pointer;
+}
 
-  .up-icon {
-    width: 42px; height: 42px;
-    background: $navy;
-    border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-    .up-icon-svg { font-size: 20px; color: #ffffff; }
+.up-icon {
+  width: 42px;
+  height: 42px;
+  background: $navy;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  .up-icon-svg {
+    font-size: 20px;
+    color: #ffffff;
+  }
+}
+
+.up-texts {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 1;
+
+  .up-main {
+    font-size: 13px;
+    font-weight: 800;
+    color: $navy;
   }
 
-  .up-texts {
-    display: flex; flex-direction: column; gap: 3px; flex: 1;
-    .up-main { font-size: 13px; font-weight: 700; color: $navy; }
-    .up-hint  { font-size: 11px; color: #94a3b8; }
+  .up-hint {
+    font-size: 11px;
+    color: #94a3b8;
   }
+}
 
-  .up-arrow {
-    width: 28px; height: 28px;
-    background: #dce6f8;
-    border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    .arrow-icon { font-size: 14px; color: $navy; }
+.up-arrow {
+  width: 28px;
+  height: 28px;
+  background: #dce6f8;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .arrow-icon {
+    font-size: 14px;
+    color: $navy;
   }
 }
 
 .file-pill {
-  display: inline-flex; align-items: center; gap: 7px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
   background: #eaf0fc;
   border: 1px solid #c2d4f0;
   border-radius: 20px;
   padding: 6px 12px;
-  font-size: 12px; font-weight: 600; color: $navy-mid;
+  font-size: 12px;
+  font-weight: 700;
+  color: $navy-mid;
   margin: 0 14px 14px;
+  max-width: calc(100% - 28px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 
   .pill-dot {
-    width: 7px; height: 7px;
+    width: 7px;
+    height: 7px;
     background: $navy-mid;
     border-radius: 50%;
     flex-shrink: 0;
@@ -204,25 +273,31 @@ ion-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 12px;
   padding-top: 4px;
 
   .skip-lnk {
     font-size: 13px;
     color: #5a739e;
-    font-weight: 600;
+    font-weight: 700;
     text-decoration: underline;
     text-underline-offset: 3px;
     cursor: pointer;
+    white-space: nowrap;
   }
 
   .submit-btn {
     --background: #{$navy};
+    --background-activated: #{$navy-mid};
     --color: #ffffff;
     --border-radius: 26px;
     --box-shadow: none;
-    font-weight: 700;
+
+    font-weight: 800;
     font-size: 14px;
     height: 48px;
     text-transform: none;
+    flex: 1;
+    max-width: 190px;
   }
 }

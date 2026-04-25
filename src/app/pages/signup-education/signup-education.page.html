@@ -1,11 +1,9 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/signup-experience"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Inscription</ion-title>
+    <ion-title>Profil freelancer</ion-title>
+
     <ion-buttons slot="end">
-      <ion-button fill="solid" class="step-badge">Étape 4 sur 6</ion-button>
+      <ion-button fill="solid" class="step-badge">Étape 4/6</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -14,22 +12,26 @@
   <div class="top-section">
     <div class="progress-section">
       <div class="prog-label">
-        <span>Compléter le profil</span>
-        <strong>66%</strong>
+        <span>Progression</span>
+        <strong>Formation</strong>
       </div>
+
       <div class="prog-track">
         <div class="prog-fill"></div>
       </div>
     </div>
-    <div class="hero-kicker">Votre parcours</div>
-    <h2 class="hero-title">Votre formation.</h2>
-    <p class="hero-sub">Les clients aiment savoir ce que vous avez étudié — ajoutez votre formation ici.</p>
+
+    <div class="hero-kicker">FreelanceHub</div>
+    <h2 class="hero-title">Ajoutez vos formations</h2>
+    <p class="hero-sub">
+      Indiquez votre parcours académique pour renforcer la crédibilité de votre profil.
+    </p>
   </div>
 
   <div class="body">
 
     <ion-button expand="block" class="add-btn" (click)="openAddEducation()">
-      <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+      <ion-icon name="add-outline" slot="start"></ion-icon>
       Ajouter une formation
     </ion-button>
 
@@ -38,12 +40,15 @@
         <div class="card-icon">
           <ion-icon name="school-outline" class="c-icon"></ion-icon>
         </div>
+
         <span class="card-title">Formations ajoutées</span>
         <span class="count-badge">{{ educations.length }}</span>
       </div>
+
       <div class="timeline-list">
         <div class="timeline-item" *ngFor="let ed of educations">
           <div class="timeline-dot"></div>
+
           <div class="timeline-content">
             <h4 class="tl-title">{{ ed.school }}</h4>
             <p class="tl-sub">{{ ed.degree }} · {{ ed.field }}</p>
@@ -54,15 +59,18 @@
 
     <div class="empty-state" *ngIf="!educations.length">
       <ion-icon name="school-outline" class="empty-icon"></ion-icon>
-      <p class="empty-text">Aucune formation ajoutée pour l'instant.</p>
+      <p class="empty-text">
+        Aucune formation ajoutée pour l’instant.
+      </p>
     </div>
 
     <div class="footer">
-      <ion-button class="skip-btn" fill="clear" routerLink="/signup-languages">
-        Passer
-      </ion-button>
+      <span class="skip-lnk" routerLink="/signup-languages">
+        Ignorer pour l’instant
+      </span>
+
       <ion-button class="submit-btn" (click)="submitEducation()">
-        Suivant
+        Continuer
         <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
       </ion-button>
     </div>

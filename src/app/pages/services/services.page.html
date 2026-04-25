@@ -1,7 +1,11 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-title>Services</ion-title>
-    <ion-buttons slot="end">
+
+    <ion-buttons
+      slot="end"
+      *ngIf="role === 'freelancer' && selectedView === 'mine'"
+    >
       <ion-button class="add-btn" (click)="goToCreateService()">
         <ion-icon name="add-outline" slot="start"></ion-icon>
         Ajouter
@@ -13,8 +17,32 @@
 <ion-content>
   <div class="body">
 
+   <ion-segment
+  *ngIf="role === 'freelancer'"
+  [value]="selectedView"
+  class="services-segment"
+  (ionChange)="switchView($event.detail.value)"
+>
+  <ion-segment-button value="all">
+    <ion-label>Services disponibles</ion-label>
+  </ion-segment-button>
+
+  <ion-segment-button value="mine">
+    <ion-label>Mes services</ion-label>
+  </ion-segment-button>
+</ion-segment>
+
     <div class="section-header">
-      <h3 class="section-title">Mes services</h3>
+      <h3 class="section-title">
+        {{
+          role === 'client'
+            ? 'Services disponibles'
+            : selectedView === 'all'
+              ? 'Services disponibles'
+              : 'Mes services'
+        }}
+      </h3>
+
       <span class="section-count">{{ services.length }}</span>
     </div>
 
@@ -33,6 +61,7 @@
               <ion-icon name="star" class="star-icon"></ion-icon>
               <span>{{ service.rating }} ({{ service.reviews_count }})</span>
             </div>
+
             <div class="meta-item">
               <ion-icon name="time-outline"></ion-icon>
               <span>{{ service.delivery_time }}j</span>
@@ -50,8 +79,20 @@
 
     <div class="empty-state" *ngIf="services.length === 0">
       <ion-icon name="briefcase-outline" class="empty-icon"></ion-icon>
-      <p class="empty-text">Aucun service pour l'instant.</p>
-      <ion-button class="empty-btn" (click)="goToCreateService()">
+
+      <p class="empty-text">
+        {{
+          role === 'client' || selectedView === 'all'
+            ? 'Aucun service disponible pour le moment.'
+            : 'Vous n’avez pas encore publié de service.'
+        }}
+      </p>
+
+      <ion-button
+        *ngIf="role === 'freelancer' && selectedView === 'mine'"
+        class="empty-btn"
+        (click)="goToCreateService()"
+      >
         Créer mon premier service
       </ion-button>
     </div>

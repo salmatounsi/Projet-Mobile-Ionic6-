@@ -42,7 +42,7 @@ export class SignupLanguagesPage {
 
 
     this.api.updateLanguages( this.signup.languages).subscribe({
-      next: () => this.router.navigateByUrl('/bio-cv'),
+      next: () => this.router.navigateByUrl('signup-skills'),
       error: (err) => {
         console.error('updateLanguages failed', err);
         alert('Failed to save languages. Is the backend running?');

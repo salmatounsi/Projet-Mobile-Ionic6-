@@ -2,15 +2,15 @@
 
   <!-- HERO -->
   <section class="hero-section">
-    <div class="hero-content">
-      <span class="hero-badge">Emplois • Services • Produits</span>
-      <h1>Recrutez, vendez,<br><span class="hero-accent">développez-vous.</span></h1>
-      <p>La plateforme tout-en-un pour clients et freelancers.</p>
-      <div class="hero-actions">
-        <ion-button shape="round" class="btn-primary" (click)="clientSignup()">Trouver un talent</ion-button>
-        <ion-button fill="outline" shape="round" class="btn-ghost" (click)="freelancer()">Offrir mes services</ion-button>
-      </div>
-    </div>
+   <div class="hero-actions">
+  <ion-button class="btn-primary" routerLink="/login">
+    Trouver un talent
+  </ion-button>
+
+  <ion-button class="btn-ghost" fill="outline" routerLink="/login">
+    Offrir mes services
+  </ion-button>
+</div>
 
     <div class="hero-stats">
       <div class="stat"><span class="stat-num">+10K</span><span class="stat-lbl">Freelancers</span></div>
@@ -113,32 +113,60 @@
     </ng-template>
   </section>
 
-  <!-- JOBS -->
-  <section class="listing-section">
-    <div class="sec-head">
-      <div>
-        <p class="section-label">En vedette</p>
-        <h2>Opportunités récentes</h2>
-      </div>
-      <ion-button fill="clear" class="see-all" (click)="browseJobs()">Voir tout →</ion-button>
+<!-- JOBS -->
+<section class="listing-section">
+  <div class="sec-head">
+    <div>
+      <p class="section-label">En vedette</p>
+      <h2>Opportunités récentes</h2>
     </div>
 
-    <div class="jobs-grid" *ngIf="jobs?.length; else noJobs">
-      <div class="job-card" *ngFor="let job of jobs; trackBy: trackById">
-        <div class="job-head">
-          <span class="tag">{{ job.category }}</span>
-          <span class="budget-tag">{{ job.budget }} DT / {{ job.budget_type }}</span>
+    <ion-button fill="clear" class="see-all" (click)="browseJobs()">
+      Voir tout →
+    </ion-button>
+  </div>
+
+  <div class="home-jobs-list" *ngIf="jobs?.length; else noJobs">
+    <div class="home-job-card" *ngFor="let job of jobs; trackBy: trackById">
+
+      <div class="job-icon-wrap">
+        <ion-icon name="briefcase-outline"></ion-icon>
+      </div>
+
+      <div class="job-content">
+        <h3>{{ job.title || 'Offre sans titre' }}</h3>
+
+        <div class="job-meta">
+          <span *ngIf="job.budgetType">
+            <ion-icon name="time-outline"></ion-icon>
+            {{ job.budgetType }}
+          </span>
+
+          <span *ngIf="job.size">
+            <ion-icon name="resize-outline"></ion-icon>
+            {{ job.size }}
+          </span>
         </div>
-        <h3>{{ job.title }}</h3>
-        <div class="chips" *ngIf="job.skills?.length">
-          <span class="chip" *ngFor="let skill of job.skills | slice:0:3">{{ skill }}</span>
+
+        <div class="job-skills" *ngIf="job.skills?.length">
+          <span *ngFor="let skill of job.skills | slice:0:3">
+            {{ skill }}
+          </span>
         </div>
       </div>
+
+      <div class="job-budget">
+        <small>Budget</small>
+        <strong>{{ job.budgetFrom || 0 }} - {{ job.budgetTo || 0 }} DT</strong>
+      </div>
+
     </div>
-    <ng-template #noJobs>
-      <div class="empty-state">Aucune offre pour l'instant.</div>
-    </ng-template>
-  </section>
+  </div>
+
+  <ng-template #noJobs>
+    <div class="empty-state">Aucune offre pour l'instant.</div>
+  </ng-template>
+</section>
 
   <!-- CTA -->
   <section class="cta-section">
@@ -146,8 +174,14 @@
       <h2>Prêt à vous lancer ?</h2>
       <p>Créez votre compte gratuitement.</p>
       <div class="cta-actions">
-        <ion-button expand="block" shape="round" class="btn-primary" (click)="postJob()">Créer un compte</ion-button>
-      </div>
+  <ion-button expand="block" shape="round" class="btn-primary" routerLink="/signup-client">
+    Je suis client
+  </ion-button>
+
+  <ion-button expand="block" shape="round" class="btn-secondary" routerLink="/general-info">
+    Je suis freelancer
+  </ion-button>
+</div>
       <div class="cta-login">
         Déjà un compte ? <a (click)="login()">Se connecter</a>
       </div>

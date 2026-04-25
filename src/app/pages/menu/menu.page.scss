@@ -1,0 +1,121 @@
+$navy: #152a5e;
+$navy-mid: #1e3f8a;
+$bg-page: #eef1f8;
+$border: #dce4f2;
+$text-muted: #64748b;
+
+ion-toolbar {
+  --background: #{$navy};
+  --color: #ffffff;
+  --border-width: 0;
+
+  ion-title {
+    font-size: 16px;
+    font-weight: 800;
+  }
+
+  ion-back-button {
+    --color: #ffffff;
+    --icon-font-size: 24px;
+  }
+}
+
+ion-content {
+  --background: #{$bg-page};
+}
+
+.body {
+  padding: 34px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.top-block {
+  text-align: center;
+  margin-bottom: 10px;
+
+  h1 {
+    margin: 0 0 8px;
+    color: $navy;
+    font-size: 26px;
+    font-weight: 900;
+  }
+
+  p {
+    margin: 0;
+    color: $text-muted;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+}
+
+.role-card {
+  background: #ffffff;
+  border: 1px solid $border;
+  border-radius: 20px;
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 8px 20px rgba(21, 42, 94, 0.06);
+  cursor: pointer;
+}
+
+.icon-box {
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  background: #eaf0fc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  ion-icon {
+    font-size: 24px;
+    color: $navy;
+  }
+}
+
+.role-text {
+  flex: 1;
+
+  h2 {
+    margin: 0 0 5px;
+    color: $navy;
+    font-size: 16px;
+    font-weight: 800;
+  }
+
+  p {
+    margin: 0;
+    color: $text-muted;
+    font-size: 12px;
+    line-height: 1.45;
+  }
+}
+
+.arrow-icon {
+  color: #94a3b8;
+  font-size: 22px;
+}
+
+.login-row {
+  margin-top: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  color: $text-muted;
+  font-size: 13px;
+
+  button {
+    border: none;
+    background: transparent;
+    color: $navy;
+    font-weight: 800;
+    font-size: 13px;
+    cursor: pointer;
+  }
+}

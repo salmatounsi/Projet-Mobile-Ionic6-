@@ -8,15 +8,18 @@ ion-toolbar {
   --background: #{$navy};
   --color: #ffffff;
   --border-width: 0;
-  ion-title { font-weight: 700; font-size: 16px; }
 
-  .icon-btn {
-    --background: rgba(255,255,255,0.15);
-    --color: #ffffff;
-    --border-radius: 10px;
-    width: 36px; height: 36px;
-    margin-right: 4px;
+  ion-title {
+    font-weight: 700;
+    font-size: 16px;
   }
+
+  ion-back-button {
+    --color: #ffffff;
+    --icon-font-size: 24px;
+  }
+
+
 }
 
 ion-content {
@@ -202,4 +205,8 @@ ion-content {
   font-size: 14px;
   height: 50px;
   text-transform: none;
+}
+
+.submit-btn.full {
+  flex: 1;
 }

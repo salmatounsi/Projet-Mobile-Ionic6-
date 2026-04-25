@@ -1,95 +1,171 @@
-// Palette de couleurs
-$blue-primary: #3880ff;
-$blue-dark: #1c3d5a;
-$blue-soft: #eef4ff;
-$white: #ffffff;
-$gray-light: #f4f5f8;
+$navy: #152a5e;
+$navy-mid: #1e3f8a;
+$blue: #3b82f6;
+$bg-page: #eef1f8;
+$border: #dce4f2;
+$text-muted: #8a96ad;
 
-:host {
-  ion-header {
-    ion-toolbar {
-      --background: #{$white};
-      --color: #{$blue-dark};
-      --border-style: none;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-      
-      ion-title {
-        font-weight: 800;
-        letter-spacing: -0.5px;
-      }
-    }
+ion-toolbar {
+  --background: #{$navy};
+  --color: #ffffff;
+  --border-width: 0;
+
+  ion-title {
+    font-size: 17px;
+    font-weight: 800;
+  }
+}
+
+ion-content {
+  --background: #{$bg-page};
+}
+
+.body {
+  padding: 18px 14px 36px;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.intro-card {
+  background: linear-gradient(135deg, $navy, $navy-mid);
+  color: #ffffff;
+  border-radius: 20px;
+  padding: 18px;
+  margin-bottom: 16px;
+  box-shadow: 0 12px 26px rgba(21, 42, 94, 0.16);
+
+  h2 {
+    margin: 0 0 6px;
+    font-size: 20px;
+    font-weight: 800;
   }
 
-  ion-content {
-    --background: #{$gray-light};
+  p {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.78);
+  }
+}
 
-    form {
-      max-width: 600px;
-      margin: 0 auto;
-    }
+.service-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
 
-    // Titres de sections (Packages, Détails)
-    h3 {
-      color: $blue-dark;
-      font-size: 1.1rem;
-      font-weight: 700;
-      margin: 24px 8px 12px 8px;
-      padding-left: 8px;
-      border-left: 4px solid $blue-primary;
-    }
+.form-section {
+  background: #ffffff;
+  border: 1px solid $border;
+  border-radius: 20px;
+  padding: 16px;
+  box-shadow: 0 8px 20px rgba(21, 42, 94, 0.06);
+}
+
+.section-title {
+  color: $navy;
+  font-size: 15px;
+  font-weight: 800;
+  margin: 0 0 14px;
+  padding-left: 10px;
+  border-left: 4px solid $blue;
+}
+
+.form-item {
+  --background: #f8faff;
+  --border-radius: 14px;
+  --padding-start: 14px;
+  --padding-end: 14px;
+  --inner-padding-end: 0;
+  --highlight-color-focused: #{$blue};
+
+  margin-bottom: 12px;
+  border: 1px solid $border;
+  border-radius: 14px;
+  overflow: hidden;
+
+  ion-label {
+    color: $navy !important;
+    font-size: 13px !important;
+    font-weight: 800 !important;
+    margin-bottom: 6px;
   }
 
-  // Style des champs de saisie
-  ion-item {
-    --background: #{$white};
-    --border-radius: 12px;
-    --padding-start: 16px;
-    --highlight-color-focused: #{$blue-primary};
-    margin-bottom: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-    
-    &::part(native) {
-      border: none;
-    }
+  ion-input,
+  ion-textarea {
+    --color: #172554;
+    --placeholder-color: #94a3b8;
+    --placeholder-opacity: 1;
+    font-size: 14px;
+  }
+}
 
-    ion-label {
-      color: $blue-dark !important;
-      font-weight: 600 !important;
-    }
+.textarea-item {
+  align-items: flex-start;
+}
 
-    ion-input, ion-textarea {
-      --padding-top: 10px;
-      font-size: 0.95rem;
-    }
+.upload-box {
+  background: #f8faff;
+  border: 1px dashed #b8c7e2;
+  border-radius: 16px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.upload-text {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  ion-icon {
+    font-size: 26px;
+    color: $navy;
+    background: #eaf0fc;
+    padding: 10px;
+    border-radius: 14px;
   }
 
-  // Style spécifique pour l'input de fichier (plus propre)
-  input[type="file"] {
-    padding: 10px 0;
-    font-size: 0.8rem;
-    color: $blue-dark;
-    
-    &::file-selector-button {
-      background: $blue-soft;
-      border: none;
-      padding: 8px 12px;
-      border-radius: 6px;
-      color: $blue-primary;
-      font-weight: bold;
-      margin-right: 10px;
-    }
+  h4 {
+    margin: 0 0 4px;
+    color: $navy;
+    font-size: 14px;
+    font-weight: 800;
   }
 
-  // Bouton de soumission
-  ion-button {
-    --background: #{$blue-primary};
-    --border-radius: 12px;
-    --box-shadow: 0 4px 12px rgba(56, 128, 255, 0.3);
-    margin-top: 30px;
-    margin-bottom: 40px;
-    height: 50px;
-    font-weight: 700;
-    text-transform: none;
-    font-size: 1.1rem;
+  p {
+    margin: 0;
+    color: $text-muted;
+    font-size: 12px;
+    line-height: 1.4;
   }
+}
+
+.file-btn {
+  height: 42px;
+  border-radius: 14px;
+  background: #eaf0fc;
+  color: $navy;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.submit-btn {
+  --background: #{$navy};
+  --background-activated: #{$navy-mid};
+  --color: #ffffff;
+  --border-radius: 16px;
+  --box-shadow: 0 12px 24px rgba(21, 42, 94, 0.22);
+
+  height: 52px;
+  font-size: 15px;
+  font-weight: 800;
+  text-transform: none;
+  margin-top: 4px;
+  margin-bottom: 20px;
 }

@@ -46,9 +46,9 @@ export class SignupSkillsPage {
       return;
     }
 
-    // ✅ token-based (1 argument)
+    
     this.api.updateSkills(this.signup.skills).subscribe({
-      next: () => this.router.navigateByUrl('/signup-languages'),
+      next: () => this.router.navigateByUrl('/choose-plan'),
       error: (err: any) => {
         console.error('updateSkills failed', err);
         alert('Failed to save skills. Is the backend running?');

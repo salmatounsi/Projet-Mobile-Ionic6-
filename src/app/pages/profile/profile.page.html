@@ -1,9 +1,10 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-title>Profile</ion-title>
+    <ion-title>Profil</ion-title>
+
     <ion-buttons slot="end">
-      <ion-button class="icon-btn">
-        <ion-icon name="settings-outline"></ion-icon>
+      <ion-button class="icon-btn" (click)="goToEditProfile()">
+        <ion-icon name="create-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -12,12 +13,19 @@
 <ion-content>
   <div class="body">
 
+    <!-- IDENTITÉ : commune client + freelancer -->
     <div class="identity-card">
       <div class="top-bar">
-        <div class="earnings-pill">
+        <div class="earnings-pill" *ngIf="user?.role === 'freelancer'">
           <ion-icon name="wallet-outline"></ion-icon>
           {{ user?.earnings || 0 }}.00$
         </div>
+
+        <div class="earnings-pill" *ngIf="user?.role === 'client'">
+          <ion-icon name="person-outline"></ion-icon>
+          Client
+        </div>
+
         <ion-button fill="clear" class="menu-btn">
           <ion-icon name="ellipsis-horizontal-outline"></ion-icon>
         </ion-button>
@@ -26,157 +34,277 @@
       <div class="avatar-section">
         <div class="avatar-wrap">
           <img
-            [src]="user?.general_info?.profile_image || 'assets/avatar.png'"
+            [src]="user?.general_info?.profile_image || 'assets/icon/favicon.png'"
             alt="user"
             class="avatar-img"
           />
         </div>
+
         <h2 class="user-name">
           {{ user?.general_info?.first_name || 'User' }}
           {{ user?.general_info?.last_name || '' }}
         </h2>
-        <p class="user-role">{{ user?.professional_role || user?.role }}</p>
+
+        <p class="user-role">
+          {{
+            user?.role === 'client'
+              ? 'Client'
+              : user?.professional_role || 'Freelancer'
+          }}
+        </p>
       </div>
     </div>
 
-    <!-- Bio -->
-    <div class="card">
-      <div class="card-head">
-        <div class="card-icon">
-          <ion-icon name="document-text-outline" class="c-icon"></ion-icon>
+    <!-- PROFIL CLIENT -->
+    <ng-container *ngIf="user?.role === 'client'">
+
+      <div class="card">
+        <div class="card-head">
+          <div class="card-icon">
+            <ion-icon name="person-outline" class="c-icon"></ion-icon>
+          </div>
+          <span class="card-title">Profil client</span>
         </div>
-        <span class="card-title">Bio</span>
-      </div>
-      <p class="bio-text">{{ user?.bio }}</p>
-    </div>
 
-    <!-- Skills -->
-    <div class="card">
-      <div class="card-head">
-        <div class="card-icon">
-          <ion-icon name="flash-outline" class="c-icon"></ion-icon>
-        </div>
-        <span class="card-title">Compétences</span>
-      </div>
-      <div class="chips-wrap">
-        <span class="chip active" *ngFor="let skill of user?.skills || []">
-          {{ skill }}
-        </span>
-      </div>
-
-      <div class="section-divider" *ngIf="user?.suggestedSkills?.length"></div>
-
-      <p class="subsection-label" *ngIf="user?.suggestedSkills?.length">Suggérées</p>
-      <div class="chips-wrap" *ngIf="user?.suggestedSkills?.length">
-        <span class="chip" *ngFor="let skill of user?.suggestedSkills || []">
-          {{ skill }}
-        </span>
-      </div>
-    </div>
-
-    <!-- Languages -->
-    <div class="card">
-      <div class="card-head">
-        <div class="card-icon">
-          <ion-icon name="language-outline" class="c-icon"></ion-icon>
-        </div>
-        <span class="card-title">Langues</span>
-      </div>
-      <div class="lang-list">
-        <div class="lang-row" *ngFor="let lang of user?.languages || []">
-          <span class="lang-name">{{ lang.language }}</span>
-          <span class="lang-level">{{ lang.proficiency }}</span>
+        <div class="client-info">
+          <p>
+            Votre compte client vous permet de publier des offres,
+            consulter les services et acheter des produits numériques.
+          </p>
         </div>
       </div>
-    </div>
 
-    <!-- Spécialités -->
-    <div class="card">
-      <div class="card-head">
-        <div class="card-icon">
-          <ion-icon name="grid-outline" class="c-icon"></ion-icon>
+      <div class="card">
+        <div class="card-head">
+          <div class="card-icon">
+            <ion-icon name="briefcase-outline" class="c-icon"></ion-icon>
+          </div>
+          <span class="card-title">Mes offres</span>
         </div>
-        <span class="card-title">{{ user?.categories?.main?.name || 'Catégorie' }}</span>
-        <ion-button fill="clear" class="head-action-btn">Modifier</ion-button>
+
+        <div class="client-info">
+          <p>Consultez et gérez les offres que vous avez publiées.</p>
+
+          <ion-button class="profile-action-btn" routerLink="/tabs/jobs">
+            Voir mes offres
+          </ion-button>
+        </div>
       </div>
 
-      <div class="check-list" *ngIf="user?.categories?.sub_categories?.length; else noSubCategories">
-        <ion-item lines="none" class="check-item" *ngFor="let sub of user?.categories?.sub_categories || []">
-          <ion-checkbox [checked]="true" class="nav-check"></ion-checkbox>
-          <ion-label class="check-label">{{ sub }}</ion-label>
-        </ion-item>
+      <div class="card">
+        <div class="card-head">
+          <div class="card-icon">
+            <ion-icon name="card-outline" class="c-icon"></ion-icon>
+          </div>
+          <span class="card-title">Abonnement</span>
+        </div>
+
+        <div class="client-info">
+          <p>
+            Plan actuel :
+            <strong>
+              {{ user?.subscription_plan?.name || 'Aucun plan actif' }}
+            </strong>
+          </p>
+
+          <ion-button class="profile-action-btn" routerLink="/choose-plan">
+            Gérer mon abonnement
+          </ion-button>
+        </div>
       </div>
 
-      <ng-template #noSubCategories>
-        <div class="check-list">
-          <ion-item lines="none" class="check-item">
-            <ion-label class="check-label">Aucune sous-catégorie sélectionnée</ion-label>
+    </ng-container>
+
+    <!-- PROFIL FREELANCER -->
+    <ng-container *ngIf="user?.role === 'freelancer'">
+
+      <!-- Bio -->
+      <div class="card">
+        <div class="card-head">
+          <div class="card-icon">
+            <ion-icon name="document-text-outline" class="c-icon"></ion-icon>
+          </div>
+          <span class="card-title">Bio</span>
+        </div>
+
+        <p class="bio-text">
+          {{ user?.bio || 'Aucune bio ajoutée pour le moment.' }}
+        </p>
+      </div>
+
+      <!-- Skills -->
+      <div class="card">
+        <div class="card-head">
+          <div class="card-icon">
+            <ion-icon name="flash-outline" class="c-icon"></ion-icon>
+          </div>
+          <span class="card-title">Compétences</span>
+        </div>
+
+        <div class="chips-wrap" *ngIf="user?.skills?.length; else noSkills">
+          <span class="chip active" *ngFor="let skill of user?.skills || []">
+            {{ skill }}
+          </span>
+        </div>
+
+        <ng-template #noSkills>
+          <p class="bio-text">Aucune compétence ajoutée.</p>
+        </ng-template>
+
+        <div class="section-divider" *ngIf="user?.suggestedSkills?.length"></div>
+
+        <p class="subsection-label" *ngIf="user?.suggestedSkills?.length">
+          Suggérées
+        </p>
+
+        <div class="chips-wrap" *ngIf="user?.suggestedSkills?.length">
+          <span class="chip" *ngFor="let skill of user?.suggestedSkills || []">
+            {{ skill }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Languages -->
+      <div class="card">
+        <div class="card-head">
+          <div class="card-icon">
+            <ion-icon name="language-outline" class="c-icon"></ion-icon>
+          </div>
+          <span class="card-title">Langues</span>
+        </div>
+
+        <div class="lang-list" *ngIf="user?.languages?.length; else noLanguages">
+          <div class="lang-row" *ngFor="let lang of user?.languages || []">
+            <span class="lang-name">{{ lang.language }}</span>
+            <span class="lang-level">{{ lang.proficiency }}</span>
+          </div>
+        </div>
+
+        <ng-template #noLanguages>
+          <p class="bio-text">Aucune langue ajoutée.</p>
+        </ng-template>
+      </div>
+
+      <!-- Spécialités -->
+      <div class="card">
+        <div class="card-head">
+          <div class="card-icon">
+            <ion-icon name="grid-outline" class="c-icon"></ion-icon>
+          </div>
+
+          <span class="card-title">
+            {{ user?.categories?.main?.name || 'Catégorie' }}
+          </span>
+
+          
+        </div>
+
+        <div class="check-list" *ngIf="user?.categories?.sub_categories?.length; else noSubCategories">
+          <ion-item
+            lines="none"
+            class="check-item"
+            *ngFor="let sub of user?.categories?.sub_categories || []"
+          >
+            <ion-checkbox [checked]="true" class="nav-check"></ion-checkbox>
+            <ion-label class="check-label">{{ sub }}</ion-label>
           </ion-item>
         </div>
-      </ng-template>
-    </div>
 
-    <!-- Education -->
-    <div class="card">
-      <div class="card-head">
-        <div class="card-icon">
-          <ion-icon name="school-outline" class="c-icon"></ion-icon>
-        </div>
-        <span class="card-title">Formation</span>
-        <ion-button fill="clear" class="head-action-btn">+ Ajouter</ion-button>
+        <ng-template #noSubCategories>
+          <div class="check-list">
+            <ion-item lines="none" class="check-item">
+              <ion-label class="check-label">
+                Aucune sous-catégorie sélectionnée
+              </ion-label>
+            </ion-item>
+          </div>
+        </ng-template>
       </div>
-      <div class="timeline-list">
-        <div class="timeline-item" *ngFor="let edu of user?.education || []">
-          <div class="timeline-dot"></div>
-          <div class="timeline-content">
-            <h4 class="tl-title">{{ edu.school }}</h4>
+
+      <!-- Education -->
+      <div class="card">
+        <div class="card-head">
+          <div class="card-icon">
+            <ion-icon name="school-outline" class="c-icon"></ion-icon>
+          </div>
+
+          <span class="card-title">Formation</span>
+
+          
+        </div>
+
+        <div class="timeline-list" *ngIf="user?.education?.length; else noEducation">
+          <div class="timeline-item" *ngFor="let edu of user?.education || []">
+            <div class="timeline-dot"></div>
+
+            <div class="timeline-content">
+              <h4 class="tl-title">{{ edu.school }}</h4>
+
               <p class="tl-sub">{{ edu.degree }} · {{ edu.field }}</p>
-            <span class="tl-date">
-              {{ edu.startDate  | date:'MMM yyyy'}}
-              <span *ngIf="!edu.currently && edu.endDate"> - {{ edu.endDate | date:'MMM yyyy' }}</span>
-              <span *ngIf="edu.currently"> - En cours</span>
-            </span>
-            <p class="tl-sub" *ngIf="edu.description">
-              {{ edu.description }}
-            </p>
+
+              <span class="tl-date">
+                {{ edu.startDate | date:'MMM yyyy' }}
+                <span *ngIf="!edu.currently && edu.endDate">
+                  - {{ edu.endDate | date:'MMM yyyy' }}
+                </span>
+                <span *ngIf="edu.currently"> - En cours</span>
+              </span>
+
+              <p class="tl-sub" *ngIf="edu.description">
+                {{ edu.description }}
+              </p>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
 
-    <!-- Experience -->
-    <div class="card">
-      <div class="card-head">
-        <div class="card-icon">
-          <ion-icon name="briefcase-outline" class="c-icon"></ion-icon>
+        <ng-template #noEducation>
+          <p class="bio-text">Aucune formation ajoutée.</p>
+        </ng-template>
+      </div>
+
+      <!-- Experience -->
+      <div class="card">
+        <div class="card-head">
+          <div class="card-icon">
+            <ion-icon name="briefcase-outline" class="c-icon"></ion-icon>
+          </div>
+
+          <span class="card-title">Expérience</span>
+
+          
         </div>
-        <span class="card-title">Expérience</span>
-        <ion-button fill="clear" class="head-action-btn">+ Ajouter</ion-button>
-      </div>
-      <div class="timeline-list">
-        <div class="timeline-item" *ngFor="let exp of user?.experience || []">
-          <div class="timeline-dot"></div>
 
-          <div class="timeline-content">
-            <h4 class="tl-title">{{ exp.title }}</h4>
+        <div class="timeline-list" *ngIf="user?.experience?.length; else noExperience">
+          <div class="timeline-item" *ngFor="let exp of user?.experience || []">
+            <div class="timeline-dot"></div>
 
-            <p class="tl-sub">
-              {{ exp.company }} · {{ exp.location }}<span *ngIf="exp.country">, {{ exp.country }}</span>
-            </p>
+            <div class="timeline-content">
+              <h4 class="tl-title">{{ exp.title }}</h4>
 
-            <span class="tl-date">
-      {{ exp.startDate | date:'MMM yyyy' }}
+              <p class="tl-sub">
+                {{ exp.company }} · {{ exp.location }}
+                <span *ngIf="exp.country">, {{ exp.country }}</span>
+              </p>
 
-      <span *ngIf="!exp.currentlyInRole && exp.endDate">
-        - {{ exp.endDate | date:'MMM yyyy' }}
-      </span>
+              <span class="tl-date">
+                {{ exp.startDate | date:'MMM yyyy' }}
 
-      <span *ngIf="exp.currentlyInRole"> - En cours</span>
-    </span>
+                <span *ngIf="!exp.currentlyInRole && exp.endDate">
+                  - {{ exp.endDate | date:'MMM yyyy' }}
+                </span>
+
+                <span *ngIf="exp.currentlyInRole"> - En cours</span>
+              </span>
+            </div>
           </div>
         </div>
+
+        <ng-template #noExperience>
+          <p class="bio-text">Aucune expérience ajoutée.</p>
+        </ng-template>
       </div>
-    </div>
+
+    </ng-container>
 
   </div>
 </ion-content>

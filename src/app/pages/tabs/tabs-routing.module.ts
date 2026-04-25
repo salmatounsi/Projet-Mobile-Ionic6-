@@ -44,9 +44,9 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: 'start',
+        redirectTo: 'services',
         pathMatch: 'full',
-      },
+}
     ],
   },
 ];

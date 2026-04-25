@@ -1,9 +1,14 @@
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
+      <ion-back-button
+        defaultHref="/home"
+        text=""
+        icon="chevron-back-outline"
+      ></ion-back-button>
     </ion-buttons>
-    <ion-title>Business Plan</ion-title>
+
+    <ion-title>Choisir un abonnement</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -11,50 +16,47 @@
   <div class="body">
 
     <div class="top-block">
-      <h2 class="page-title">Abonnement mensuel</h2>
+      <h2 class="page-title">{{ getPageTitle() }}</h2>
       <p class="page-hint">
-        Activez votre Business Plan pour débloquer les fonctionnalités premium de votre compte FreelanceHub.
+        {{ getPageHint() }}
       </p>
     </div>
 
-    <div class="plan-card">
-      <div class="plan-top">
-        <div>
-          <div class="plan-name">Business Plan</div>
-          <div class="plan-sub">Facturation mensuelle · Annulable</div>
-        </div>
-        <div class="price-box">
-          <div class="amount">19.99</div>
-          <div class="unit">TND / mois</div>
-        </div>
-      </div>
+    <div class="plans-grid">
+      <div
+        class="plan-card"
+        *ngFor="let plan of plans"
+        [class.active]="selectedPlan === plan.id"
+        (click)="selectPlan(plan.id)"
+      >
+        <div class="plan-header">
+          <div>
+            <div class="plan-name">{{ plan.name }}</div>
+            <div class="plan-sub">{{ plan.subtitle }}</div>
+          </div>
 
-      <div class="plan-divider"></div>
+          <div class="plan-badge" *ngIf="plan.badge">
+            {{ plan.badge }}
+          </div>
+        </div>
 
-      <div class="features">
-        <div class="feat">
-          <div class="feat-dot">
-            <ion-icon name="checkmark-outline"></ion-icon>
-          </div>
-          Propositions illimitées
+        <div class="price-row">
+          <span class="amount">{{ plan.price }}</span>
+          <span class="unit">TND / mois</span>
         </div>
-        <div class="feat">
-          <div class="feat-dot">
-            <ion-icon name="checkmark-outline"></ion-icon>
+
+        <div class="features">
+          <div class="feat" *ngFor="let feature of getPlanFeatures(plan)">
+            <div class="feat-dot">
+              <ion-icon name="checkmark-outline"></ion-icon>
+            </div>
+            <span>{{ feature }}</span>
           </div>
-          Support prioritaire
         </div>
-        <div class="feat">
-          <div class="feat-dot">
-            <ion-icon name="checkmark-outline"></ion-icon>
-          </div>
-          Accès aux offres premium
-        </div>
-        <div class="feat">
-          <div class="feat-dot">
-            <ion-icon name="checkmark-outline"></ion-icon>
-          </div>
-          Réductions boutique
+
+        <div class="selected-indicator" *ngIf="selectedPlan === plan.id">
+          <ion-icon name="checkmark-circle-outline"></ion-icon>
+          Plan sélectionné
         </div>
       </div>
     </div>
@@ -68,19 +70,31 @@
       <ion-item lines="none" class="check-item">
         <ion-checkbox slot="start" [(ngModel)]="agreed"></ion-checkbox>
         <ion-label class="check-label">
-          J'accepte les conditions et comprends qu'il s'agit d'un paiement simulé.
+          J’accepte les conditions et je comprends qu’il s’agit d’un paiement simulé.
         </ion-label>
       </ion-item>
     </div>
 
-    <ion-button expand="block" class="activate-btn"
-                [disabled]="!agreed" (click)="continue()">
-      Activer l'abonnement
+    <div class="summary-card" *ngIf="selectedPlanData">
+      <span>Plan choisi</span>
+      <strong>
+        {{ selectedPlanData.name }} · {{ selectedPlanData.price }} TND / mois
+      </strong>
+    </div>
+
+    <ion-button
+      expand="block"
+      class="activate-btn"
+      [disabled]="!agreed || loading"
+      (click)="continue()"
+    >
+      {{ loading ? 'Activation...' : 'Activer l’abonnement' }}
       <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
     </ion-button>
 
     <p class="foot-note">
-      Vous pouvez annuler à tout moment. Si le renouvellement automatique est activé, votre abonnement se renouvelle chaque mois.
+      Vous pouvez annuler à tout moment. Si le renouvellement automatique est activé,
+      votre abonnement se renouvelle chaque mois.
     </p>
 
   </div>

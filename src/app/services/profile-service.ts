@@ -1,21 +1,30 @@
-import {inject, Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
-import {AuthService} from "./auth-service";
+import { Injectable, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class ProfileService {
-  private http= inject(HttpClient);
-  private authService = inject(AuthService);
-  api = 'http://localhost:5000';
+  private http = inject(HttpClient);
+  private api = 'http://localhost:5000';
 
-  fetchProfileData():Observable<Object>{
-    const token = this.authService.getToken();
+  fetchProfileData() {
+    const token = localStorage.getItem('token');
+
     const headers = {
-      'Authorization': `Bearer ${token}`
-    }
+      Authorization: `Bearer ${token}`
+    };
+
     return this.http.get(`${this.api}/profile`, { headers });
   }
+
+ updateProfile(payload: FormData) {
+  const token = localStorage.getItem('token');
+
+  const headers = {
+    Authorization: `Bearer ${token}`
+  };
+
+  return this.http.put('http://localhost:5000/profile', payload, { headers });
+}
 }

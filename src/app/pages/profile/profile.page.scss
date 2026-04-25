@@ -122,6 +122,8 @@ ion-content { --background: #{$bg-page}; }
   }
 }
 
+
+
 // ── Bio ────────────────────────────────────────────────
 .bio-text {
   padding: 14px;
@@ -129,6 +131,32 @@ ion-content { --background: #{$bg-page}; }
   line-height: 1.65;
 }
 
+.client-info {
+  padding: 14px;
+  color: #64748b;
+  font-size: 13px;
+  line-height: 1.55;
+
+  p {
+    margin: 0 0 12px;
+  }
+
+  strong {
+    color: #152a5e;
+    font-weight: 800;
+  }
+}
+
+.profile-action-btn {
+  --background: #152a5e;
+  --color: #ffffff;
+  --border-radius: 22px;
+  --box-shadow: none;
+  height: 42px;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: none;
+}
 // ── Chips ──────────────────────────────────────────────
 .chips-wrap {
   display: flex; flex-wrap: wrap; gap: 8px;

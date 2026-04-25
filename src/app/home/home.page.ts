@@ -1,8 +1,7 @@
-import {Component, inject} from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import {ProductSample,ServiceSample,JobSample} from "../models/Sample"
-import {HttpClient} from "@angular/common/http";
-import {HomeService} from "../services/home-service";
+import { ProductSample, ServiceSample, JobSample } from '../models/Sample';
+import { HomeService } from '../services/home-service';
 
 @Component({
   selector: 'app-home',
@@ -10,83 +9,98 @@ import {HomeService} from "../services/home-service";
   styleUrls: ['home.page.scss'],
   standalone: false,
 })
-export class HomePage {
-
+export class HomePage implements OnInit {
   services: ServiceSample[] = [];
   products: ProductSample[] = [];
   jobs: JobSample[] = [];
-  private router = inject(Router);
-  private serviceHome= inject(HomeService);
 
   isLoading = false;
 
+  private router = inject(Router);
+  private serviceHome = inject(HomeService);
 
-  loadSamples(): void {
-    this.isLoading = true;
-
-    this.serviceHome.getSamples().subscribe(res =>
-    {
-      this.products.push(...res.samples.products)
-      this.services.push(...res.samples.services)
-    }
-      ,error => {
-
-    })
-
-    this.isLoading = false;
-  }
-  login(): void {
-    this.router.navigate(['/login']);
-  }
-
-  freelancer(): void {
-    this.router.navigate(['/login']);
-  }
-
-  clientSignup(): void {
-    this.router.navigate(['/login']);
-  }
-
-  browseServices(): void {
-    this.router.navigate(['/services']);
-  }
-
-  browseProducts(): void {
-    this.router.navigate(['/products']);
-  }
-
-  browseJobs(): void {
-    this.router.navigate(['/jobs']);
-  }
-
-  postJob(): void {
-    this.router.navigate(['/login']);
-  }
-
-  startSelling(): void {
-    this.router.navigate(['/login']);
-  }
-  getImageUrl(path: string | null | undefined): string {
-    if (!path) {
-      return 'assets/placeholder.png';
-    }
-
-    // Replace with your backend base URL if needed
-    return path.startsWith('http') ? path : path;
-  }
-
-  getShortDescription(text: string, maxLength: number = 100): string {
-    if (!text) return '';
-    return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
-  }
-
-  trackById(index: number, item: { _id: string }): string {
-    return item._id;
-  }
   constructor() {}
 
   ngOnInit(): void {
     this.loadSamples();
   }
 
+  loadSamples(): void {
+    this.isLoading = true;
+
+    this.serviceHome.getSamples().subscribe({
+      next: (res) => {
+        this.products = res.samples?.products || [];
+        this.services = res.samples?.services || [];
+        this.jobs = res.samples?.jobs || [];
+
+        console.log('Home products:', this.products);
+        console.log('Home services:', this.services);
+        console.log('Home jobs:', this.jobs);
+
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('Error loading home samples:', error);
+
+        this.products = [];
+        this.services = [];
+        this.jobs = [];
+
+        this.isLoading = false;
+      }
+    });
+  }
+
+  login(): void {
+    this.router.navigateByUrl('/login');
+  }
+
+  freelancer(): void {
+    this.router.navigateByUrl('/login');
+  }
+
+  clientSignup(): void {
+    this.router.navigateByUrl('/login');
+  }
+
+  browseServices(): void {
+    this.router.navigateByUrl('/login');
+  }
+
+  browseProducts(): void {
+    this.router.navigateByUrl('/login');
+  }
+
+  browseJobs(): void {
+    this.router.navigateByUrl('/login');
+  }
+
+  postJob(): void {
+    this.router.navigateByUrl('/login');
+  }
+
+  startSelling(): void {
+    this.router.navigateByUrl('/login');
+  }
+
+  getImageUrl(path: string | null | undefined): string {
+    if (!path) {
+      return 'assets/placeholder.png';
+    }
+
+    return path.startsWith('http') ? path : path;
+  }
+
+  getShortDescription(text: string, maxLength: number = 100): string {
+    if (!text) {
+      return '';
+    }
+
+    return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
+  }
+
+  trackById(index: number, item: { _id: string }): string {
+    return item._id;
+  }
 }

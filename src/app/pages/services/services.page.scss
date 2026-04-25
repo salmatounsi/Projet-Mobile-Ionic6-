@@ -174,3 +174,38 @@ ion-content { --background: #{$bg-page}; }
     height: 44px;
   }
 }
+
+/* Segment Services / Mes services */
+ion-segment.services-segment {
+  margin: 0 0 12px;
+  background: transparent;
+  border-bottom: 1px solid $border;
+  border-radius: 0;
+  padding: 0;
+}
+
+ion-segment.services-segment ion-segment-button {
+  --indicator-color: #152a5e;
+  --background: transparent;
+  --background-checked: transparent;
+  --color: #8a96ad;
+  --color-checked: #152a5e;
+  --border-radius: 0;
+
+  min-height: 38px;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+ion-segment.services-segment ion-segment-button::part(indicator-background) {
+  background: #152a5e;
+  height: 3px;
+  border-radius: 20px;
+}
+
+ion-segment.services-segment ion-segment-button::part(native) {
+  background: transparent;
+}
+

@@ -62,7 +62,7 @@ export class CreateServicePage implements OnInit {
     this.http.post(`${this.api}/services`, formData, { headers }).subscribe({
       next: (res) => {
         console.log(res);
-        this.router.navigate(['/services']);
+        this.router.navigateByUrl('/tabs/services');
       },
       error: (err) => console.error(err)
     });

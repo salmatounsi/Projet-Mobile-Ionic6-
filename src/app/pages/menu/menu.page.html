@@ -1,13 +1,55 @@
-<ion-header [translucent]="true">
+<ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-title>menu</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button
+        defaultHref="/login"
+        text=""
+        icon="chevron-back-outline"
+      ></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>Inscription</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">menu</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <div class="body">
+
+    <div class="top-block">
+      <h1>Créer un compte</h1>
+      <p>Choisissez le type de compte adapté à votre utilisation.</p>
+    </div>
+
+    <div class="role-card" routerLink="/signup-client">
+      <div class="icon-box">
+        <ion-icon name="person-outline"></ion-icon>
+      </div>
+
+      <div class="role-text">
+        <h2>Je suis client</h2>
+        <p>Publier des offres, acheter des produits et contacter des freelancers.</p>
+      </div>
+
+      <ion-icon name="chevron-forward-outline" class="arrow-icon"></ion-icon>
+    </div>
+
+    <div class="role-card" routerLink="/general-info">
+      <div class="icon-box">
+        <ion-icon name="briefcase-outline"></ion-icon>
+      </div>
+
+      <div class="role-text">
+        <h2>Je suis freelancer</h2>
+        <p>Créer un profil, publier des services et proposer vos compétences.</p>
+      </div>
+
+      <ion-icon name="chevron-forward-outline" class="arrow-icon"></ion-icon>
+    </div>
+
+    <div class="login-row">
+      <span>Vous avez déjà un compte ?</span>
+      <button routerLink="/login">Se connecter</button>
+    </div>
+
+  </div>
 </ion-content>
