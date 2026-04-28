@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-jobs',
@@ -17,7 +18,7 @@ export class JobsPage implements OnInit {
 
   private api = 'http://localhost:5000';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit() {
     this.role = (localStorage.getItem('role') || '').toLowerCase().trim();
@@ -30,35 +31,34 @@ export class JobsPage implements OnInit {
 
     this.loadJobs();
   }
- 
-  formatBudgetType(type: string): string {
-  switch (type) {
-    case 'hourly':
-      return 'Paiement horaire';
-    case 'fixed':
-      return 'Prix fixe';
-    default:
-      return type || 'Budget non précisé';
-  }
-}
-
-formatSize(size: string): string {
-  switch (size) {
-    case 'small':
-      return 'Petit projet';
-    case 'medium':
-      return 'Projet moyen';
-    case 'large':
-      return 'Grand projet';
-    default:
-      return size || 'Taille non précisée';
-  }
-}
-
 
   ionViewWillEnter() {
     this.role = (localStorage.getItem('role') || '').toLowerCase().trim();
     this.loadJobs();
+  }
+
+  formatBudgetType(type: string): string {
+    switch (type) {
+      case 'hourly':
+        return 'Paiement horaire';
+      case 'fixed':
+        return 'Prix fixe';
+      default:
+        return type || 'Budget non précisé';
+    }
+  }
+
+  formatSize(size: string): string {
+    switch (size) {
+      case 'small':
+        return 'Petit projet';
+      case 'medium':
+        return 'Projet moyen';
+      case 'large':
+        return 'Grand projet';
+      default:
+        return size || 'Taille non précisée';
+    }
   }
 
   switchView(view: any) {
@@ -71,23 +71,23 @@ formatSize(size: string): string {
   }
 
   loadJobs() {
-  const token = localStorage.getItem('token');
-  const headers = { Authorization: `Bearer ${token}` };
+    const token = localStorage.getItem('token');
+    const headers = { Authorization: `Bearer ${token}` };
 
-  let url = `${this.api}/api/jobs`;
+    let url = `${this.api}/api/jobs`;
 
-  if (this.role === 'client' && this.selectedView === 'mine') {
-    url = `${this.api}/api/jobs/my`;
+    if (this.role === 'client' && this.selectedView === 'mine') {
+      url = `${this.api}/api/jobs/my`;
+    }
+
+    this.http.get<any[]>(url, { headers }).subscribe({
+      next: (data) => {
+        this.jobs = data;
+        this.applySearch();
+      },
+      error: (err) => console.error(err),
+    });
   }
-
-  this.http.get<any[]>(url, { headers }).subscribe({
-    next: (data) => {
-      this.jobs = data;
-      this.applySearch();
-    },
-    error: (err) => console.error(err),
-  });
-}
 
   onSearch() {
     this.applySearch();
@@ -106,5 +106,13 @@ formatSize(size: string): string {
       j.category?.toLowerCase().includes(term) ||
       j.skills?.some((s: string) => s.toLowerCase().includes(term))
     );
+  }
+
+  goToApply(jobId: string) {
+    this.router.navigate(['/apply-job', jobId]);
+  }
+
+  goToApplications(jobId: string) {
+    this.router.navigate(['/job-applications', jobId]);
   }
 }

@@ -24,6 +24,7 @@ export class MessagesPage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.loadConversations();
+
     this.pollingInterval = setInterval(() => {
       this.loadConversations();
     }, 5000);
@@ -36,30 +37,33 @@ export class MessagesPage implements OnInit, OnDestroy {
   }
 
   loadConversations() {
-    const headers = { Authorization: `Bearer ${this.authService.getToken()}` };
-    this.http.get<any[]>(`${this.api}/conversations`, { headers }).subscribe({
+    const headers = {
+      Authorization: `Bearer ${this.authService.getToken()}`
+    };
+
+    this.http.get<any[]>(`${this.api}/api/conversations`, { headers }).subscribe({
       next: (data) => {
-        this.conversations = data.sort((a, b) => {
-          const datetimeA = `${a.lastDate || '01/01'} ${a.lastTime || '00:00'}`;
-          const datetimeB = `${b.lastDate || '01/01'} ${b.lastTime || '00:00'}`;
-          return datetimeB.localeCompare(datetimeA);
-        });
-        this.filteredConversations = [...this.conversations];
+        this.conversations = data || [];
         this.filterConversations();
       },
-      error: (err) => console.error(err)
+      error: (err) => {
+        console.error('Load conversations error:', err);
+      }
     });
   }
 
   filterConversations() {
-    if (!this.searchTerm) {
+    const term = this.searchTerm.trim().toLowerCase();
+
+    if (!term) {
       this.filteredConversations = [...this.conversations];
-    } else {
-      const term = this.searchTerm.toLowerCase();
-      this.filteredConversations = this.conversations.filter(c =>
-        c.name.toLowerCase().includes(term)
-      );
+      return;
     }
+
+    this.filteredConversations = this.conversations.filter(conv =>
+      (conv.other_user_name || '').toLowerCase().includes(term) ||
+      (conv.job_title || '').toLowerCase().includes(term)
+    );
   }
 
   onSearch() {
@@ -69,6 +73,34 @@ export class MessagesPage implements OnInit, OnDestroy {
   openChat(conv: any) {
     this.router.navigate(['/chat', conv.id], {
       state: { contact: conv }
+    });
+  }
+
+  getInitial(name: string): string {
+    if (!name) return 'U';
+    return name.trim().charAt(0).toUpperCase();
+  }
+
+  formatDate(dateString: string | null): string {
+    if (!dateString) return 'Date inconnue';
+
+    const date = new Date(dateString);
+
+    return date.toLocaleDateString('fr-FR', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric'
+    });
+  }
+
+  formatTime(dateString: string | null): string {
+    if (!dateString) return '--:--';
+
+    const date = new Date(dateString);
+
+    return date.toLocaleTimeString('fr-FR', {
+      hour: '2-digit',
+      minute: '2-digit'
     });
   }
 }

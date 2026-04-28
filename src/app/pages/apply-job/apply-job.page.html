@@ -1,0 +1,206 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/jobs" text="" icon="chevron-back-outline"></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>Postuler</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="body">
+
+    <div class="top-card">
+      <h2>Créer une candidature professionnelle</h2>
+      <p>
+        Présentez votre compréhension du besoin, votre méthode de travail,
+        vos livrables et votre proposition financière.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <span class="card-title">Présentation</span>
+      </div>
+
+      <div class="fields-wrap">
+        <label class="field-label">Titre de la proposition *</label>
+        <ion-item lines="none" class="field-item">
+          <ion-input
+            [(ngModel)]="proposalTitle"
+            placeholder="Ex : Développement complet de votre application mobile"
+          ></ion-input>
+        </ion-item>
+
+        <label class="field-label">Message au client *</label>
+        <ion-item lines="none" class="field-item textarea-item">
+          <ion-textarea
+            rows="5"
+            [(ngModel)]="coverLetter"
+            placeholder="Bonjour, j’ai bien lu votre besoin..."
+          ></ion-textarea>
+        </ion-item>
+
+        <label class="field-label">Votre compréhension du besoin</label>
+        <ion-item lines="none" class="field-item textarea-item">
+          <ion-textarea
+            rows="4"
+            [(ngModel)]="understanding"
+            placeholder="Expliquez ce que vous avez compris du projet."
+          ></ion-textarea>
+        </ion-item>
+
+        <label class="field-label">Votre approche</label>
+        <ion-item lines="none" class="field-item textarea-item">
+          <ion-textarea
+            rows="4"
+            [(ngModel)]="approach"
+            placeholder="Expliquez comment vous allez réaliser le travail."
+          ></ion-textarea>
+        </ion-item>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <span class="card-title">Livrables proposés</span>
+      </div>
+
+      <div class="fields-wrap">
+        <div class="add-row">
+          <ion-item lines="none" class="field-item">
+            <ion-input
+              [(ngModel)]="deliverableInput"
+              placeholder="Ex : Interface mobile responsive"
+            ></ion-input>
+          </ion-item>
+
+          <ion-button class="small-add-btn" (click)="addDeliverable()">
+            <ion-icon name="add-outline"></ion-icon>
+          </ion-button>
+        </div>
+
+        <div class="chips-wrap" *ngIf="deliverables.length">
+          <span class="chip" *ngFor="let d of deliverables; let i = index">
+            {{ d }}
+            <ion-icon name="close-outline" (click)="removeDeliverable(i)"></ion-icon>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <span class="card-title">Budget et délai</span>
+      </div>
+
+      <div class="fields-wrap">
+        <div class="double-fields">
+          <div>
+            <label class="field-label">Prix proposé *</label>
+            <ion-item lines="none" class="field-item">
+              <ion-input
+                type="number"
+                [(ngModel)]="proposedPrice"
+                placeholder="Ex : 800"
+              ></ion-input>
+            </ion-item>
+          </div>
+
+          <div>
+            <label class="field-label">Type de tarification</label>
+            <ion-item lines="none" class="field-item">
+              <ion-select [(ngModel)]="priceType" interface="popover">
+                <ion-select-option value="fixed">Prix fixe</ion-select-option>
+                <ion-select-option value="hourly">Paiement horaire</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </div>
+        </div>
+
+        <label class="field-label">Durée estimée</label>
+        <ion-item lines="none" class="field-item">
+          <ion-input
+            [(ngModel)]="estimatedDuration"
+            placeholder="Ex : 7 jours"
+          ></ion-input>
+        </ion-item>
+
+        <label class="field-label">Disponibilité</label>
+        <ion-item lines="none" class="field-item">
+          <ion-input
+            [(ngModel)]="availability"
+            placeholder="Ex : Disponible immédiatement"
+          ></ion-input>
+        </ion-item>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <span class="card-title">CV et pièce jointe</span>
+      </div>
+
+      <div class="fields-wrap">
+        <ion-item lines="none" class="check-row">
+          <ion-checkbox slot="start" [(ngModel)]="useProfileCv"></ion-checkbox>
+          <ion-label>Utiliser le CV enregistré dans mon profil</ion-label>
+        </ion-item>
+
+        <label class="upload-btn">
+          <ion-icon name="cloud-upload-outline"></ion-icon>
+          Joindre un fichier complémentaire
+          <input
+            type="file"
+            hidden
+            accept=".pdf,.doc,.docx,.png,.jpg,.jpeg"
+            (change)="onAttachmentSelected($event)"
+          />
+        </label>
+
+        <p class="selected-file" *ngIf="attachmentName">
+          {{ attachmentName }}
+        </p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <span class="card-title">Questions au client</span>
+      </div>
+
+      <div class="fields-wrap">
+        <div class="add-row">
+          <ion-item lines="none" class="field-item">
+            <ion-input
+              [(ngModel)]="questionInput"
+              placeholder="Ex : Avez-vous une maquette Figma ?"
+            ></ion-input>
+          </ion-item>
+
+          <ion-button class="small-add-btn" (click)="addQuestion()">
+            <ion-icon name="add-outline"></ion-icon>
+          </ion-button>
+        </div>
+
+        <div class="chips-wrap" *ngIf="questions.length">
+          <span class="chip" *ngFor="let q of questions; let i = index">
+            {{ q }}
+            <ion-icon name="close-outline" (click)="removeQuestion(i)"></ion-icon>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <ion-button
+      expand="block"
+      class="submit-btn"
+      [disabled]="loading"
+      (click)="submitApplication()"
+    >
+      {{ loading ? 'Envoi...' : 'Envoyer ma candidature' }}
+    </ion-button>
+
+  </div>
+</ion-content>

@@ -1,0 +1,127 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/jobs" text="" icon="chevron-back-outline"></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>Candidatures</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="body">
+
+    <div class="top-card">
+      <h2>Candidatures reçues</h2>
+      <p>
+        Consultez les propositions des freelancers et contactez celui avec qui vous souhaitez travailler.
+      </p>
+    </div>
+
+    <div class="empty-state" *ngIf="!loading && applications.length === 0">
+      <ion-icon name="document-text-outline" class="empty-icon"></ion-icon>
+      <p>Aucune candidature reçue pour cette offre.</p>
+    </div>
+
+    <div class="application-card" *ngFor="let app of applications">
+
+      <div class="freelancer-head">
+        <div class="avatar">
+          <img *ngIf="app.freelancer_profile_image; else defaultAvatar" [src]="app.freelancer_profile_image" />
+          <ng-template #defaultAvatar>
+            <ion-icon name="person-outline"></ion-icon>
+          </ng-template>
+        </div>
+
+        <div class="freelancer-info">
+          <h3>{{ app.freelancer_name || 'Freelancer' }}</h3>
+          <p>{{ app.freelancer_role || 'Profil freelancer' }}</p>
+        </div>
+
+        <span class="status" [class.accepted]="app.status === 'accepted'" [class.rejected]="app.status === 'rejected'">
+          {{ app.status === 'accepted' ? 'Acceptée' : app.status === 'rejected' ? 'Refusée' : 'En attente' }}
+        </span>
+      </div>
+
+      <div class="proposal-section">
+        <h4>{{ app.proposal_title || 'Proposition sans titre' }}</h4>
+
+        <p class="label">Message au client</p>
+        <p class="text">{{ app.cover_letter || 'Aucun message.' }}</p>
+
+        <p class="label" *ngIf="app.understanding">Compréhension du besoin</p>
+        <p class="text" *ngIf="app.understanding">{{ app.understanding }}</p>
+
+        <p class="label" *ngIf="app.approach">Approche proposée</p>
+        <p class="text" *ngIf="app.approach">{{ app.approach }}</p>
+      </div>
+
+      <div class="info-grid">
+        <div>
+          <span>Prix proposé</span>
+          <strong>{{ app.proposed_price || 0 }} DT</strong>
+        </div>
+
+        <div>
+          <span>Tarification</span>
+          <strong>{{ formatPriceType(app.price_type) }}</strong>
+        </div>
+
+        <div>
+          <span>Durée estimée</span>
+          <strong>{{ app.estimated_duration || 'Non précisée' }}</strong>
+        </div>
+
+        <div>
+          <span>Disponibilité</span>
+          <strong>{{ app.availability || 'Non précisée' }}</strong>
+        </div>
+      </div>
+
+      <div class="list-section" *ngIf="app.deliverables?.length">
+        <p class="label">Livrables proposés</p>
+        <ul>
+          <li *ngFor="let d of app.deliverables">{{ d }}</li>
+        </ul>
+      </div>
+
+      <div class="list-section" *ngIf="app.questions?.length">
+        <p class="label">Questions du freelancer</p>
+        <ul>
+          <li *ngFor="let q of app.questions">{{ q }}</li>
+        </ul>
+      </div>
+
+      <div class="files-row" *ngIf="app.freelancer_cv || app.attachment">
+        <a *ngIf="app.freelancer_cv" [href]="app.freelancer_cv" target="_blank">
+          Voir le CV
+        </a>
+
+        <a *ngIf="app.attachment" [href]="app.attachment" target="_blank">
+          Voir la pièce jointe
+        </a>
+      </div>
+
+      <div class="actions">
+        <ion-button
+          fill="clear"
+          class="reject-btn"
+          [disabled]="app.status === 'rejected'"
+          (click)="rejectApplication(app.id)"
+        >
+          Refuser
+        </ion-button>
+
+        <ion-button
+          class="contact-btn"
+          [disabled]="app.status === 'rejected'"
+          (click)="startChat(app.id)"
+        >
+          Contacter
+        </ion-button>
+      </div>
+
+    </div>
+
+  </div>
+</ion-content>

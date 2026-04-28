@@ -125,27 +125,27 @@ ion-content {
 .jobs-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
 }
 
 .job-card {
   background: #ffffff;
   border: 1px solid $border;
-  border-radius: 18px;
-  padding: 14px;
-  box-shadow: 0 8px 18px rgba(21, 42, 94, 0.05);
+  border-radius: 20px;
+  padding: 16px;
+  box-shadow: 0 8px 20px rgba(21, 42, 94, 0.05);
 }
 
-.job-header {
+.job-main-row {
   display: flex;
   align-items: flex-start;
-  gap: 12px;
+  gap: 14px;
 }
 
 .job-icon-wrap {
-  width: 42px;
-  height: 42px;
-  border-radius: 14px;
+  width: 48px;
+  height: 48px;
+  border-radius: 15px;
   background: #e8effe;
   display: flex;
   align-items: center;
@@ -153,22 +153,22 @@ ion-content {
   flex-shrink: 0;
 
   ion-icon {
-    font-size: 23px;
+    font-size: 24px;
     color: $navy;
   }
 }
 
-.job-title-wrap {
+.job-info {
   flex: 1;
   min-width: 0;
+}
 
-  h3 {
-    margin: 0 0 8px;
-    color: $navy;
-    font-size: 15px;
-    font-weight: 900;
-    line-height: 1.35;
-  }
+.job-title {
+  margin: 0 0 9px;
+  color: $navy;
+  font-size: 16px;
+  font-weight: 900;
+  line-height: 1.35;
 }
 
 .job-meta {
@@ -179,39 +179,38 @@ ion-content {
   span {
     display: inline-flex;
     align-items: center;
-    gap: 4px;
-    background: #f3f6fc;
-    border: 1px solid #e1e9f6;
+    gap: 5px;
+    background: #f3f7ff;
+    border: 1px solid #dce4f2;
     border-radius: 999px;
-    padding: 4px 8px;
-    color: #64748b;
-    font-size: 11px;
+    padding: 5px 9px;
+    color: #5f7190;
+    font-size: 12px;
     font-weight: 700;
   }
 
   ion-icon {
-    font-size: 12px;
-    color: #8aa0c4;
+    font-size: 13px;
+    color: $navy-mid;
   }
 }
 
 .job-budget {
   text-align: right;
+  min-width: 110px;
   flex-shrink: 0;
-  min-width: 86px;
 
   span {
     display: block;
     color: #94a3b8;
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 700;
-    margin-bottom: 3px;
+    margin-bottom: 4px;
   }
 
   strong {
-    display: block;
     color: $navy;
-    font-size: 14px;
+    font-size: 17px;
     font-weight: 900;
     white-space: nowrap;
   }
@@ -220,20 +219,53 @@ ion-content {
 .skills-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 13px;
-  padding-top: 12px;
+  gap: 7px;
+  margin-top: 14px;
+  padding-top: 13px;
   border-top: 1px solid #f0f4fc;
 
   .skill-chip {
     background: #eaf0fc;
     border: 1px solid #d7e2f4;
     border-radius: 999px;
-    padding: 5px 10px;
-    font-size: 11px;
+    padding: 6px 11px;
+    font-size: 12px;
     font-weight: 800;
     color: $navy-mid;
   }
+}
+
+.job-actions {
+  margin-top: 14px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.apply-btn,
+.applications-btn {
+  --background: #eaf0fc;
+  --background-activated: #dbe7fb;
+  --color: #152a5e;
+  --border-radius: 999px;
+  --box-shadow: none;
+  --padding-start: 18px;
+  --padding-end: 16px;
+
+  height: 42px;
+  font-size: 13px;
+  font-weight: 900;
+  text-transform: none;
+  margin: 0;
+
+  ion-icon {
+    font-size: 15px;
+  }
+}
+
+.apply-btn {
+  --background: #152a5e;
+  --background-activated: #1e3f8a;
+  --color: #ffffff;
 }
 
 .empty-state {
@@ -260,19 +292,41 @@ ion-content {
 }
 
 @media (max-width: 430px) {
-  .job-header {
-    align-items: flex-start;
+  .job-card {
+    padding: 14px;
+  }
+
+  .job-main-row {
+    gap: 11px;
+  }
+
+  .job-icon-wrap {
+    width: 44px;
+    height: 44px;
+  }
+
+  .job-title {
+    font-size: 15px;
   }
 
   .job-budget {
-    min-width: 78px;
+    min-width: 82px;
 
     strong {
-      font-size: 13px;
+      font-size: 14px;
     }
   }
 
-  .job-title-wrap h3 {
-    font-size: 14px;
+  .job-meta span {
+    font-size: 11px;
+  }
+
+  .apply-btn,
+  .applications-btn {
+    width: 100%;
+  }
+
+  .job-actions {
+    justify-content: stretch;
   }
 }

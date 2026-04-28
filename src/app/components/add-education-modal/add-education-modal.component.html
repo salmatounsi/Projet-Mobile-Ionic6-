@@ -1,49 +1,108 @@
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-title>Add Education</ion-title>
+    <ion-title>Ajouter une formation</ion-title>
+
     <ion-buttons slot="end">
-      <ion-button (click)="close()">✕</ion-button>
+      <ion-button fill="clear" class="close-btn" (click)="close()">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content>
+  <div class="modal-body">
 
-  <form [formGroup]="form">
-    <ion-item >
-    <ion-label position="stacked">School</ion-label>
-    <ion-input placeholder="School *" formControlName="school"></ion-input>
-    </ion-item>
+    <div class="intro-card">
+      <div class="intro-icon">
+        <ion-icon name="school-outline"></ion-icon>
+      </div>
 
-    <ion-item >
-      <ion-label position="stacked">Degree</ion-label>
-    <ion-input placeholder="Degree *" formControlName="degree"></ion-input>
-    </ion-item>
-
-    <ion-item >
-      <ion-label position="stacked">Field Of Study</ion-label>
-      <ion-input placeholder="Field Of Study *" formControlName="field"></ion-input>
-    </ion-item>
-
-    <ion-item >
-      <ion-label position="stacked">From</ion-label>
-      <ion-datetime presentation="date" formControlName="startDate"></ion-datetime>
-    </ion-item>
-    <ion-item >
-      <ion-label position="stacked">To (or expected graduation year)</ion-label>
-      <ion-datetime presentation="date" max="3000" formControlName="endDate"></ion-datetime>
-    </ion-item>
-
-    <ion-item >
-      <ion-label position="stacked">Description</ion-label>
-  <ion-textarea placeholder="Describe your studies, awards, etc." formControlName="description">
-  </ion-textarea>
-    </ion-item>
-    <div class="buttons">
-      <ion-button fill="outline" (click)="close()">Cancel</ion-button>
-      <ion-button (click)="save()" [disabled]="form.invalid">Save</ion-button>
+      <div>
+        <h2>Parcours académique</h2>
+        <p>
+          Ajoutez vos études, diplômes ou formations pour renforcer votre profil freelancer.
+        </p>
+      </div>
     </div>
 
-  </form>
+    <form [formGroup]="form">
 
+      <div class="field-group">
+        <label class="field-label">École ou université *</label>
+        <ion-item lines="none" class="field-item">
+          <ion-input
+            placeholder="Ex : Université de Tunis"
+            formControlName="school"
+          ></ion-input>
+        </ion-item>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Diplôme *</label>
+        <ion-item lines="none" class="field-item">
+          <ion-input
+            placeholder="Ex : Licence en informatique"
+            formControlName="degree"
+          ></ion-input>
+        </ion-item>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Domaine d’étude *</label>
+        <ion-item lines="none" class="field-item">
+          <ion-input
+            placeholder="Ex : Développement logiciel"
+            formControlName="field"
+          ></ion-input>
+        </ion-item>
+      </div>
+
+      <div class="date-card">
+        <label class="field-label">Date de début</label>
+        <ion-datetime
+          presentation="date"
+          locale="fr-FR"
+          formControlName="startDate"
+          doneText="Valider"
+          cancelText="Annuler"
+        ></ion-datetime>
+      </div>
+
+      <div class="date-card">
+        <label class="field-label">Date de fin ou année prévue</label>
+        <ion-datetime
+          presentation="date"
+          locale="fr-FR"
+          max="3000"
+          formControlName="endDate"
+          doneText="Valider"
+          cancelText="Annuler"
+        ></ion-datetime>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Description</label>
+        <ion-item lines="none" class="field-item textarea-item">
+          <ion-textarea
+            rows="5"
+            placeholder="Décrivez vos études, projets, distinctions ou formations importantes."
+            formControlName="description"
+          ></ion-textarea>
+        </ion-item>
+      </div>
+
+      <div class="buttons">
+        <ion-button type="button" fill="clear" class="cancel-btn" (click)="close()">
+          Annuler
+        </ion-button>
+
+        <ion-button type="button" class="save-btn" (click)="save()" [disabled]="form.invalid">
+          Enregistrer
+        </ion-button>
+      </div>
+
+    </form>
+
+  </div>
 </ion-content>

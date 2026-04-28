@@ -1,40 +1,117 @@
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-title>Add Work Experience</ion-title>
+    <ion-title>Ajouter une expérience</ion-title>
+
     <ion-buttons slot="end">
-      <ion-button (click)="close()">✕</ion-button>
+      <ion-button fill="clear" class="close-btn" (click)="close()">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content>
+  <div class="modal-body">
 
-  <form [formGroup]="form">
+    <div class="intro-card">
+      <div class="intro-icon">
+        <ion-icon name="briefcase-outline"></ion-icon>
+      </div>
 
-    <ion-input placeholder="Title *" formControlName="title"></ion-input>
-    <ion-input placeholder="Company *" formControlName="company"></ion-input>
-    <ion-input placeholder="Location *" formControlName="location"></ion-input>
-    <ion-input placeholder="Country *" formControlName="country"></ion-input>
-    <ion-item >
-      <ion-label position="stacked">Start date</ion-label>
-      <ion-datetime formControlName="startDate"></ion-datetime>
-    </ion-item>
-    <ion-item *ngIf="!form.value.currentlyInRole">
-      <ion-label position="stacked">End date</ion-label>
-      <ion-datetime formControlName="endDate"></ion-datetime>
-    </ion-item>
-    <ion-item lines="none">
-      <ion-checkbox
-        slot="start"
-        formControlName="currentlyInRole">
-      </ion-checkbox>
-      <ion-label>I am currently working in this role</ion-label>
-    </ion-item>
-    <div class="buttons">
-      <ion-button fill="outline" (click)="close()">Cancel</ion-button>
-      <ion-button (click)="save()" [disabled]="form.invalid">Save</ion-button>
+      <div>
+        <h2>Expérience professionnelle</h2>
+        <p>
+          Ajoutez vos expériences pour montrer votre parcours et renforcer votre profil freelancer.
+        </p>
+      </div>
     </div>
 
-  </form>
+    <form [formGroup]="form">
 
+      <div class="field-group">
+        <label class="field-label">Poste *</label>
+        <ion-item lines="none" class="field-item">
+          <ion-input
+            placeholder="Ex : Développeur mobile"
+            formControlName="title"
+          ></ion-input>
+        </ion-item>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Entreprise *</label>
+        <ion-item lines="none" class="field-item">
+          <ion-input
+            placeholder="Ex : FreelanceHub"
+            formControlName="company"
+          ></ion-input>
+        </ion-item>
+      </div>
+
+      <div class="double-fields">
+        <div class="field-group">
+          <label class="field-label">Ville *</label>
+          <ion-item lines="none" class="field-item">
+            <ion-input
+              placeholder="Ex : Tunis"
+              formControlName="location"
+            ></ion-input>
+          </ion-item>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label">Pays *</label>
+          <ion-item lines="none" class="field-item">
+            <ion-input
+              placeholder="Ex : Tunisie"
+              formControlName="country"
+            ></ion-input>
+          </ion-item>
+        </div>
+      </div>
+
+      <div class="date-card">
+        <label class="field-label">Date de début</label>
+        <ion-datetime
+          presentation="date"
+          locale="fr-FR"
+          formControlName="startDate"
+          doneText="Valider"
+          cancelText="Annuler"
+        ></ion-datetime>
+      </div>
+
+      <ion-item lines="none" class="check-row">
+        <ion-checkbox
+          slot="start"
+          formControlName="currentlyInRole"
+        ></ion-checkbox>
+
+        <ion-label>J’occupe actuellement ce poste</ion-label>
+      </ion-item>
+
+      <div class="date-card" *ngIf="!form.value.currentlyInRole">
+        <label class="field-label">Date de fin</label>
+        <ion-datetime
+          presentation="date"
+          locale="fr-FR"
+          formControlName="endDate"
+          doneText="Valider"
+          cancelText="Annuler"
+        ></ion-datetime>
+      </div>
+
+      <div class="buttons">
+        <ion-button type="button" fill="clear" class="cancel-btn" (click)="close()">
+          Annuler
+        </ion-button>
+
+        <ion-button type="button" class="save-btn" (click)="save()" [disabled]="form.invalid">
+          Enregistrer
+        </ion-button>
+      </div>
+
+    </form>
+
+  </div>
 </ion-content>

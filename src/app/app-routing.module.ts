@@ -110,10 +110,31 @@ const routes: Routes = [
   path: 'edit-profile',
   loadChildren: () =>
     import('./pages/edit-profile/edit-profile.module').then(m => m.EditProfilePageModule)
-},  {
+},
+  {
     path: 'edit-profile',
     loadChildren: () => import('./pages/edit-profile/edit-profile.module').then( m => m.EditProfilePageModule)
-  }
+  },
+  {
+    path: 'apply-job',
+    loadChildren: () => import('./pages/apply-job/apply-job.module').then( m => m.ApplyJobPageModule)
+  },
+  
+{
+  path: 'apply-job/:jobId',
+  loadChildren: () =>
+    import('./pages/apply-job/apply-job.module').then(m => m.ApplyJobPageModule)
+},
+{
+    path: 'job-applications',
+    loadChildren: () => import('./pages/job-applications/job-applications.module').then( m => m.JobApplicationsPageModule)
+},
+
+{
+  path: 'job-applications/:jobId',
+  loadChildren: () =>
+    import('./pages/job-applications/job-applications.module').then(m => m.JobApplicationsPageModule)
+}
 
   
 ];

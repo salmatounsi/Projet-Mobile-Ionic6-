@@ -2,6 +2,7 @@
   <ion-toolbar>
     <ion-title>Messages</ion-title>
   </ion-toolbar>
+
   <div class="search-bar-wrap">
     <div class="search-box">
       <ion-icon name="search-outline" class="search-icon"></ion-icon>
@@ -23,36 +24,59 @@
       <span class="section-count">{{ filteredConversations.length }}</span>
     </div>
 
-    <div class="empty-state" *ngIf="filteredConversations.length === 0">
-      <ion-icon name="chatbubbles-outline" class="empty-icon"></ion-icon>
-      <p class="empty-text">Aucune conversation pour l'instant.</p>
-    </div>
-
-    <div class="conv-list">
-      <div class="conv-card"
-           *ngFor="let conv of filteredConversations"
-           (click)="openChat(conv)">
-
-        <div class="avatar-wrap">
-          <div class="avatar-initials">{{ conv.name | slice:0:1 }}</div>
-          <span class="online-dot" *ngIf="conv.online"></span>
+    <div class="conversation-list" *ngIf="filteredConversations.length > 0">
+      <div
+        class="conversation-card"
+        *ngFor="let conv of filteredConversations"
+        (click)="openChat(conv)"
+      >
+        <div class="avatar">
+          {{ getInitial(conv.other_user_name) }}
         </div>
 
-        <div class="conv-info">
-          <div class="conv-top">
-            <span class="conv-name">{{ conv.name }}</span>
-            <div class="conv-datetime">
-              <span class="conv-date">{{ conv.lastDate }}</span>
-              <span class="conv-time">{{ conv.lastTime }}</span>
+        <div class="conversation-content">
+          <div class="top-row">
+            <div class="identity-block">
+              <h3>{{ conv.other_user_name }}</h3>
+              <p class="role">{{ conv.other_user_role }}</p>
+            </div>
+
+            <div class="right-side">
+              <span class="time-badge">
+                {{ formatTime(conv.lastMessageAt || conv.createdAt) }}
+              </span>
+
+              <span
+                class="unread-badge"
+                *ngIf="conv.unreadCount && conv.unreadCount > 0"
+              >
+                {{ conv.unreadCount }}
+              </span>
             </div>
           </div>
-          <div class="conv-bottom">
-            <span class="conv-preview">{{ conv.lastMessage }}</span>
-            <span class="unread-badge" *ngIf="conv.unread > 0">{{ conv.unread }}</span>
+
+          <p class="project-line">
+            <strong>Projet :</strong> {{ conv.job_title || 'Projet non renseigné' }}
+          </p>
+
+          <div class="meta-pills">
+            <span class="pill">
+              <ion-icon name="calendar-outline"></ion-icon>
+              Lancé le {{ formatDate(conv.createdAt) }}
+            </span>
+
+            <span class="pill">
+              <ion-icon name="time-outline"></ion-icon>
+              Dernière activité à {{ formatTime(conv.lastMessageAt || conv.createdAt) }}
+            </span>
           </div>
         </div>
-
       </div>
+    </div>
+
+    <div class="empty-state" *ngIf="filteredConversations.length === 0">
+      <ion-icon name="chatbubble-ellipses-outline" class="empty-icon"></ion-icon>
+      <p class="empty-text">Aucune conversation disponible.</p>
     </div>
 
   </div>

@@ -63,13 +63,15 @@
     <div class="jobs-list" *ngIf="filteredJobs.length > 0">
       <div class="job-card" *ngFor="let job of filteredJobs">
 
-        <div class="job-header">
+        <div class="job-main-row">
           <div class="job-icon-wrap">
             <ion-icon name="briefcase-outline"></ion-icon>
           </div>
 
-          <div class="job-title-wrap">
-            <h3>{{ job.title }}</h3>
+          <div class="job-info">
+            <h3 class="job-title">
+              {{ job.title || 'Offre sans titre' }}
+            </h3>
 
             <div class="job-meta">
               <span *ngIf="job.budgetType">
@@ -94,6 +96,28 @@
           <span class="skill-chip" *ngFor="let s of job.skills | slice:0:4">
             {{ s }}
           </span>
+        </div>
+
+        <div class="job-actions">
+          <ion-button
+            *ngIf="role === 'freelancer'"
+            fill="clear"
+            class="apply-btn"
+            (click)="goToApply(job.id || job._id)"
+          >
+            Postuler
+            <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
+          </ion-button>
+
+          <ion-button
+            *ngIf="role === 'client' && selectedView === 'mine'"
+            fill="clear"
+            class="applications-btn"
+            (click)="goToApplications(job.id || job._id)"
+          >
+            Voir les candidatures
+            <ion-icon name="document-text-outline" slot="end"></ion-icon>
+          </ion-button>
         </div>
 
       </div>
