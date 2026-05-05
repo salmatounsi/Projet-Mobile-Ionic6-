@@ -1,0 +1,217 @@
+<ion-menu contentId="admin-content" menuId="admin-menu" side="start">
+
+  <div class="drawer-header">
+    <div class="drawer-avatar">AD</div>
+    <div class="drawer-info">
+      <p class="drawer-name">Admin</p>
+      <p class="drawer-role">FreelanceHub</p>
+    </div>
+  </div>
+
+  <ion-content class="drawer-content">
+
+    <p class="drawer-section-label">Gestion</p>
+
+    <div class="drawer-item" [class.active]="activeMenu === 'dashboard'"
+      (click)="navigate('dashboard')">
+      <div class="di-icon blue">
+        <ion-icon name="grid-outline"></ion-icon>
+      </div>
+      <span class="di-label">Dashboard</span>
+    </div>
+
+    <div class="drawer-item" [class.active]="activeMenu === 'freelancers'"
+      (click)="navigate('admin-freelancers', 'freelancers')">
+      <div class="di-icon amber">
+        <ion-icon name="people-outline"></ion-icon>
+      </div>
+      <span class="di-label">Freelancers</span>
+      <span class="di-badge" *ngIf="stats?.profiles?.pending > 0">
+        {{ stats.profiles.pending }}
+      </span>
+    </div>
+
+    <div class="drawer-item" [class.active]="activeMenu === 'clients'"
+      (click)="navigate('admin-clients', 'clients')">
+      <div class="di-icon blue">
+        <ion-icon name="person-outline"></ion-icon>
+      </div>
+      <span class="di-label">Clients</span>
+    </div>
+
+    <div class="drawer-divider"></div>
+    <p class="drawer-section-label">Contenu</p>
+
+    <div class="drawer-item" [class.active]="activeMenu === 'jobs'"
+      (click)="navigate('admin-jobs', 'jobs')">
+      <div class="di-icon blue">
+        <ion-icon name="briefcase-outline"></ion-icon>
+      </div>
+      <span class="di-label">Offres d'emploi</span>
+    </div>
+
+    <div class="drawer-item" [class.active]="activeMenu === 'projects'"
+      (click)="navigate('admin-projects', 'projects')">
+      <div class="di-icon blue">
+        <ion-icon name="folder-outline"></ion-icon>
+      </div>
+      <span class="di-label">Projets</span>
+    </div>
+
+    <div class="drawer-divider"></div>
+    <p class="drawer-section-label">Marketplace</p>
+
+    <div class="drawer-item" [class.active]="activeMenu === 'services'"
+      (click)="navigate('admin-services', 'services')">
+      <div class="di-icon blue">
+        <ion-icon name="construct-outline"></ion-icon>
+      </div>
+      <span class="di-label">Services</span>
+    </div>
+
+    <div class="drawer-item" [class.active]="activeMenu === 'products'"
+      (click)="navigate('admin-products', 'products')">
+      <div class="di-icon blue">
+        <ion-icon name="cube-outline"></ion-icon>
+      </div>
+      <span class="di-label">Produits</span>
+    </div>
+
+  </ion-content>
+
+  <div class="drawer-footer">
+    <div class="drawer-logout" (click)="logout()">
+      <ion-icon name="log-out-outline"></ion-icon>
+      <span>Déconnexion</span>
+    </div>
+  </div>
+
+</ion-menu>
+
+<div class="ion-page" id="admin-content">
+
+  <ion-header class="ion-no-border">
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button menu="admin-menu" autoHide="false"></ion-menu-button>
+      </ion-buttons>
+      <ion-title>Dashboard Admin</ion-title>
+      <ion-buttons slot="end">
+        <div class="shield-badge">
+          <ion-icon name="shield-checkmark-outline"></ion-icon>
+        </div>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <div class="body">
+
+      <p class="section-label">Vue d'ensemble</p>
+      <div class="stats-grid">
+
+        <div class="stat-card">
+          <div class="stat-top">
+            <div class="stat-icon blue"><ion-icon name="people-outline"></ion-icon></div>
+            <span class="stat-badge blue">Inscrits</span>
+          </div>
+          <p class="stat-value">{{ stats?.users?.freelancers || 0 }}</p>
+          <p class="stat-label">Freelancers</p>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-top">
+            <div class="stat-icon amber"><ion-icon name="alert-circle-outline"></ion-icon></div>
+            <span class="stat-badge amber">Urgent</span>
+          </div>
+          <p class="stat-value">{{ stats?.profiles?.pending || 0 }}</p>
+          <p class="stat-label">En attente</p>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-top">
+            <div class="stat-icon blue"><ion-icon name="person-outline"></ion-icon></div>
+            <span class="stat-badge blue">Total</span>
+          </div>
+          <p class="stat-value">{{ stats?.users?.clients || 0 }}</p>
+          <p class="stat-label">Clients</p>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-top">
+            <div class="stat-icon blue"><ion-icon name="briefcase-outline"></ion-icon></div>
+            <span class="stat-badge blue">Total</span>
+          </div>
+          <p class="stat-value">{{ stats?.jobs?.total || 0 }}</p>
+          <p class="stat-label">Offres</p>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-top">
+            <div class="stat-icon green"><ion-icon name="folder-outline"></ion-icon></div>
+            <span class="stat-badge green">Actifs</span>
+          </div>
+          <p class="stat-value">{{ stats?.projects?.total || 0 }}</p>
+          <p class="stat-label">Projets</p>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-top">
+            <div class="stat-icon blue"><ion-icon name="construct-outline"></ion-icon></div>
+            <span class="stat-badge blue">Total</span>
+          </div>
+          <p class="stat-value">{{ stats?.services?.total || 0 }}</p>
+          <p class="stat-label">Services</p>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-top">
+            <div class="stat-icon blue"><ion-icon name="cube-outline"></ion-icon></div>
+            <span class="stat-badge blue">Total</span>
+          </div>
+          <p class="stat-value">{{ stats?.products?.total || 0 }}</p>
+          <p class="stat-label">Produits</p>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-top">
+            <div class="stat-icon blue"><ion-icon name="send-outline"></ion-icon></div>
+            <span class="stat-badge blue">Total</span>
+          </div>
+          <p class="stat-value">{{ stats?.applications?.total || 0 }}</p>
+          <p class="stat-label">Candidatures</p>
+        </div>
+
+      </div>
+
+      <!-- Alerte profils en attente -->
+      <div class="alert-card"
+        *ngIf="stats?.profiles?.pending > 0"
+        (click)="navigate('admin-freelancers', 'freelancers')">
+        <div class="alert-icon">
+          <ion-icon name="alert-circle-outline"></ion-icon>
+        </div>
+        <div class="alert-text">
+          <p class="alert-title">Profils en attente</p>
+          <p class="alert-desc">
+            {{ stats.profiles.pending }} freelancer(s) attendent une validation
+          </p>
+        </div>
+        <ion-icon name="chevron-forward-outline" class="alert-arrow"></ion-icon>
+      </div>
+
+      <!-- Revenus -->
+      <div class="revenue-card">
+        <div class="revenue-left">
+          <p class="revenue-label">Budget total des projets</p>
+          <p class="revenue-value">{{ (stats?.revenue || 0) | number }} TND</p>
+        </div>
+        <div class="revenue-icon">
+          <ion-icon name="cash-outline"></ion-icon>
+        </div>
+      </div>
+
+    </div>
+  </ion-content>
+
+</div>

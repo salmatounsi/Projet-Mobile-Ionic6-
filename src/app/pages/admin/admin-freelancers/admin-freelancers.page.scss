@@ -1,0 +1,103 @@
+// ── admin-freelancers.page.scss ────────────────────────────
+
+ion-toolbar { --background: #152a5e; --color: #ffffff; }
+ion-content  { --background: #f0f3fa; }
+
+.body {
+  padding: 16px 14px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.admin-segment {
+  border-bottom: 1px solid #e8edf5;
+
+  ion-segment-button {
+    --indicator-color: #152a5e;
+    --color: #94a3b8;
+    --color-checked: #152a5e;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: none;
+  }
+}
+
+.empty-state {
+  background: #fff;
+  border: 1px solid #e8edf5;
+  border-radius: 16px;
+  padding: 40px 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+
+  .empty-icon { font-size: 40px; color: #c7d3ee; }
+  .empty-text  { font-size: 13px; color: #94a3b8; }
+}
+
+.freelancers-list { display: flex; flex-direction: column; gap: 10px; }
+
+.freelancer-card {
+  background: #fff;
+  border: 1px solid #e8edf5;
+  border-radius: 14px;
+  padding: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+
+  .card-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .card-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+}
+
+.avatar {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: #eef1f8;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 700; color: #152a5e;
+  flex-shrink: 0; overflow: hidden;
+
+  img { width: 100%; height: 100%; object-fit: cover; }
+}
+
+.info {
+  display: flex; flex-direction: column; gap: 2px; min-width: 0;
+
+  .name { font-size: 13px; font-weight: 700; color: #152a5e; margin: 0;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .role { font-size: 11px; color: #64748b; margin: 0; }
+  .country { display: flex; align-items: center; gap: 3px;
+    font-size: 10px; color: #94a3b8; margin: 0;
+    ion-icon { font-size: 10px; } }
+}
+
+.arrow { color: #c7d3ee; font-size: 16px; }
+
+// ── Status badges ──────────────────────────────────────────
+.status-badge {
+  font-size: 10px; font-weight: 700;
+  padding: 3px 9px; border-radius: 20px;
+
+  &.pending  { background: #fff8e1; color: #f57f17; }
+  &.approved { background: #e8f5e9; color: #2e7d32; }
+  &.rejected { background: #ffebee; color: #c62828; }
+}

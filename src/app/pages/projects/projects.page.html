@@ -1,0 +1,150 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>Projets</ion-title>
+<ion-buttons slot="end" *ngIf="role === 'client'">
+  <ion-button class="add-btn" (click)="createProject()">
+    <ion-icon name="add-outline" slot="start"></ion-icon>
+    Nouveau
+  </ion-button>
+</ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="body">
+
+    <!-- HEADER -->
+    <div class="top-block">
+      <h2 class="page-title">Mes projets</h2>
+      <p class="page-sub">
+        Suivez l’avancement et gérez vos collaborations.
+      </p>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <p class="stat-value">{{ stats.total }}</p>
+        <p class="stat-label">Total</p>
+      </div>
+
+      <div class="stat-card">
+        <p class="stat-value">{{ stats.active }}</p>
+        <p class="stat-label">En cours</p>
+      </div>
+
+      <div class="stat-card">
+        <p class="stat-value">{{ stats.completed }}</p>
+        <p class="stat-label">Terminés</p>
+      </div>
+    </div>
+
+    <!--  SEARCH (IONIC PROPRE) -->
+    <ion-searchbar
+      placeholder="Rechercher un projet"
+      [(ngModel)]="searchTerm"
+      (ionInput)="onSearchChange()"
+      class="custom-search"
+    ></ion-searchbar>
+
+    <!-- FILTER -->
+    <ion-segment
+      [(ngModel)]="selectedStatus"
+      (ionChange)="filterByStatus()"
+      class="projects-segment"
+    >
+      <ion-segment-button value="all">
+        <ion-label>Tous</ion-label>
+      </ion-segment-button>
+
+      <ion-segment-button value="in_progress">
+        <ion-label>En cours</ion-label>
+      </ion-segment-button>
+
+      <ion-segment-button value="completed">
+        <ion-label>Terminés</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
+    <!-- HEADER -->
+    <div class="section-header">
+      <h3 class="section-title">Projets</h3>
+      <span class="section-count">
+        {{ filteredProjects.length }}
+      </span>
+    </div>
+
+   <div class="projects-list" *ngIf="filteredProjects.length > 0">
+
+  <div class="project-card" *ngFor="let p of filteredProjects">
+
+    <!-- LEFT -->
+    <div class="card-left">
+
+      <h3 class="project-title">{{ p.title }}</h3>
+
+      <span class="status-badge" [ngClass]="p.status">
+        {{ p.status === 'in_progress' ? 'En cours' : 'Terminé' }}
+      </span>
+
+      <p class="project-desc">
+        {{ p.description }}
+      </p>
+
+      <div class="meta-row">
+        <span class="meta-chip">
+          <ion-icon name="calendar-outline"></ion-icon>
+          {{ p.deadline || 'Non défini' }}
+        </span>
+      </div>
+
+      <div class="progress-block">
+        <div class="progress-info">
+          <span>Avancement</span>
+          <span>{{ p.progress }}%</span>
+        </div>
+
+        <ion-progress-bar [value]="p.progress / 100"></ion-progress-bar>
+      </div>
+
+    </div>
+
+    <!-- RIGHT -->
+    <div class="card-right">
+
+      <div class="budget">
+        {{ p.budget }} TND
+      </div>
+
+     <div class="card-footer">
+  <ion-button class="details-btn" (click)="openProject(p)">
+    Voir détails
+  </ion-button>
+</div>
+
+    </div>
+
+  </div>
+
+</div>
+
+    <!-- EMPTY -->
+    <div class="empty-state" *ngIf="filteredProjects.length === 0">
+      <ion-icon name="briefcase-outline" class="empty-icon"></ion-icon>
+
+      <p class="empty-text">
+        Aucun projet pour le moment.
+      </p>
+
+  <ion-buttons slot="end">
+  <ion-button class="add-btn" 
+    *ngIf="role === 'client'"
+    (click)="createProject()">
+    <ion-icon name="add-outline" slot="start"></ion-icon>
+    Nouveau
+  </ion-button>
+</ion-buttons>
+    </div>
+
+  </div>
+</ion-content>

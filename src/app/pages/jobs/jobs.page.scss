@@ -330,3 +330,128 @@ ion-content {
     justify-content: stretch;
   }
 }
+
+/* ── Ajoute ces styles dans jobs.page.scss ── */
+
+/* Bouton filtre à côté de la searchbar */
+.search-bar-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px 10px;
+
+  .search-box { flex: 1; }
+}
+
+.filter-btn {
+  width: 40px; height: 40px;
+  background: #ffffff;
+  border: 1px solid #e8edf5;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; flex-shrink: 0;
+
+  ion-icon { font-size: 18px; color: #152a5e; }
+
+  &.active {
+    background: #152a5e;
+    border-color: #152a5e;
+    ion-icon { color: #ffffff; }
+  }
+}
+
+/* Panneau filtres */
+.filter-panel {
+  background: #ffffff;
+  border-top: 1px solid #e8edf5;
+  border-bottom: 1px solid #e8edf5;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  animation: slideDown 0.2s ease;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.filter-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+.filter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.fchip {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 1px solid #e8edf5;
+  background: #f8fafc;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.15s;
+
+  &.selected {
+    background: #152a5e;
+    border-color: #152a5e;
+    color: #ffffff;
+  }
+}
+
+/* Budget range */
+.budget-range {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  .range-input {
+    flex: 1;
+    border: 1px solid #e8edf5;
+    border-radius: 10px;
+    background: #f8fafc;
+    padding: 8px 12px;
+    font-size: 13px;
+    color: #152a5e;
+    outline: none;
+    &:focus { border-color: #152a5e; }
+  }
+
+  .range-sep { color: #94a3b8; font-size: 14px; }
+}
+
+/* Reset */
+.reset-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: transparent;
+  border: 1px dashed #c7d3ee;
+  border-radius: 10px;
+  padding: 9px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #152a5e;
+  cursor: pointer;
+  width: 100%;
+
+  ion-icon { font-size: 14px; }
+}

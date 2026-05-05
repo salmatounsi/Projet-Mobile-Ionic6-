@@ -12,13 +12,23 @@
   </ion-button>
 </div>
 
-    <div class="hero-stats">
-      <div class="stat"><span class="stat-num">+10K</span><span class="stat-lbl">Freelancers</span></div>
-      <div class="stat-divider"></div>
-      <div class="stat"><span class="stat-num">+2K</span><span class="stat-lbl">Services</span></div>
-      <div class="stat-divider"></div>
-      <div class="stat"><span class="stat-num">100%</span><span class="stat-lbl">Sécurisé</span></div>
-    </div>
+   <div class="hero-stats">
+  <div class="stat">
+    <span class="stat-num">{{ formatStat(stats.freelancers) }}</span>
+    <span class="stat-lbl">Freelancers</span>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat">
+    <span class="stat-num">{{ formatStat(stats.services) }}</span>
+    <span class="stat-lbl">Services</span>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat">
+    <span class="stat-num">100%</span>
+    <span class="stat-lbl">Sécurisé</span>
+  </div>
+</div>
+ 
   </section>
 
   <!-- VALUE -->

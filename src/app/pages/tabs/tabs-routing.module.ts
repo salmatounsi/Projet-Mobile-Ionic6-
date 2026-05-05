@@ -46,6 +46,10 @@ const routes: Routes = [
         path: '',
         redirectTo: 'services',
         pathMatch: 'full',
+}, 
+{
+  path: 'projects',
+  loadChildren: () => import('../projects/projects.module').then(m => m.ProjectsPageModule)
 }
     ],
   },

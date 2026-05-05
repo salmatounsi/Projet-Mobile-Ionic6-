@@ -1,0 +1,154 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/admin-freelancers"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Profil Freelancer</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="body" *ngIf="freelancer">
+
+    <!-- PROFIL HEADER -->
+    <div class="profile-header">
+      <div class="avatar-large">
+        <img *ngIf="freelancer.profile_image" [src]="freelancer.profile_image" alt=""/>
+        <span *ngIf="!freelancer.profile_image">
+          {{ initials(freelancer.first_name, freelancer.last_name) }}
+        </span>
+      </div>
+      <h2 class="name">{{ freelancer.first_name }} {{ freelancer.last_name }}</h2>
+      <p class="role">{{ freelancer.professional_role || 'Rôle non défini' }}</p>
+      <div class="meta-row">
+        <span class="meta-chip">
+          <ion-icon name="location-outline"></ion-icon>
+          {{ freelancer.country }}
+        </span>
+        <span class="meta-chip">
+          <ion-icon name="mail-outline"></ion-icon>
+          {{ freelancer.email }}
+        </span>
+      </div>
+      <span class="status-badge" [ngClass]="freelancer.profile_status || 'pending'">
+        {{ statusLabel(freelancer.profile_status) }}
+      </span>
+    </div>
+
+    <!-- MOTIF REFUS -->
+    <div class="reject-banner" *ngIf="freelancer.profile_status === 'rejected' && freelancer.reject_reason">
+      <ion-icon name="close-circle-outline"></ion-icon>
+      <div>
+        <p class="reject-title">Motif de refus</p>
+        <p class="reject-reason">{{ freelancer.reject_reason }}</p>
+      </div>
+    </div>
+
+    <!-- BIO -->
+    <div class="section-card" *ngIf="freelancer.bio">
+      <p class="section-heading">À propos</p>
+      <p class="bio-text">{{ freelancer.bio }}</p>
+    </div>
+
+    <!-- COMPÉTENCES -->
+    <div class="section-card" *ngIf="freelancer.skills?.length > 0">
+      <p class="section-heading">Compétences</p>
+      <div class="skills-wrap">
+        <span class="skill-chip" *ngFor="let s of freelancer.skills">{{ s }}</span>
+      </div>
+    </div>
+
+    <!-- LANGUES -->
+    <div class="section-card" *ngIf="freelancer.languages?.length > 0">
+      <p class="section-heading">Langues</p>
+      <div class="skills-wrap">
+        <span class="skill-chip" *ngFor="let l of freelancer.languages">
+          {{ l.language }} — {{ l.level }}
+        </span>
+      </div>
+    </div>
+
+    <!-- EXPÉRIENCES -->
+    <div class="section-card" *ngIf="freelancer.experience?.length > 0">
+      <p class="section-heading">Expériences</p>
+      <div class="timeline">
+        <div class="timeline-item" *ngFor="let e of freelancer.experience">
+          <p class="tl-title">{{ e.title || e.position }}</p>
+          <p class="tl-sub">{{ e.company }}</p>
+          <p class="tl-date">{{ e.startDate }} — {{ e.endDate || 'Présent' }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- FORMATION -->
+    <div class="section-card" *ngIf="freelancer.education?.length > 0">
+      <p class="section-heading">Formation</p>
+      <div class="timeline">
+        <div class="timeline-item" *ngFor="let ed of freelancer.education">
+          <p class="tl-title">{{ ed.degree }}</p>
+          <p class="tl-sub">{{ ed.school || ed.institution }}</p>
+          <p class="tl-date">{{ ed.startYear }} — {{ ed.endYear }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CV -->
+    <div class="section-card" *ngIf="freelancer.cvFile">
+      <p class="section-heading">CV</p>
+      <a [href]="freelancer.cvFile" target="_blank" class="cv-link">
+        <ion-icon name="document-outline"></ion-icon>
+        Voir le CV
+      </a>
+    </div>
+
+    <!-- ACTIONS -->
+    <div class="actions-block" *ngIf="freelancer.profile_status !== 'approved'">
+
+      <!-- Motif refus -->
+      <div class="form-group" *ngIf="showRejectForm">
+        <label class="form-label">Motif de refus *</label>
+        <textarea
+          class="form-textarea"
+          rows="3"
+          [(ngModel)]="rejectReason"
+          placeholder="Ex : Profil incomplet, expériences non vérifiables...">
+        </textarea>
+      </div>
+
+      <div class="action-buttons">
+        <button class="btn-approve" [disabled]="actioning"
+          (click)="approve()">
+          <ion-icon name="checkmark-outline"></ion-icon>
+          {{ actioning ? '...' : 'Valider le profil' }}
+        </button>
+
+        <button class="btn-reject"
+          *ngIf="!showRejectForm"
+          (click)="showRejectForm = true">
+          <ion-icon name="close-outline"></ion-icon>
+          Refuser
+        </button>
+
+        <button class="btn-reject" [disabled]="!rejectReason.trim() || actioning"
+          *ngIf="showRejectForm"
+          (click)="reject()">
+          <ion-icon name="close-outline"></ion-icon>
+          {{ actioning ? '...' : 'Confirmer le refus' }}
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Déjà approuvé : option bloquer -->
+    <div class="actions-block" *ngIf="freelancer.profile_status === 'approved'">
+      <button class="btn-block"
+        [class.btn-unblock]="freelancer.is_blocked"
+        [disabled]="actioning"
+        (click)="toggleBlock()">
+        <ion-icon [name]="freelancer.is_blocked ? 'lock-open-outline' : 'ban-outline'"></ion-icon>
+        {{ freelancer.is_blocked ? 'Débloquer le compte' : 'Bloquer le compte' }}
+      </button>
+    </div>
+
+  </div>
+</ion-content>

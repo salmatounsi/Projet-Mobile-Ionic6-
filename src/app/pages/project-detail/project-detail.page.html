@@ -1,0 +1,329 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/projects"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Détail du projet</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="body" *ngIf="project">
+
+    <!-- ── En-tête projet ── -->
+    <div class="project-header">
+      <h2 class="project-title">{{ project.title }}</h2>
+      <p class="project-description">{{ project.description }}</p>
+      <div class="header-meta">
+  <span class="meta-pill">
+    <span class="pill-label">Budget</span>
+    {{ project.budget | number }} TND
+  </span>
+  <span class="meta-pill">
+    <span class="pill-label">Statut</span>
+    {{ statusLabel(project.status) }}
+  </span>
+  <span class="meta-pill">
+    <span class="pill-label">{{ role === 'client' ? 'Freelancer' : 'Client' }}</span>
+    {{ role === 'client' ? project.freelancer?.name : project.client?.name }}
+  </span>
+</div>
+    </div>
+
+    <!-- ── Progression globale ── -->
+    <div class="progress-card">
+      <div class="progress-row">
+        <span class="progress-label">Progression globale</span>
+        <span class="progress-pct">{{ project.progress }}%</span>
+      </div>
+      <ion-progress-bar [value]="project.progress / 100"></ion-progress-bar>
+    </div>
+
+    <!-- ── Jalons ── -->
+    <p class="section-heading">Sprints</p>
+
+    <div class="milestones">
+      <div
+        class="milestone-card"
+        [class.is-validated]="m.status === 'validated'"
+        *ngFor="let m of project.milestones">
+
+        <!-- En-tête accordion -->
+        <div class="milestone-trigger" (click)="toggleMilestone(m._id)">
+          <div class="milestone-top">
+            <div class="milestone-left">
+              <span class="milestone-title">{{ m.title }}</span>
+              <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+                <span class="chip" [ngClass]="m.status">
+                  {{ statusLabel(m.status) }}
+                </span>
+                <span class="badge-pending" *ngIf="pendingCount(m) > 0">
+                  {{ pendingCount(m) }} en attente
+                </span>
+              </div>
+            </div>
+            <div class="milestone-right">
+              <span class="milestone-pct">{{ m.progress }}%</span>
+              <span class="chevron" [class.open]="isExpanded(m._id)">▾</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Barre de progression -->
+        <div class="milestone-bar">
+          <ion-progress-bar [value]="m.progress / 100"></ion-progress-bar>
+        </div>
+
+        <!-- Corps collapsible -->
+        <div class="milestone-body" *ngIf="isExpanded(m._id)">
+
+          <!-- Livrables -->
+          <div class="deliverables-section" *ngIf="m.deliverables && m.deliverables.length > 0">
+            <p class="deliverables-title">Livrables</p>
+            <div class="deliverable-item" *ngFor="let d of m.deliverables">
+              <ion-icon name="checkmark-circle-outline"></ion-icon>
+              <span>{{ d }}</span>
+            </div>
+          </div>
+
+          <!-- Durée estimée -->
+          <div class="meta-chip-row" *ngIf="m.duration">
+            <span class="meta-chip">
+              <ion-icon name="time-outline"></ion-icon>
+              {{ m.duration }}
+            </span>
+            <span class="meta-chip" *ngIf="m.amount">
+              <ion-icon name="cash-outline"></ion-icon>
+              {{ m.amount | number }} TND
+            </span>
+          </div>
+
+          <p class="no-updates" *ngIf="!m.updates || m.updates.length === 0">
+            Aucun avancement soumis pour ce sprint.
+          </p>
+
+          <!-- Liste des updates -->
+          <div
+            class="update-item"
+            *ngFor="let u of m.updates"
+            [ngClass]="{
+              'is-pending':  u.status === 'pending',
+              'is-approved': u.status === 'approved',
+              'is-rejected': u.status === 'rejected'
+            }">
+
+            <div class="update-header">
+              <div class="update-user">
+                <div class="user-avatar">
+                  <ion-icon name="person-outline"></ion-icon>
+                </div>
+                <span>{{ role === 'freelancer' ? 'Moi' : 'Freelancer' }}</span>
+              </div>
+              <span class="chip" [ngClass]="u.status">
+                {{ statusLabel(u.status) }}
+              </span>
+            </div>
+
+            <p class="update-message">{{ u.message }}</p>
+
+            <div class="update-footer">
+              <span class="update-progress-tag">{{ u.progress }}%</span>
+              <span class="update-date">{{ u.created_at | date:'dd MMM yyyy' }}</span>
+
+              <!-- Boutons client -->
+              <div class="action-row"
+                *ngIf="role === 'client' && u.status === 'pending'">
+                <button
+                  class="btn-approve"
+                  [disabled]="isActioning(u._id)"
+                  (click)="approveUpdate(m, u); $event.stopPropagation()">
+                  ✓ Valider
+                </button>
+                <button
+                  class="btn-reject"
+                  [disabled]="isActioning(u._id)"
+                  (click)="rejectUpdate(m, u); $event.stopPropagation()">
+                  ✕ Refuser
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- CLIENT : valider le sprint complet -->
+          <div class="validate-milestone-row" *ngIf="role === 'client'">
+            <div class="milestone-validated-banner"
+              *ngIf="m.status === 'validated'">
+              ✓ Sprint validé et clôturé
+            </div>
+            <button
+              class="btn-validate-milestone"
+              *ngIf="m.status !== 'validated'"
+              [disabled]="!canValidateMilestone(m) || isValidating(m._id)"
+              (click)="validateMilestone(m); $event.stopPropagation()">
+              <span *ngIf="!isValidating(m._id)">🏁 Valider ce sprint</span>
+              <span *ngIf="isValidating(m._id)">Validation en cours...</span>
+            </button>
+            <p class="validate-hint"
+              *ngIf="m.status !== 'validated' && !canValidateMilestone(m) && pendingCount(m) > 0">
+              Validez ou refusez les avancements avant de clôturer ce sprint.
+            </p>
+          </div>
+
+          <!-- FREELANCER : soumettre un avancement -->
+          <div class="form-trigger-row" *ngIf="role === 'freelancer'">
+
+            <p class="milestone-locked" *ngIf="m.status === 'validated'">
+              🔒 Ce sprint a été validé par le client.
+            </p>
+
+            <ng-container *ngIf="m.status !== 'validated'">
+              <button class="btn-add-update"
+                *ngIf="!m.showForm"
+                (click)="toggleForm(m); $event.stopPropagation()">
+                <ion-icon name="add-outline"></ion-icon>
+                Soumettre un avancement
+              </button>
+
+              <div class="update-form" *ngIf="m.showForm">
+                <label class="form-label">Message d'avancement</label>
+                <textarea
+                  class="form-textarea"
+                  rows="3"
+                  [(ngModel)]="m.newMessage"
+                  placeholder="Décris ce que tu as accompli...">
+                </textarea>
+
+                <div class="form-bottom">
+                  <input
+                    class="form-input-progress"
+                    type="number"
+                    [(ngModel)]="m.newProgress"
+                    placeholder="% progression"
+                    min="0" max="100"
+                  />
+                  <button class="btn-cancel"
+                    (click)="toggleForm(m); $event.stopPropagation()">
+                    Annuler
+                  </button>
+                  <button
+                    class="btn-submit"
+                    [disabled]="!canSubmit(m) || isSubmitting(m._id)"
+                    (click)="submitUpdate(m); $event.stopPropagation()">
+                    {{ isSubmitting(m._id) ? '...' : 'Envoyer' }}
+                  </button>
+                </div>
+              </div>
+            </ng-container>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Bouton ajouter un sprint (freelancer seulement) ── -->
+    <button
+      class="btn-add-milestone"
+      *ngIf="role === 'freelancer'"
+      (click)="openMilestoneModal()">
+      <ion-icon name="add-outline"></ion-icon>
+      Ajouter un nouveau sprint
+    </button>
+
+  </div>
+</ion-content>
+
+<!-- ── MODAL : Nouveau sprint ── -->
+<div class="milestone-modal-overlay" *ngIf="showMilestoneModal">
+
+  <div class="milestone-modal">
+
+    <div class="modal-header">
+      <span class="modal-title">Nouveau sprint</span>
+      <button class="modal-close-btn" (click)="closeMilestoneModal()">
+        <ion-icon name="close-outline"></ion-icon>
+      </button>
+    </div>
+
+    <div class="modal-body">
+
+      <div class="form-group">
+        <label class="form-label">Titre du sprint *</label>
+        <input
+          class="form-input"
+          type="text"
+          [(ngModel)]="newMilestone.title"
+          placeholder="Ex : Sprint 3 — Frontend Mobile"/>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Description</label>
+        <textarea
+          class="form-textarea"
+          rows="3"
+          [(ngModel)]="newMilestone.description"
+          placeholder="Décris les objectifs de ce sprint..."></textarea>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Montant (TND)</label>
+          <input
+            class="form-input"
+            type="number"
+            [(ngModel)]="newMilestone.amount"
+            placeholder="0"/>
+          <span class="form-hint">Part du budget total</span>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Durée estimée</label>
+          <input
+            class="form-input"
+            type="text"
+            [(ngModel)]="newMilestone.duration"
+            placeholder="Ex : 2 semaines"/>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Livrables attendus</label>
+        <div class="deliverables-list">
+          <div
+            class="deliverable-input-item"
+            *ngFor="let d of newMilestone.deliverables; let i = index">
+            <ion-icon name="checkmark-circle-outline"></ion-icon>
+            <span class="del-text">{{ d }}</span>
+            <button class="del-remove" (click)="removeDeliverable(i)">
+              <ion-icon name="close-outline"></ion-icon>
+            </button>
+          </div>
+        </div>
+        <div class="add-deliverable-row">
+          <input
+            class="form-input"
+            type="text"
+            [(ngModel)]="newDeliverable"
+            placeholder="Ajouter un livrable..."
+            (keyup.enter)="addDeliverable()"/>
+          <button class="btn-add-del" (click)="addDeliverable()">
+            <ion-icon name="add-outline"></ion-icon>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-cancel-modal" (click)="closeMilestoneModal()">
+        Annuler
+      </button>
+      <button
+        class="btn-submit-modal"
+        [disabled]="!canSubmitMilestone() || isCreatingMilestone"
+        (click)="submitMilestone()">
+        {{ isCreatingMilestone ? 'Création...' : 'Créer le sprint' }}
+      </button>
+    </div>
+
+  </div>
+</div>

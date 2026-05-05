@@ -9,12 +9,23 @@ import { Router } from '@angular/router';
   styleUrls: ['./jobs.page.scss'],
 })
 export class JobsPage implements OnInit {
-  jobs: any[] = [];
+
+  jobs:         any[] = [];
   filteredJobs: any[] = [];
 
-  searchTerm: string = '';
-  role: string = '';
+  searchTerm   = '';
+  role         = '';
   selectedView: 'all' | 'mine' = 'all';
+
+  // ── Filtres ────────────────────────────────────────────────
+  showFilters = false;
+  filters = {
+    budgetType: '',
+    size:       '',
+    budgetMin:  null as number | null,
+    budgetMax:  null as number | null,
+    sort:       'recent' as 'recent' | 'budget_asc' | 'budget_desc'
+  };
 
   private api = 'http://localhost:5000';
 
@@ -22,13 +33,7 @@ export class JobsPage implements OnInit {
 
   ngOnInit() {
     this.role = (localStorage.getItem('role') || '').toLowerCase().trim();
-
-    if (this.role === 'client') {
-      this.selectedView = 'mine';
-    } else {
-      this.selectedView = 'all';
-    }
-
+    this.selectedView = this.role === 'client' ? 'mine' : 'all';
     this.loadJobs();
   }
 
@@ -37,75 +42,96 @@ export class JobsPage implements OnInit {
     this.loadJobs();
   }
 
-  formatBudgetType(type: string): string {
-    switch (type) {
-      case 'hourly':
-        return 'Paiement horaire';
-      case 'fixed':
-        return 'Prix fixe';
-      default:
-        return type || 'Budget non précisé';
-    }
-  }
-
-  formatSize(size: string): string {
-    switch (size) {
-      case 'small':
-        return 'Petit projet';
-      case 'medium':
-        return 'Projet moyen';
-      case 'large':
-        return 'Grand projet';
-      default:
-        return size || 'Taille non précisée';
-    }
-  }
-
-  switchView(view: any) {
-    if (view !== 'all' && view !== 'mine') {
-      return;
-    }
-
-    this.selectedView = view;
-    this.loadJobs();
-  }
-
+  // ── Chargement ─────────────────────────────────────────────
   loadJobs() {
-    const token = localStorage.getItem('token');
+    const token   = localStorage.getItem('token');
     const headers = { Authorization: `Bearer ${token}` };
-
-    let url = `${this.api}/api/jobs`;
-
-    if (this.role === 'client' && this.selectedView === 'mine') {
-      url = `${this.api}/api/jobs/my`;
-    }
+    const url     = this.role === 'client' && this.selectedView === 'mine'
+      ? `${this.api}/api/jobs/my`
+      : `${this.api}/api/jobs`;
 
     this.http.get<any[]>(url, { headers }).subscribe({
-      next: (data) => {
-        this.jobs = data;
-        this.applySearch();
-      },
-      error: (err) => console.error(err),
+      next:  (data) => { this.jobs = data; this.applyFilters(); },
+      error: (err)  => console.error(err)
     });
   }
 
-  onSearch() {
-    this.applySearch();
-  }
+  // ── Filtres + recherche ────────────────────────────────────
+  applyFilters() {
+    let result = [...this.jobs];
 
-  applySearch() {
-    if (!this.searchTerm.trim()) {
-      this.filteredJobs = [...this.jobs];
-      return;
+    // Recherche texte
+    const term = this.searchTerm.toLowerCase().trim();
+    if (term) {
+      result = result.filter(j =>
+        j.title?.toLowerCase().includes(term) ||
+        j.skills?.some((s: string) => s.toLowerCase().includes(term))
+      );
     }
 
-    const term = this.searchTerm.toLowerCase().trim();
+    // Type de budget
+    if (this.filters.budgetType) {
+      result = result.filter(j => j.budgetType === this.filters.budgetType);
+    }
 
-    this.filteredJobs = this.jobs.filter(j =>
-      j.title?.toLowerCase().includes(term) ||
-      j.category?.toLowerCase().includes(term) ||
-      j.skills?.some((s: string) => s.toLowerCase().includes(term))
+    // Taille du projet
+    if (this.filters.size) {
+      result = result.filter(j => j.size === this.filters.size);
+    }
+
+    // Budget min
+    if (this.filters.budgetMin !== null && this.filters.budgetMin !== undefined) {
+      result = result.filter(j => Number(j.budgetTo) >= Number(this.filters.budgetMin));
+    }
+
+    // Budget max
+    if (this.filters.budgetMax !== null && this.filters.budgetMax !== undefined) {
+      result = result.filter(j => Number(j.budgetFrom) <= Number(this.filters.budgetMax));
+    }
+
+    // Tri
+    if (this.filters.sort === 'budget_asc') {
+      result.sort((a, b) => Number(a.budgetFrom) - Number(b.budgetFrom));
+    } else if (this.filters.sort === 'budget_desc') {
+      result.sort((a, b) => Number(b.budgetTo) - Number(a.budgetTo));
+    } else {
+      // Plus récent par défaut
+      result.sort((a, b) =>
+        new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime()
+      );
+    }
+
+    this.filteredJobs = result;
+  }
+
+  hasActiveFilters(): boolean {
+    return !!(
+      this.filters.budgetType ||
+      this.filters.size ||
+      this.filters.budgetMin ||
+      this.filters.budgetMax ||
+      this.filters.sort !== 'recent' ||
+      this.searchTerm.trim()
     );
+  }
+
+  resetFilters() {
+    this.searchTerm  = '';
+    this.filters = {
+      budgetType: '',
+      size:       '',
+      budgetMin:  null,
+      budgetMax:  null,
+      sort:       'recent'
+    };
+    this.applyFilters();
+  }
+
+  // ── Navigation ─────────────────────────────────────────────
+  switchView(view: any) {
+    if (view !== 'all' && view !== 'mine') return;
+    this.selectedView = view;
+    this.loadJobs();
   }
 
   goToApply(jobId: string) {
@@ -114,5 +140,14 @@ export class JobsPage implements OnInit {
 
   goToApplications(jobId: string) {
     this.router.navigate(['/job-applications', jobId]);
+  }
+
+  // ── Formatage ──────────────────────────────────────────────
+  formatBudgetType(type: string): string {
+    return ({ hourly: 'Paiement horaire', fixed: 'Prix fixe' } as any)[type] || type || 'Non précisé';
+  }
+
+  formatSize(size: string): string {
+    return ({ small: 'Petit projet', medium: 'Projet moyen', large: 'Grand projet' } as any)[size] || size || 'Non précisée';
   }
 }

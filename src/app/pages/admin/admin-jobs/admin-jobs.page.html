@@ -1,0 +1,47 @@
+<!-- ══════════════════════════════════════════════════════
+     admin-jobs.page.html
+══════════════════════════════════════════════════════ -->
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/admin-dashboard"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Offres d'emploi</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="body">
+
+    <div class="empty-state" *ngIf="loading">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+
+    <div class="empty-state" *ngIf="!loading && jobs.length === 0">
+      <ion-icon name="newspaper-outline" class="empty-icon"></ion-icon>
+      <p class="empty-text">Aucune offre d'emploi.</p>
+    </div>
+
+    <div class="list" *ngIf="!loading && jobs.length > 0">
+      <div class="item-card" *ngFor="let j of jobs">
+
+        <div class="item-left">
+          <p class="item-title">{{ j.title }}</p>
+          <p class="item-sub">{{ j.budgetFrom }} – {{ j.budgetTo }} TND · {{ j.budgetType }}</p>
+          <div class="chips-row">
+            <span class="chip" *ngFor="let s of j.skills?.slice(0,3)">{{ s }}</span>
+          </div>
+        </div>
+
+        <div class="item-right">
+          <span class="count-badge">{{ j.applications }} candidature(s)</span>
+          <button class="btn-delete" (click)="deleteJob(j)">
+            <ion-icon name="trash-outline"></ion-icon>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</ion-content>

@@ -1,30 +1,97 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-title>Offres d'emploi</ion-title>
-
     <ion-buttons slot="end">
       <ion-button
         *ngIf="role === 'client' && selectedView === 'mine'"
         class="add-btn"
-        routerLink="/create-job-client"
-      >
+        routerLink="/create-job-client">
         <ion-icon name="add-outline" slot="start"></ion-icon>
         Publier
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 
+  <!-- SEARCH -->
   <div class="search-bar-wrap">
     <div class="search-box">
       <ion-icon name="search-outline" class="search-icon"></ion-icon>
-
       <input
         type="text"
         placeholder="Rechercher une offre..."
         [(ngModel)]="searchTerm"
-        (input)="onSearch()"
-      />
+        (input)="applyFilters()"/>
     </div>
+    <!-- Bouton filtre (freelancer seulement) -->
+    <button class="filter-btn" *ngIf="role === 'freelancer'"
+      (click)="showFilters = !showFilters"
+      [class.active]="hasActiveFilters()">
+      <ion-icon name="options-outline"></ion-icon>
+    </button>
+  </div>
+
+  <!-- PANNEAU FILTRES -->
+  <div class="filter-panel" *ngIf="showFilters && role === 'freelancer'">
+
+    <!-- Type de budget -->
+    <div class="filter-group">
+      <p class="filter-label">Type de budget</p>
+      <div class="filter-chips">
+        <span class="fchip" [class.selected]="filters.budgetType === ''"
+          (click)="filters.budgetType = ''; applyFilters()">Tous</span>
+        <span class="fchip" [class.selected]="filters.budgetType === 'hourly'"
+          (click)="filters.budgetType = 'hourly'; applyFilters()">Horaire</span>
+        <span class="fchip" [class.selected]="filters.budgetType === 'fixed'"
+          (click)="filters.budgetType = 'fixed'; applyFilters()">Fixe</span>
+      </div>
+    </div>
+
+    <!-- Taille du projet -->
+    <div class="filter-group">
+      <p class="filter-label">Taille du projet</p>
+      <div class="filter-chips">
+        <span class="fchip" [class.selected]="filters.size === ''"
+          (click)="filters.size = ''; applyFilters()">Tous</span>
+        <span class="fchip" [class.selected]="filters.size === 'small'"
+          (click)="filters.size = 'small'; applyFilters()">Petit</span>
+        <span class="fchip" [class.selected]="filters.size === 'medium'"
+          (click)="filters.size = 'medium'; applyFilters()">Moyen</span>
+        <span class="fchip" [class.selected]="filters.size === 'large'"
+          (click)="filters.size = 'large'; applyFilters()">Grand</span>
+      </div>
+    </div>
+
+    <!-- Budget min/max -->
+    <div class="filter-group">
+      <p class="filter-label">Budget (TND)</p>
+      <div class="budget-range">
+        <input class="range-input" type="number" placeholder="Min"
+          [(ngModel)]="filters.budgetMin" (input)="applyFilters()"/>
+        <span class="range-sep">—</span>
+        <input class="range-input" type="number" placeholder="Max"
+          [(ngModel)]="filters.budgetMax" (input)="applyFilters()"/>
+      </div>
+    </div>
+
+    <!-- Tri -->
+    <div class="filter-group">
+      <p class="filter-label">Trier par</p>
+      <div class="filter-chips">
+        <span class="fchip" [class.selected]="filters.sort === 'recent'"
+          (click)="filters.sort = 'recent'; applyFilters()">Plus récent</span>
+        <span class="fchip" [class.selected]="filters.sort === 'budget_asc'"
+          (click)="filters.sort = 'budget_asc'; applyFilters()">Budget ↑</span>
+        <span class="fchip" [class.selected]="filters.sort === 'budget_desc'"
+          (click)="filters.sort = 'budget_desc'; applyFilters()">Budget ↓</span>
+      </div>
+    </div>
+
+    <!-- Reset -->
+    <button class="reset-btn" (click)="resetFilters()" *ngIf="hasActiveFilters()">
+      <ion-icon name="refresh-outline"></ion-icon>
+      Réinitialiser les filtres
+    </button>
+
   </div>
 </ion-header>
 
@@ -35,12 +102,10 @@
       *ngIf="role === 'client'"
       [value]="selectedView"
       class="jobs-segment"
-      (ionChange)="switchView($event.detail.value)"
-    >
+      (ionChange)="switchView($event.detail.value)">
       <ion-segment-button value="all">
         <ion-label>Toutes les offres</ion-label>
       </ion-segment-button>
-
       <ion-segment-button value="mine">
         <ion-label>Mes offres</ion-label>
       </ion-segment-button>
@@ -48,18 +113,13 @@
 
     <div class="section-header">
       <h3 class="section-title">
-        {{
-          role === 'freelancer'
-            ? 'Offres disponibles'
-            : selectedView === 'all'
-              ? 'Toutes les offres'
-              : 'Mes offres'
-        }}
+        {{ role === 'freelancer' ? 'Offres disponibles'
+           : selectedView === 'all' ? 'Toutes les offres' : 'Mes offres' }}
       </h3>
-
       <span class="section-count">{{ filteredJobs.length }}</span>
     </div>
 
+    <!-- LISTE -->
     <div class="jobs-list" *ngIf="filteredJobs.length > 0">
       <div class="job-card" *ngFor="let job of filteredJobs">
 
@@ -67,25 +127,19 @@
           <div class="job-icon-wrap">
             <ion-icon name="briefcase-outline"></ion-icon>
           </div>
-
           <div class="job-info">
-            <h3 class="job-title">
-              {{ job.title || 'Offre sans titre' }}
-            </h3>
-
+            <h3 class="job-title">{{ job.title || 'Offre sans titre' }}</h3>
             <div class="job-meta">
               <span *ngIf="job.budgetType">
                 <ion-icon name="cash-outline"></ion-icon>
                 {{ formatBudgetType(job.budgetType) }}
               </span>
-
               <span *ngIf="job.size">
                 <ion-icon name="layers-outline"></ion-icon>
                 {{ formatSize(job.size) }}
               </span>
             </div>
           </div>
-
           <div class="job-budget">
             <span>Budget</span>
             <strong>{{ job.budgetFrom }} - {{ job.budgetTo }} DT</strong>
@@ -93,28 +147,18 @@
         </div>
 
         <div class="skills-row" *ngIf="job.skills?.length">
-          <span class="skill-chip" *ngFor="let s of job.skills | slice:0:4">
-            {{ s }}
-          </span>
+          <span class="skill-chip" *ngFor="let s of job.skills | slice:0:4">{{ s }}</span>
         </div>
 
         <div class="job-actions">
-          <ion-button
-            *ngIf="role === 'freelancer'"
-            fill="clear"
-            class="apply-btn"
-            (click)="goToApply(job.id || job._id)"
-          >
+          <ion-button *ngIf="role === 'freelancer'" fill="clear" class="apply-btn"
+            (click)="goToApply(job.id || job._id)">
             Postuler
             <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
           </ion-button>
-
-          <ion-button
-            *ngIf="role === 'client' && selectedView === 'mine'"
-            fill="clear"
-            class="applications-btn"
-            (click)="goToApplications(job.id || job._id)"
-          >
+          <ion-button *ngIf="role === 'client' && selectedView === 'mine'"
+            fill="clear" class="applications-btn"
+            (click)="goToApplications(job.id || job._id)">
             Voir les candidatures
             <ion-icon name="document-text-outline" slot="end"></ion-icon>
           </ion-button>
@@ -123,16 +167,18 @@
       </div>
     </div>
 
+    <!-- EMPTY -->
     <div class="empty-state" *ngIf="filteredJobs.length === 0">
       <ion-icon name="briefcase-outline" class="empty-icon"></ion-icon>
-
       <p class="empty-text">
-        {{
-          role === 'client' && selectedView === 'mine'
-            ? 'Vous n’avez publié aucune offre pour le moment.'
-            : 'Aucune offre disponible.'
-        }}
+        {{ role === 'client' && selectedView === 'mine'
+          ? 'Vous n\'avez publié aucune offre pour le moment.'
+          : 'Aucune offre ne correspond à vos critères.' }}
       </p>
+      <button class="reset-btn" *ngIf="hasActiveFilters()" (click)="resetFilters()">
+        <ion-icon name="refresh-outline"></ion-icon>
+        Réinitialiser les filtres
+      </button>
     </div>
 
   </div>

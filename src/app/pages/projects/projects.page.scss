@@ -1,0 +1,265 @@
+ion-toolbar {
+  --background: #152a5e;
+  --color: #ffffff;
+}
+
+ion-content {
+  --background: #f4f6fb;
+}
+
+ion-progress-bar {
+  --background: #eef1f8;
+  --progress-background: #152a5e;
+  height: 5px;
+  border-radius: 10px;
+}
+
+.body {
+  padding: 18px 14px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* HEADER */
+.top-block {
+  .page-title {
+    font-size: 21px;
+    font-weight: 800;
+    color: #152a5e;
+  }
+  .page-sub {
+    font-size: 13px;
+    color: #94a3b8;
+    margin-top: 3px;
+  }
+}
+
+/* STATS */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+
+  .stat-card {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 14px 8px;
+    border: 1px solid #e8edf5;
+    text-align: center;
+    box-shadow: none;
+
+    .stat-value {
+      font-size: 22px;
+      font-weight: 800;
+      color: #152a5e;
+    }
+    .stat-label {
+      font-size: 10px;
+      color: #94a3b8;
+      font-weight: 600;
+      margin-top: 2px;
+    }
+  }
+}
+
+/* SEARCH */
+.custom-search {
+  --background: #ffffff;
+  --border-radius: 22px;
+  --box-shadow: none;
+  border: 1px solid #e8edf5;
+  border-radius: 22px;
+}
+
+/* SEGMENT */
+.projects-segment {
+  border-bottom: 1px solid #e8edf5;
+
+  ion-segment-button {
+    --indicator-color: #152a5e;
+    --color: #94a3b8;
+    --color-checked: #152a5e;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: none;
+  }
+  ion-segment-button::part(indicator-background) {
+    background: #152a5e;
+    height: 2.5px;
+    border-radius: 10px;
+  }
+}
+
+/* SECTION HEADER */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .section-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #152a5e;
+  }
+  .section-count {
+    background: #eef1f8;
+    color: #64748b;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+}
+
+/* LIST */
+.projects-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* CARD */
+.project-card {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1px solid #e8edf5;
+  padding: 14px;
+  box-shadow: none;
+}
+
+.card-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.card-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.project-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #152a5e;
+  line-height: 1.3;
+}
+
+/* STATUS — bleu uniquement */
+.status-badge {
+  font-size: 10px;
+  padding: 3px 9px;
+  border-radius: 20px;
+  font-weight: 600;
+  width: fit-content;
+
+  &.in_progress {
+    background: #eef1f8;
+    color: #152a5e;
+  }
+  &.completed {
+    background: #eef1f8;
+    color: #152a5e;
+    opacity: 0.6;
+  }
+}
+
+.project-desc {
+  font-size: 12px;
+  color: #94a3b8;
+  line-height: 1.5;
+}
+
+.meta-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  background: #f4f6fb;
+  color: #64748b;
+  padding: 3px 9px;
+  border-radius: 20px;
+  font-weight: 500;
+  width: fit-content;
+}
+
+/* PROGRESS */
+.progress-block {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  .progress-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: #94a3b8;
+  }
+}
+
+/* BUDGET */
+.budget-label {
+  font-size: 10px;
+  color: #b0bec5;
+  text-align: right;
+}
+.budget {
+  font-size: 13px;
+  font-weight: 800;
+  color: #152a5e;
+  text-align: right;
+}
+
+/* BUTTON */
+.details-btn {
+  --background: #152a5e;
+  --color: #ffffff;
+  --border-radius: 20px;
+  --box-shadow: none;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: none;
+}
+
+/* BOUTON TOOLBAR */
+ion-button.add-btn {
+  --background: transparent;
+  --color: #ffffff;
+  --border-radius: 20px;
+  --box-shadow: none;
+  border: 1.5px solid rgba(255, 255, 255, 0.5);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: none;
+  height: 34px;
+}
+
+/* EMPTY STATE */
+.empty-state {
+  background: #ffffff;
+  border: 1px solid #e8edf5;
+  border-radius: 16px;
+  padding: 48px 20px;
+  text-align: center;
+
+  .empty-icon { font-size: 36px; color: #d1d9e8; margin-bottom: 12px; }
+  .empty-text { font-size: 13px; color: #94a3b8; margin-bottom: 16px; }
+
+  .empty-btn {
+    --background: #152a5e;
+    --color: #ffffff;
+    --border-radius: 22px;
+    --box-shadow: none;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: none;
+    height: 42px;
+  }
+}

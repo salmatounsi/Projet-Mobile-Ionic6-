@@ -26,7 +26,8 @@
           Client
         </div>
 
-        <ion-button fill="clear" class="menu-btn">
+        <!-- ✅ SEUL CHANGEMENT : (click)="openMenu()" ajouté -->
+        <ion-button fill="clear" class="menu-btn" (click)="openMenu()">
           <ion-icon name="ellipsis-horizontal-outline"></ion-icon>
         </ion-button>
       </div>
@@ -54,6 +55,12 @@
         </p>
       </div>
     </div>
+    
+    <div class="validation-banner {{ user?.profile_status || 'pending' }}"
+  *ngIf="user?.role === 'freelancer'">
+  <ion-icon [name]="statusIcon()"></ion-icon>
+  <span>{{ statusMessage() }}</span>
+</div>
 
     <!-- PROFIL CLIENT -->
     <ng-container *ngIf="user?.role === 'client'">
@@ -117,7 +124,7 @@
 
     <!-- PROFIL FREELANCER -->
     <ng-container *ngIf="user?.role === 'freelancer'">
-
+    
       <!-- Bio -->
       <div class="card">
         <div class="card-head">
@@ -195,8 +202,6 @@
           <span class="card-title">
             {{ user?.categories?.main?.name || 'Catégorie' }}
           </span>
-
-          
         </div>
 
         <div class="check-list" *ngIf="user?.categories?.sub_categories?.length; else noSubCategories">
@@ -229,8 +234,6 @@
           </div>
 
           <span class="card-title">Formation</span>
-
-          
         </div>
 
         <div class="timeline-list" *ngIf="user?.education?.length; else noEducation">
@@ -270,8 +273,6 @@
           </div>
 
           <span class="card-title">Expérience</span>
-
-          
         </div>
 
         <div class="timeline-list" *ngIf="user?.experience?.length; else noExperience">

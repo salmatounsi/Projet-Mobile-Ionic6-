@@ -1,0 +1,105 @@
+ion-toolbar { --background: #152a5e; --color: #ffffff; }
+ion-content  { --background: #f0f3fa; }
+
+.body {
+  padding: 16px 14px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.empty-state {
+  background: #fff; border: 1px solid #e8edf5;
+  border-radius: 16px; padding: 40px 20px;
+  text-align: center; display: flex;
+  flex-direction: column; align-items: center; gap: 12px;
+  .empty-icon { font-size: 40px; color: #c7d3ee; }
+  .empty-text  { font-size: 13px; color: #94a3b8; }
+}
+
+.list { display: flex; flex-direction: column; gap: 10px; }
+
+.item-card {
+  background: #fff;
+  border: 1px solid #e8edf5;
+  border-radius: 14px;
+  padding: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+// ── Client card ────────────────────────────────────────────
+.card-left {
+  display: flex; align-items: center;
+  gap: 10px; flex: 1; min-width: 0;
+}
+
+.avatar {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: #eef1f8; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 700; color: #152a5e;
+  overflow: hidden;
+  img { width: 100%; height: 100%; object-fit: cover; }
+}
+
+.card-right {
+  display: flex; flex-direction: column;
+  align-items: flex-end; gap: 8px; flex-shrink: 0;
+}
+
+.info { flex: 1; min-width: 0; }
+.name  { font-size: 13px; font-weight: 700; color: #152a5e; margin: 0 0 2px; }
+.email { font-size: 11px; color: #94a3b8; margin: 0 0 2px; }
+.country {
+  display: flex; align-items: center; gap: 3px;
+  font-size: 10px; color: #94a3b8; margin: 0 0 6px;
+  ion-icon { font-size: 10px; }
+}
+
+.blocked-badge {
+  font-size: 10px; font-weight: 700;
+  background: #ffebee; color: #c62828;
+  padding: 2px 8px; border-radius: 20px;
+}
+
+.btn-block {
+  width: 34px; height: 34px;
+  background: #fff3e0; border: none;
+  border-radius: 8px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  ion-icon { color: #e65100; font-size: 16px; }
+  &.btn-unblock { background: #e8f5e9; ion-icon { color: #2e7d32; } }
+  &:disabled { opacity: 0.5; }
+}
+
+// ── Item card (services/produits) ──────────────────────────
+.item-left  { flex: 1; display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+.item-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; flex-shrink: 0; }
+
+.item-title { font-size: 13px; font-weight: 700; color: #152a5e; margin: 0; }
+.item-sub   { font-size: 11px; color: #64748b; margin: 0; }
+
+.chips-row { display: flex; flex-wrap: wrap; gap: 5px; }
+.chip {
+  background: #eef1f8; color: #152a5e;
+  font-size: 10px; font-weight: 600;
+  padding: 2px 8px; border-radius: 20px;
+  display: flex; align-items: center; gap: 3px;
+  &.rating ion-icon { font-size: 10px; color: #f59e0b; }
+}
+
+.price {
+  font-size: 13px; font-weight: 800; color: #152a5e;
+}
+
+.btn-delete {
+  width: 34px; height: 34px;
+  background: #ffebee; border: none;
+  border-radius: 8px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  ion-icon { color: #c62828; font-size: 16px; }
+  &:disabled { opacity: 0.5; }
+}

@@ -1,0 +1,46 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/admin-dashboard"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Produits</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="body">
+
+    <div class="empty-state" *ngIf="loading">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+
+    <div class="empty-state" *ngIf="!loading && products.length === 0">
+      <ion-icon name="cube-outline" class="empty-icon"></ion-icon>
+      <p class="empty-text">Aucun produit disponible.</p>
+    </div>
+
+    <div class="list" *ngIf="!loading && products.length > 0">
+      <div class="item-card" *ngFor="let p of products">
+
+        <div class="item-left">
+          <p class="item-title">{{ p.title }}</p>
+          <p class="item-sub">{{ p.seller_name || 'Vendeur' }}</p>
+          <div class="chips-row">
+            <span class="chip" *ngIf="p.version">v{{ p.version }}</span>
+            <span class="chip" *ngIf="p.license">{{ p.license }}</span>
+          </div>
+        </div>
+
+        <div class="item-right">
+          <span class="price">{{ p.price | number }} TND</span>
+          <button class="btn-delete" [disabled]="deleting === p.id"
+            (click)="deleteProduct(p)">
+            <ion-icon name="trash-outline"></ion-icon>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</ion-content>

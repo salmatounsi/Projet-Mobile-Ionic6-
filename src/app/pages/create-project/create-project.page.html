@@ -1,0 +1,191 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/projects"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Nouveau projet</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="body">
+
+    <!-- ────────────────────────────────────────
+         ÉTAPE 1 : Choisir une candidature
+    ──────────────────────────────────────── -->
+    <div *ngIf="step === 1">
+
+      <div class="project-header">
+        <h2 class="project-title">Choisir un freelancer</h2>
+        <p class="project-description">
+          Sélectionne la candidature acceptée pour laquelle tu veux créer un projet.
+        </p>
+      </div>
+
+      <!-- Loading -->
+      <div class="empty-state" *ngIf="loadingApplications">
+        <ion-spinner name="crescent"></ion-spinner>
+        <p class="empty-text">Chargement des candidatures...</p>
+      </div>
+
+      <!-- Aucune candidature -->
+      <div class="empty-state"
+        *ngIf="!loadingApplications && applications.length === 0">
+        <ion-icon name="people-outline" class="empty-icon"></ion-icon>
+        <p class="empty-text">
+          Aucune candidature acceptée.<br/>
+          Accepte d'abord une candidature depuis tes offres d'emploi.
+        </p>
+        <ion-button class="empty-btn" routerLink="/jobs">
+          Voir mes offres
+        </ion-button>
+      </div>
+
+      <!-- Liste candidatures acceptées -->
+      <div class="applications-list"
+        *ngIf="!loadingApplications && applications.length > 0">
+
+        <div
+          class="application-card"
+          *ngFor="let a of applications"
+          [class.selected]="selectedApplication?.id === a.id"
+          [class.has-project]="a.has_project"
+          (click)="!a.has_project && selectApplication(a)">
+
+          <div class="app-left">
+            <div class="freelancer-avatar">
+              <img *ngIf="a.freelancer_profile_image"
+                [src]="a.freelancer_profile_image" alt=""/>
+              <span *ngIf="!a.freelancer_profile_image">
+                {{ initials(a.freelancer_name) }}
+              </span>
+            </div>
+            <div class="freelancer-info">
+              <p class="freelancer-name">{{ a.freelancer_name }}</p>
+              <p class="freelancer-role">{{ a.freelancer_role }}</p>
+              <p class="job-title-chip">
+                <ion-icon name="briefcase-outline"></ion-icon>
+                {{ a.job_title }}
+              </p>
+            </div>
+          </div>
+
+          <div class="app-right">
+            <p class="proposed-price">{{ a.proposed_price }} TND</p>
+            <span class="duration-chip" *ngIf="a.estimated_duration">
+              <ion-icon name="time-outline"></ion-icon>
+              {{ a.estimated_duration }}
+            </span>
+            <div class="project-exists-badge" *ngIf="a.has_project">
+              <ion-icon name="checkmark-circle-outline"></ion-icon>
+              Projet créé
+            </div>
+            <ion-icon
+              name="checkmark-circle"
+              class="selected-icon"
+              *ngIf="selectedApplication?.id === a.id && !a.has_project">
+            </ion-icon>
+          </div>
+
+        </div>
+
+      </div>
+
+      <button
+        class="btn-submit-project"
+        [disabled]="!selectedApplication"
+        (click)="goToStep2()"
+        *ngIf="!loadingApplications && applications.length > 0">
+        <ion-icon name="arrow-forward-outline"></ion-icon>
+        Continuer
+      </button>
+
+    </div>
+
+    <!-- ────────────────────────────────────────
+         ÉTAPE 2 : Détails du projet
+    ──────────────────────────────────────── -->
+    <div *ngIf="step === 2">
+
+      <!-- Résumé freelancer sélectionné -->
+      <div class="selected-freelancer-banner">
+        <div class="freelancer-avatar small">
+          <img *ngIf="selectedApplication?.freelancer_profile_image"
+            [src]="selectedApplication.freelancer_profile_image" alt=""/>
+          <span *ngIf="!selectedApplication?.freelancer_profile_image">
+            {{ initials(selectedApplication?.freelancer_name) }}
+          </span>
+        </div>
+        <div class="banner-info">
+          <p class="freelancer-name">{{ selectedApplication?.freelancer_name }}</p>
+          <p class="freelancer-role">{{ selectedApplication?.job_title }}</p>
+        </div>
+        <button class="btn-change" (click)="step = 1">Changer</button>
+      </div>
+
+      <!-- Informations générales -->
+      <div class="section-card">
+        <p class="section-heading">Informations du projet</p>
+
+        <div class="form-group">
+          <label class="form-label">Titre du projet *</label>
+          <input
+            class="form-input"
+            type="text"
+            [(ngModel)]="form.title"
+            placeholder="Ex : Refonte site e-commerce"/>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Description</label>
+          <textarea
+            class="form-textarea"
+            rows="3"
+            [(ngModel)]="form.description"
+            placeholder="Décris les objectifs et le contexte du projet...">
+          </textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Budget total (TND)</label>
+            <input
+              class="form-input"
+              type="number"
+              [(ngModel)]="form.budget"
+              placeholder="0"/>
+            <span class="form-hint">
+              Proposé : {{ selectedApplication?.proposed_price }} TND
+            </span>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Deadline</label>
+            <input
+              class="form-input"
+              type="date"
+              [(ngModel)]="form.deadline"/>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Actions -->
+      <div class="form-actions">
+        <button class="btn-back" (click)="step = 1">
+          <ion-icon name="arrow-back-outline"></ion-icon>
+          Retour
+        </button>
+        <button
+          class="btn-submit-project"
+          style="flex:2"
+          [disabled]="!canSubmit() || isSubmitting"
+          (click)="submitProject()">
+          <ion-icon name="checkmark-outline" *ngIf="!isSubmitting"></ion-icon>
+          {{ isSubmitting ? 'Création en cours...' : 'Créer le projet' }}
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+</ion-content>

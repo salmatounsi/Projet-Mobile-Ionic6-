@@ -41,14 +41,15 @@ export class LoginPage implements OnInit {
         console.log('Role:', role);
 
         this.errorMessage = '';
-
-        if (role === 'client') {
-          this.router.navigateByUrl('/tabs/services', { replaceUrl: true });
-        } else if (role === 'freelancer') {
-          this.router.navigateByUrl('/tabs/jobs', { replaceUrl: true });
-        } else {
-          this.router.navigateByUrl('/tabs/start', { replaceUrl: true });
-        }
+ if (role === 'admin') {
+    this.router.navigateByUrl('/admin-dashboard', { replaceUrl: true });
+  } else if (role === 'client') {
+    this.router.navigateByUrl('/tabs/services', { replaceUrl: true });
+  } else if (role === 'freelancer') {
+    this.router.navigateByUrl('/tabs/jobs', { replaceUrl: true });
+  } else {
+    this.router.navigateByUrl('/tabs/start', { replaceUrl: true });
+  }
       },
       error: (err) => {
         if (err.status === 404) {

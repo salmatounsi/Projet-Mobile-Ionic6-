@@ -65,7 +65,8 @@ export interface User {
   current_step?: number;
   signup_completed?: boolean;
   payment_completed?: boolean;
-
+  profile_status?: string;
+  reject_reason?:  string;
   general_info?: GeneralInfo;
 
   professional_role?: string | null;

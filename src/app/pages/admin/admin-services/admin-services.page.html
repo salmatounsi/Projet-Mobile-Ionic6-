@@ -1,0 +1,49 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/admin-dashboard"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Services</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="body">
+
+    <div class="empty-state" *ngIf="loading">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+
+    <div class="empty-state" *ngIf="!loading && services.length === 0">
+      <ion-icon name="construct-outline" class="empty-icon"></ion-icon>
+      <p class="empty-text">Aucun service disponible.</p>
+    </div>
+
+    <div class="list" *ngIf="!loading && services.length > 0">
+      <div class="item-card" *ngFor="let s of services">
+
+        <div class="item-left">
+          <p class="item-title">{{ s.title }}</p>
+          <p class="item-sub">{{ s.freelancer_name || 'Freelancer' }}</p>
+          <div class="chips-row">
+            <span class="chip" *ngIf="s.category">{{ s.category }}</span>
+            <span class="chip rating">
+              <ion-icon name="star"></ion-icon>
+              {{ s.rating }}
+            </span>
+          </div>
+        </div>
+
+        <div class="item-right">
+          <span class="price">{{ s.price_basic | number }} TND</span>
+          <button class="btn-delete" [disabled]="deleting === s.id"
+            (click)="deleteService(s)">
+            <ion-icon name="trash-outline"></ion-icon>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</ion-content>

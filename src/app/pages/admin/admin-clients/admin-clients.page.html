@@ -1,0 +1,58 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/admin-dashboard"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Clients</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="body">
+
+    <div class="empty-state" *ngIf="loading">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+
+    <div class="empty-state" *ngIf="!loading && clients.length === 0">
+      <ion-icon name="person-outline" class="empty-icon"></ion-icon>
+      <p class="empty-text">Aucun client inscrit.</p>
+    </div>
+
+    <div class="list" *ngIf="!loading && clients.length > 0">
+      <div class="item-card" *ngFor="let c of clients">
+
+        <div class="card-left">
+          <div class="avatar">
+            <img *ngIf="c.profile_image" [src]="c.profile_image" alt=""/>
+            <span *ngIf="!c.profile_image">{{ initials(c.first_name, c.last_name) }}</span>
+          </div>
+          <div class="info">
+            <p class="name">{{ c.first_name }} {{ c.last_name }}</p>
+            <p class="email">{{ c.email }}</p>
+            <p class="country">
+              <ion-icon name="location-outline"></ion-icon>
+              {{ c.country || 'Non défini' }}
+            </p>
+            <div class="chips-row">
+              <span class="chip">{{ c.jobs_count }} offre(s)</span>
+              <span class="chip">{{ c.proj_count }} projet(s)</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-right">
+          <span class="blocked-badge" *ngIf="c.is_blocked">Bloqué</span>
+          <button class="btn-block"
+            [class.btn-unblock]="c.is_blocked"
+            [disabled]="actioning === c.id"
+            (click)="toggleBlock(c)">
+            <ion-icon [name]="c.is_blocked ? 'lock-open-outline' : 'ban-outline'"></ion-icon>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</ion-content>

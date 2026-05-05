@@ -1,0 +1,53 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/admin-dashboard"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Projets</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="body">
+
+    <div class="empty-state" *ngIf="loading">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+
+    <div class="empty-state" *ngIf="!loading && projects.length === 0">
+      <ion-icon name="folder-outline" class="empty-icon"></ion-icon>
+      <p class="empty-text">Aucun projet.</p>
+    </div>
+
+    <div class="list" *ngIf="!loading && projects.length > 0">
+      <div class="item-card" *ngFor="let p of projects">
+
+        <div class="item-left">
+          <div class="item-title-row">
+            <p class="item-title">{{ p.title }}</p>
+            <span class="status-badge" [ngClass]="p.status">
+              {{ p.status === 'in_progress' ? 'En cours' : 'Terminé' }}
+            </span>
+          </div>
+          <p class="item-sub">
+            Client : <strong>{{ p.client_name }}</strong> →
+            Freelancer : <strong>{{ p.freelancer_name }}</strong>
+          </p>
+          <div class="progress-row">
+            <div class="prog-track">
+              <div class="prog-fill" [style.width.%]="p.progress"></div>
+            </div>
+            <span class="prog-pct">{{ p.progress }}%</span>
+          </div>
+        </div>
+
+        <div class="item-right">
+          <span class="budget">{{ p.budget | number }} TND</span>
+          <span class="ms-count">{{ p.milestones_count }} sprint(s)</span>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</ion-content>
